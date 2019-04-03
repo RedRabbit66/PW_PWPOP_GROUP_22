@@ -1,6 +1,25 @@
 {
     "name": "llure29/slim-test",
+    "description": "Template to work with slim",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Llorenç Garcia"
+        },
+        {
+            "name": "Sergio Álvarez"
+        },
+        {
+            "name": "Alejandro Martí"
+        }
+    ],
     "require": {
         "slim/slim": "^3.12"
+    },
+    "autoload": {
+        "psr-4": {
+            "SallePW\\pwpop\\": "src/"
+        }
     }
+
 }
