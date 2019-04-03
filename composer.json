@@ -1,0 +1,6 @@
+{
+    "name": "llure29/slim-test",
+    "require": {
+        "slim/slim": "^3.12"
+    }
+}
