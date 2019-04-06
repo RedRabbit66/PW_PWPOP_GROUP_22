@@ -6,7 +6,7 @@
  * Time: 13:22
  */
 
-namespace SallePW\pwpop\model;
+namespace SallePW\pwpop\Model;
 
 
 class Product

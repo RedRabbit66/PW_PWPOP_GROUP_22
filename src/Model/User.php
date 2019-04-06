@@ -5,7 +5,7 @@
  * Date: 2019-04-06
  * Time: 13:11
  */
-namespace SallePW\pwpop\model;
+namespace SallePW\pwpop\Model;
 
 use DateTime;
 
