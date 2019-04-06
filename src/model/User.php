@@ -105,7 +105,7 @@ class User
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -129,7 +129,6 @@ class User
     /**
      * @return string
      */
-
     public function getUsername(): string
     {
         return $this->username;
@@ -154,7 +153,7 @@ class User
     /**
      * @return int
      */
-    public function getPhoneNumber()
+    public function getPhoneNumber(): int
     {
         return $this->phoneNumber;
     }
