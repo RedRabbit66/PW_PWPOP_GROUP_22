@@ -25,11 +25,11 @@ class PHPMailer implements Mailer
 
             $this->mail->isHTML(true);
             $this->mail->Subject = 'Pwpop Confirmation email';
-            $this->mail->Body    = $message;
-            $this->mail->AltBody    = $message;
+            $this->mail->Body = $message;
+            $this->mail->AltBody = $message;
 
             $this->mail->send();
-        } catch (Exception $e) {
+        } catch (Exception $exeption) {
             echo 'Email has not been sent. Mailer Error: ', $this->mail->ErrorInfo;
         }
     }
