@@ -7,6 +7,6 @@ $app->get('/hello/{name}', function (Request $request, Response $response, array
     $name = $args['name'];
     $response->getBody()->write("Hello, $name");
 
-    return $response;
+    return $response_ai;
 });
 
