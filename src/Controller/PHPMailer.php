@@ -9,7 +9,7 @@
 namespace SallePW\pwpop\Controller;
 
 
-class PHPMailer implements Mailer
+final class PHPMailer implements Mailer
 {
     private $mail;
 

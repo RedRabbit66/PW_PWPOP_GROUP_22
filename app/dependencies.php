@@ -19,3 +19,11 @@ $container['view'] = function($container) {
     return $view;
 
 };
+
+$container['mailer'] = function () {
+    return new \SallePW\pwpop\Controller\PHPMailer();
+};
+
+$container['test_controller'] = function () {
+  return new \SallePW\pwpop\Controller\TestController("test");
+};
