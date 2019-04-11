@@ -14,7 +14,7 @@ class User
     /**
      * @var int
      */
-    private $idokok;
+    private $id;
 
     /**
      * @var string
