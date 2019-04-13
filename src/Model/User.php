@@ -72,27 +72,18 @@ class User
     private $profileImage;
 
 
-    public function __construct(
-        $id,
-        $username,
-        $email,
-        $password,
-        $phoneNumber,
-        DateTime $birthdate,
-        DateTime $createdAt,
-        DateTime $updatedAt,
-        $profileimage
-    ) {
-        $this->id = $id;
-        $this->username = $username;
-        $this->email = $email;
-        $this->password = $password;
-        $this->phoneNumber = $phoneNumber;
-        $this->birthdate = $birthdate;
-        $this->createdAt = $createdAt;
-        $this->updatedAt = $updatedAt;
-        $this->profileImage = $profileimage;
-    }
+    public function __construct($id, $username, $email, $password, $phoneNumber, DateTime $birthdate,
+        DateTime $createdAt, DateTime $updatedAt, $profileimage) {
+            $this->id = $id;
+            $this->username = $username;
+            $this->email = $email;
+            $this->password = $password;
+            $this->phoneNumber = $phoneNumber;
+            $this->birthdate = $birthdate;
+            $this->createdAt = $createdAt;
+            $this->updatedAt = $updatedAt;
+            $this->profileImage = $profileimage;
+        }
 
     /**
      * @return int
