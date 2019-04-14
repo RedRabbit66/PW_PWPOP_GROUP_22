@@ -4,10 +4,10 @@ return [
   'settings' => [
       'displayErrorDetails' => true,
       'database' => [
-          'dbname' => 'pwpop',
-          'user' => 'root',
-          'password' => '1234',
-          'host' => 'localhost',
+          'dbname' => 'pwpopdb',
+          'user' => 'homestead',
+          'password' => 'secret',
+          'host' => '192.168.10.10',
           'driver' => 'pdo_mysql'
       ],
       'mailer' => [

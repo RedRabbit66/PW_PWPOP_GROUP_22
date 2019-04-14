@@ -7,6 +7,7 @@
  */
 namespace SallePW\pwpop\Model;
 
+use \Hashids\Hashids;
 use DateTime;
 
 class User
@@ -17,19 +18,14 @@ class User
     private $id;
 
     /**
+     * @var int
+     */
+    private $hash_id;
+
+    /**
      * @var string
      */
     private $name;
-
-    /**
-     * @var string
-     */
-    private $description;
-
-    /**
-     * @var string
-     */
-    private $characteristics;
 
     /**
      * @var string
@@ -42,9 +38,9 @@ class User
     private $email;
 
     /**
-     * @var string
+     * @var DateTime
      */
-    private $password;
+    private $birthdate;
 
     /**
      * @var int
@@ -52,19 +48,9 @@ class User
     private $phoneNumber;
 
     /**
-     * @var DateTime
+     * @var string
      */
-    private $birthdate;
-
-    /**
-     * @var DateTime
-     */
-    private $createdAt;
-
-    /**
-     * @var DateTime
-     */
-    private $updatedAt;
+    private $password;
 
     /**
      * @var string
@@ -72,31 +58,48 @@ class User
     private $profileImage;
 
 
-    public function __construct($id, $username, $email, $password, $phoneNumber, DateTime $birthdate,
-        DateTime $createdAt, DateTime $updatedAt, $profileimage) {
-            $this->id = $id;
+    public function __construct($name, $username, $email, $birthdate, $phoneNumber, $password, $profileImage) {
+            $this->name = $name;
             $this->username = $username;
             $this->email = $email;
             $this->password = $password;
             $this->phoneNumber = $phoneNumber;
             $this->birthdate = $birthdate;
-            $this->createdAt = $createdAt;
-            $this->updatedAt = $updatedAt;
-            $this->profileImage = $profileimage;
+            $this->profileImage = $profileImage;
         }
 
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
+    public function generateHashId() {
+        $hashids = new Hashids($this->username . $this->email);
+        $this->hash_id = $hashids->encode(1, 2, 3);
     }
 
     /**
      * @return string
      */
-    public function getName(): string
+    public function getEncryptedPassword() {
+        return md5($this->password);
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHashId()
+    {
+        return $this->hash_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
     {
         return $this->name;
     }
@@ -104,23 +107,7 @@ class User
     /**
      * @return string
      */
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCharacteristics(): string
-    {
-        return $this->characteristics;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUsername(): string
+    public function getUsername()
     {
         return $this->username;
     }
@@ -128,7 +115,7 @@ class User
     /**
      * @return string
      */
-    public function getEmail(): string
+    public function getEmail()
     {
         return $this->email;
     }
@@ -136,7 +123,7 @@ class User
     /**
      * @return string
      */
-    public function getPassword(): string
+    public function getPassword()
     {
         return $this->password;
     }
@@ -144,7 +131,7 @@ class User
     /**
      * @return int
      */
-    public function getPhoneNumber(): int
+    public function getPhoneNumber()
     {
         return $this->phoneNumber;
     }
@@ -152,31 +139,16 @@ class User
     /**
      * @return DateTime
      */
-    public function getBirthdate(): DateTime
+    public function getBirthdate()
     {
         return $this->birthdate;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getCreatedAt(): DateTime
-    {
-        return $this->createdAt;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getUpdatedAt(): DateTime
-    {
-        return $this->updatedAt;
-    }
 
     /**
      * @return string
      */
-    public function getProfileImage(): string
+    public function getProfileImage()
     {
         return $this->profileImage;
     }

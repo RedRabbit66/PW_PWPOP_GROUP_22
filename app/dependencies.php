@@ -18,17 +18,26 @@ $container['doctrine'] = function($container){
 };
 
 $container['user_repository'] = function ($container){
-    $repository = new \Pwpop\Model\Implementation\DoctrineUserRepository(
+    $repository = new SallePW\pwpop\Model\Implementation\DoctrineUserRepository(
         $container->get('doctrine')
     );
     return $repository;
 };
 
 $container['post_user_repository'] = function ($container){
-    $service = new \Pwpop\Model\UseCase\PostUserUseCase(
+    $service = new SallePW\pwpop\Model\UseCase\PostUserUseCase(
+
         $container->get('user_repository')
     );
     return $service;
 };
+
+$container['check_user_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\CheckUserUseCase(
+        $container->get('user_repository')
+    );
+    return $service;
+};
+
 
 

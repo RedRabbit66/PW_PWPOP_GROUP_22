@@ -32,5 +32,4 @@ class HomeController
     {
         return $this->container->get('view')->render($response, 'landing.html.twig');
     }
-
 }
