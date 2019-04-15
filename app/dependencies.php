@@ -39,5 +39,25 @@ $container['check_user_repository'] = function ($container){
     return $service;
 };
 
+$container['search_user_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\SearchUserUseCase(
+        $container->get('user_repository')
+    );
+    return $service;
+};
 
+
+$container['update_user_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\UpdateUserUseCase(
+        $container->get('user_repository')
+    );
+    return $service;
+};
+
+$container['delete_user_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\DeleteUserUseCase(
+        $container->get('user_repository')
+    );
+    return $service;
+};
 

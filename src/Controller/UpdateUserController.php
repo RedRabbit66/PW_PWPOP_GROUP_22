@@ -2,18 +2,18 @@
 /**
  * Created by PhpStorm.
  * User: Sergio
- * Date: 13/04/2019
- * Time: 11:41
+ * Date: 15/04/2019
+ * Time: 17:24
  */
 
 namespace SallePW\pwpop\Controller;
 
-use Psr\Container\ContainerInterface;
-use Psr\Http\Message\RequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
+use \Psr\Container\ContainerInterface;
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
 
 
-class LoginController
+class UpdateUserController
 {
     protected $container;
 
@@ -21,44 +21,33 @@ class LoginController
         $this->container = $container;
     }
 
-    public function __invoke(Request $request, Response $response) {
-        if (session_status() == PHP_SESSION_ACTIVE) {
-            session_destroy();
-        }
-
+    public function __invoke(Request $request, Response $response)
+    {
         //$error = $this->validateUser();
-        $id = 0;
+        $statusMessage = "";
 
         if (0 != 0) {
-            $id = '-1';
+            $status = 302;
+            $statusMessage = "error";
         } else {
             try {
                 $data = $request->getParsedBody();
-                $service = $this->container->get('check_user_repository');
-                $data = $service($data);
-                $id = $data['user_id'];
-                session_start();
+                $service = $this->container->get('update_user_repository');
+                $service($data);
+                $status = 200;
+                $statusMessage = "success";
             } catch (\Exception $e) {
-                $id = '-1';
+                $status = 302;
+                $statusMessage = "error";
             }
         }
-
         $protocol = $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
             || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
-        $url = $protocol . $_SERVER['SERVER_NAME'];
-
-        if ($id == '-1') {
-            $status = 302;
-            $url = $url . '/?action=login_user&status=error';
-        } else {
-            $_SESSION['user_id'] = $id;
-
-            $status = 200;
-        }
 
         $response = $response
             ->withStatus($status)
-            ->withHeader('Location', $url);
+            ->withHeader('Location',
+                $protocol . $_SERVER['SERVER_NAME'] . '/profile?action=update_user&status=' . $statusMessage);
 
         return $response;
     }
@@ -79,12 +68,14 @@ class LoginController
                     if (!preg_match("/^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})\S+$/", $val) || strlen($val) < 6 || strlen($val) > 12) {
                         $error = 2;
                     }
+                } elseif ($name == 'confirmPassword') {
+                    if ($val != $password) {
+                        $error = 3;
+                    }
                 }
             }
-
             return $error;
         }
-
         return -1;
     }
 }

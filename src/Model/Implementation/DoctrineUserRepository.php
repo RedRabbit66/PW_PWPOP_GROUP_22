@@ -37,24 +37,13 @@ class DoctrineUserRepository implements UserRepository
         $stmt->bindValue('profile_image', $user->getprofileImage(), 'string');
         $stmt->execute();
 
-/*
-        echo($user->getHashId() . '!!!!!!!!!!');
-        echo($user->getName(). '!!!!!!!!!!');
-        echo($user->getUsername(). '!!!!!!!!!!');
-        echo($user->getEmail(). '!!!!!!!!!!');
-        echo($user->getBirthdate(). '!!!!!!!!!!');
-        echo($user->getPhoneNumber(). '!!!!!!!!!!');
-        echo($user->getEncryptedPassword(). '!!!!!!!!!!');
-        echo($user->getProfileImage(). '!!!!!!!!!!');
-*/
-
     }
 
 
     public function getUserId($email, $password) {
         $hashId = '-1';
 
-        $sql = 'SELECT hash_id FROM users WHERE email LIKE :email OR username LIKE :email AND password LIKE :password';
+        $sql = 'SELECT hash_id FROM users WHERE (email LIKE :email OR username LIKE :email) AND password LIKE :password';
         $stmt = $this->database->prepare($sql);
         $stmt->bindValue('email', $email, 'string');
         $stmt->bindValue('password', $password, 'string');
@@ -68,5 +57,82 @@ class DoctrineUserRepository implements UserRepository
         $data = array('user_id' => $hashId);
 
         return $data;
+    }
+
+    public function searchUser(){
+
+        $hash_id = $_SESSION['user_id'];
+
+        if($hash_id != -1){
+            $sql = 'SELECT name, username, email, birth_date, phone_number FROM users WHERE hash_id LIKE :hash_id';
+            $stmt = $this->database->prepare($sql);
+            $stmt->bindValue('hash_id', $hash_id, 'string');
+            $stmt->execute();
+            $result = $stmt->fetchAll();
+
+            foreach($result as $row) {
+                $name = $row['name'];
+                $username = $row['username'];
+                $email = $row['email'];
+                $birthday = $row['birth_date'];
+                $phone_number = $row['phone_number'];
+            }
+
+            $data = array('name' => $name, 'username' => $username,  'email' => $email, 'birthday' => $birthday, 'phone_number' => $phone_number);
+            return $data;
+        }
+        return -1;
+    }
+
+    public function updateUser(){
+        session_start();
+        $id = $_SESSION['user_id'];
+
+        if($id != -1){
+            $name = $_POST['name'];
+            $email = $_POST['email'];
+            $birthday = $_POST['birthday'];
+            $phone_number = $_POST['phone_number'];
+            $password = md5($_POST['password']);
+
+            $sql = 'UPDATE users SET name = :name, email = :email, birth_date = :birth_date, phone_number =:phone_number, password = :password WHERE hash_id LIKE :hash_id';
+            $stmt = $this->database->prepare($sql);
+            $stmt->bindValue('name', $name, 'string');
+            $stmt->bindValue('email', $email, 'string');
+            $stmt->bindValue('birth_date', $birthday, 'string');
+            $stmt->bindValue('phone_number', $phone_number, 'string');
+            $stmt->bindValue('password', $password, 'string');
+            $stmt->bindValue('hash_id', $id, 'string');
+            $stmt->execute();
+        }
+    }
+
+    public function deleteUser(){
+        session_start();
+
+        $hash_id = $_SESSION['user_id'];
+
+        if($hash_id != -1){
+
+            //buscamos el id del usuario
+            $sql = 'SELECT id FROM users WHERE hash_id LIKE :hash_id';
+            $stmt = $this->database->prepare($sql);
+            $stmt->bindValue('hash_id', $hash_id, 'string');
+            $stmt->execute();
+            $result = $stmt->fetchAll();
+
+            foreach($result as $row) {
+                $user_id = $row['id'];
+            }
+
+            //Borramos el usuario
+            $sql = 'DELETE FROM users WHERE id LIKE :user_id';
+            $stmt = $this->database->prepare($sql);
+            $stmt->bindValue('user_id', $user_id, 'string');
+            $stmt->execute();
+
+            //Reedirigimos a la landing page y cerramos la session
+            session_destroy();
+        }
     }
 }

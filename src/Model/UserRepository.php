@@ -13,5 +13,7 @@ Interface UserRepository
 {
     public function saveUser(User $user);
     public function getUserId($email, $password);
-
+    public function searchUser();
+    public function updateUser();
+    public function deleteUser();
 }
