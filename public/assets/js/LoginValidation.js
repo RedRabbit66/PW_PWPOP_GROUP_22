@@ -2,30 +2,30 @@
 //Javascript file to comprove a valid login
 $(document).ready(function() {
     $('#login').submit(function (event) {
-        errorMail = document.getElementById("errorMail");
+        errorUserMail = document.getElementById("errorUserMail");
         errorPassword = document.getElementById("errorPassword");
 
 
-        errorMail.innerHTML = "";
+        errorUserMail.innerHTML = "";
         errorPassword.innerHTML = "";
 
         var data = $(this).serialize();
-        var email = document.forms["login"]["email"].value;
-        var password = document.forms["login"]["password"].value;
+        var userEmail = document.forms["login-form"]["userEmail"].value;
+        var password = document.forms["login-form"]["password"].value;
 
         var ok = true;
         var errorElement;
 
-        if (email == "") {
+        if (userEmail == "") {
             ok = false;
-            errorMail.innerHTML = "It cannot be empty.";
-            errorMail.style.display = 'block';
+            errorUserMail.innerHTML = "It cannot be empty.";
+            errorUserMail.style.display = 'block';
 
         }
 
-        if (!validatePassword(password) || password == "") {
+        if (!(password.length > 5) || password == "") {
             ok = false;
-            errorPassword.innerHTML = "The length of the password must be between 6 and 12 characters and it must contain at least one number and one upper case letter.";
+            errorPassword.innerHTML = "It must contain at least 6 characters";
             errorPassword.style.display = 'block';
 
         }
@@ -51,19 +51,3 @@ $(document).ready(function() {
     });
 });
 
-function validatePassword(password) {
-    var ok = false;
-    if (password.length >= 6 && password.length <= 20 && hasNumbers(password) && hasUpperCase(password)) {
-        ok = true;
-    }
-    return ok;
-}
-
-function hasNumbers(t)
-{
-    return /\d/.test(t);
-}
-
-function hasUpperCase(str) {
-    return (/[A-Z]/.test(str));
-}

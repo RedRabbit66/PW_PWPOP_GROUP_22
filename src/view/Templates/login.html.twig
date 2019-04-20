@@ -4,13 +4,32 @@
     <h1 class="text-center alert alert-primary">PWPop - Online Storage</h1>
     <div class="row m-4 text-center">
 
-        <form id="form_login" class="col" action="/login" enctype="application/x-www-form-urlencoded" method="POST">
+        <form id="login-form" class="col" action="/login" enctype="application/x-www-form-urlencoded" method="POST">
             <h2 class="mb-4">Login</h2>
-            <div class="form-group"><input id="emailLogin" type="text" name="email" class="form-control-sm" placeholder="Username or Email" onkeyup="comprovaInput('login')"></div>
-            <div class="form-group"><span id="error6" style="color: red"></span></div>
-            <div class="form-group"><input id="passwordLogin" type="password" name="password" class="form-control-sm" placeholder="Password" onkeyup="comprovaInput('login')"></div>
-            <div class="form-group"><span id="error7" style="color: red"></span></div>
-            <div class="form-group"><button class="btn-dark">Send</button></div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Introduce the email or username:</label>
+                <div class="col-lg-10">
+                    <input id="userEmail" name="userEmail" type="text" class="form-control" placeholder="Username or email" value="{{ data['email'] }}">
+                    <span id="errorMail" style="color: red;" class="text-danger">{{ errors['userEmail'] }}</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-lg-2">Introduce the password:</label>
+                <div class="col-lg-10">
+                    <input id="password" name="password" type="password" class="form-control" placeholder="password" value="{{ data['password'] }}">
+                    <span id="errorPassword" style="color: red;" class="text-danger">{{ errors['password'] }}</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <span class="text-danger">{{ errors['usernoexist'] }}</span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Sign in<i class="icon-arrow-right14 position-right"></i></button>
+
         </form>
     </div>
+{% endblock %}
+{% block footer_scripts %}
+    {{ parent() }}
 {% endblock %}

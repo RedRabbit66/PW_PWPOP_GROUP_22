@@ -2,7 +2,7 @@ $(document).ready(function() {
     $('#register').submit(function (event) {
         errorName = document.getElementById("errorName");
         errorUser = document.getElementById("errorUser");
-        errorMail = document.getElementById("errorMail");
+        errorUserMail = document.getElementById("errorUserMail");
         errorDate = document.getElementById("errorBirthdate");
         errorNumber = document.getElementById("errorNumber");
         errorPassword = document.getElementById("errorPassword");
@@ -11,7 +11,7 @@ $(document).ready(function() {
 
         errorName.innerHTML = "";
         errorUser.innerHTML = "";
-        errorMail.innerHTML = "";
+        errorUserMail.innerHTML = "";
         errorDate.innerHTML = "";
         errorNumber.innerHTML = "";
         errorPassword.innerHTML = "";
@@ -26,7 +26,7 @@ $(document).ready(function() {
         var phoneNumber = document.forms["register"]["phoneNumber"].value;
         var password = document.forms["register"]["password"].value;
         var confirm = document.forms["register"]["confirm"].value;
-        var image = document.forms["register"]["image"];
+        var image = document.forms["register"]["image"].value;
 
         var ok = true;
         var errorElement;
@@ -47,8 +47,8 @@ $(document).ready(function() {
         }
         if (!validateEmail(email) || email == "") {
             ok = false;
-            errorMail.innerHTML = "This field is required. It must be a valid email address";
-            errorMail.style.display = 'block';
+            errorUserMail.innerHTML = "This field is required. It must be a valid email address";
+            errorUserMail.style.display = 'block';
 
         }
         if (birthdate != ""){
@@ -65,9 +65,9 @@ $(document).ready(function() {
             errorNumber.innerHTML = "This field is required. Must follow the format nxx xxx xxx"
         }
 
-        if (!validatePassword(password) || password == "") {
+        if (!(password.length > 5) || password == "") {
             ok = false;
-            errorPassword.innerHTML = "The length of the password must be between 6 and 12 characters and it must contain at least one number and one upper case letter.";
+            errorPassword.innerHTML = "It must contain at least 6 characters";
             errorPassword.style.display = 'block';
 
         }
@@ -77,16 +77,20 @@ $(document).ready(function() {
             errorConfirmPassword.style.display = 'block';
 
         }
+        //Això s'ha de validar en PHP (al Servidor)
+        /*
         if (!validateFile(image)){
             ok = false;
             errorImage.innerHTML = "Bad extension";
             errorImage.style.display = 'block';
-        }
-        if (!isValidSize(image)){
+        }*/
+
+        //Això s'ha de validar en PHP (al Servidor)
+        /*if (!isValidSize(image)){
             ok = false;
             errorImage.innerHTML = "File can't exeed from 500Kb";
             errorImage.style.display = 'block';
-        }
+        }*/
 
         if (ok) {
             //$(this).submit();
@@ -130,22 +134,7 @@ function validateEmail(email) {
     return re.test(email);
 }
 
-function validatePassword(password) {
-    var ok = false;
-    if (password.length >= 6 && password.length <= 20 && hasNumbers(password) && hasUpperCase(password)) {
-        ok = true;
-    }
-    return ok;
-}
 
-function hasNumbers(t)
-{
-    return /\d/.test(t);
-}
-
-function hasUpperCase(str) {
-    return (/[A-Z]/.test(str));
-}
 
 function revalidatePassword(password1, password2) {
     return password1 === password2;
