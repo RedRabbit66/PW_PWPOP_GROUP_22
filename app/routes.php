@@ -9,3 +9,6 @@ $app->get('/profile', 'SallePW\pwpop\Controller\UpdateUserViewController');
 $app->post('/updateuser', 'SallePW\pwpop\Controller\UpdateUserController');
 $app->post('/deleteuser', 'SallePW\pwpop\Controller\DeleteUserController');
 $app->get('/logout', 'SallePW\pwpop\Controller\LogoutController');
+$app
+    ->post('/files', FileController::class . ':uploadAction')
+    ->setName('upload');
