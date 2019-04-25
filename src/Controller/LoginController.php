@@ -43,7 +43,6 @@ class LoginController
                 $id = '-1';
             }
         }
-        echo( $data['user_id']);
 
         $protocol = $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
             || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
@@ -62,7 +61,7 @@ class LoginController
             ->withStatus($status)
             ->withHeader('Location', $url);
 
-       // return $response;
+        return $response;
     }
 
     public function validateUser(){
