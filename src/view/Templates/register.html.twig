@@ -25,3 +25,20 @@
         </form>
     </div>
 {% endblock %}
+{% block footer_scripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $('#uploadFile').click(function(){ $('#imageUpload').trigger('click'); });
+        $('#profileImage').click(function(){ $('#imageUpload').trigger('click'); });
+        function fasterPreview( uploader ) {
+            if ( uploader.files && uploader.files[0] ){
+                $('#profileImage').attr('src',
+                    window.URL.createObjectURL(uploader.files[0]) );
+            }
+        }
+
+        $("#imageUpload").change(function(){
+            fasterPreview( this );
+        });
+    </script>
+{% endblock %}
