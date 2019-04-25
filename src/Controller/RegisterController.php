@@ -21,15 +21,16 @@ class RegisterController
     }
 
     public function __invoke(Request $request, Response $response) {
-        $error[] = $this->validateUser();
+       // $error[] = $this->validateUser();
 
-        if ($error != 0) {
+        if (0 != 0) {
             $status = 302;
         } else {
             try {
                 $data = $request->getParsedBody();
                 $service = $this->container->get('post_user_repository');
                 $service($data);
+
                 $status = 200;
             } catch (\Exception $e) {
                 $status = 302;

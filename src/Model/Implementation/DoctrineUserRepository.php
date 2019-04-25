@@ -36,7 +36,6 @@ class DoctrineUserRepository implements UserRepository
         $stmt->bindValue('password', $user->getEncryptedPassword(), 'string');
         $stmt->bindValue('profile_image', $user->getprofileImage(), 'string');
         $stmt->execute();
-
     }
 
 
@@ -49,7 +48,6 @@ class DoctrineUserRepository implements UserRepository
         $stmt->bindValue('password', $password, 'string');
         $stmt->execute();
         $result = $stmt->fetchAll();
-
         foreach($result as $row) {
             $hashId = $row['hash_id'];
         }

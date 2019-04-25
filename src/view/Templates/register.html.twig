@@ -3,70 +3,25 @@
 {% block content %}
     <h1 class="text-center alert alert-primary">PWPop - Online Storage</h1>
     <div class="row m-4 text-center">
-        <div class="panel-body">
-            <form id="register" class="form-horizontal" method="POST" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Name</label>
-                    <div class="col-lg-10">
-                        <input id="name" name="name" type="text" class="form-control" placeholder="Name" value="{{ data['name'] }}">
-                        <span id="errorName" class="text-danger">{{ errors['name'] }}</span>
-                        <span class="text-danger">{{ errors['nameError'] }}</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Username</label>
-                    <div class="col-lg-10">
-                        <input id="username" name="username" type="text" class="form-control" placeholder="username" value="{{ data['username'] }}">
-                        <span id="errorUser" class="text-danger">{{ errors['username'] }}</span>
-                        <span class="text-danger">{{ errors['registeredUser'] }}</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Email</label>
-                    <div class="col-lg-10">
-                        <input id="email" name="email" type="text" class="form-control" placeholder="email" value="{{ data['email'] }}">
-                        <span id="errorMail" style="color: red;" class="text-danger">{{ errors['email'] }}</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Birthdate</label>
-                    <div class="col-lg-10">
-                        <input id="birthdate" name="birthdate" type="text" class="form-control" placeholder="mm/dd/yyyy" value="{{ data['birthdate'] }}">
-                        <span id="errorBirthdate" style="color: red;" class="text-danger">{{ errors['birthdate'] }}</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Phone Number</label>
-                    <div class="col-lg-10">
-                        <input id="phoneNumber" name="phoneNumber" type="text" class="form-control" placeholder="format nxx xxx xxx" value="{{ data['birthdate'] }}">
-                        <span id="errorNumber" style="color: red;" class="text-danger">{{ errors['phoneNumber'] }}</span>
-                    </div>
-                </div>ass="form-group">
-                    <label class="control-label col-lg-2">Password</label>
-                    <div class="col-lg-10">
-                        <input id="password" name="password" type="password" class="form-control" placeholder="password"
-                               value="{{ data['password'] }}">
-                        <span id="errorPassword" style="color: red;" class="text-danger">{{ errors['password'] }}</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Confirm password</label>
-                    <div class="col-lg-10">
-                        <input id="confirm" name="confirmPassword" type="password" class="form-control" placeholder="confirm password" value="{{ data['confirmPassword'] }}">
-                        <span id="errorValidation" style="color: red;" class="text-danger">{{ errors['confirmPassword'] }}</span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-lg-2">Profile image</label>
-                    <div class="col-lg-10">
-                        <img id="profileImage" src="{{ base_url() }}/ImageProfile/default-profile-icon.png" style="border-radius: 50%;height:100px;width:100px;margin-bottom:10px;" />
-                        <input id="image" name="files[]" type="file" class="form-control" style="display:none;" multiple="multiple">
-                        <input id="upload" type="button" class="text-right btn btn-success" value="Change profile image">
-                        <span id="errorImage" style="color: red;" class="text-danger">{{ errors['profileImage'] }}</span>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary" id="enviar">Sign up <i class="icon-arrow-right14 position-right"></i></button>
-            </form>
-        </div>
+        <form id="form_registration" class="col" action="/register" enctype="application/x-www-form-urlencoded" method="POST">
+            <h2 class="mb-4">Register</h2>
+            <div class="form-group"><input id="name" type="text" name="name" class="form-control-sm" placeholder="Name"></div>
+            <div class="form-group"><span id="error1" style="color: red"></span></div>
+            <div class="form-group"><input id="username" type="text" name="username" class="form-control-sm" placeholder="UserName" ></div>
+            <div class="form-group"><span id="error1" style="color: red"></span></div>
+            <div class="form-group"><input id="email" type="email" name="email" class="form-control-sm" placeholder="Email" ></div>
+            <div class="form-group"><span id="error2" style="color: red"></span></div>
+            <div class="form-group"><input id="birthday" type="date" name="birthday" class="form-control-sm" placeholder="01/05/1990" ></div>
+            <div class="form-group"><span id="error3" style="color: red"></span></div>
+            <div class="form-group"><input id="phoneNumber" type="tel" name="phoneNumber" class="form-control-sm" placeholder="666 666 666" ></div>
+            <div class="form-group"><span id="error3" style="color: red"></span></div>
+            <div class="form-group"><input id="password" type="password" name="password"  class="form-control-sm" placeholder="Password" ></div>
+            <div class="form-group"><span id="error4" style="color: red"></span></div>
+            <div class="form-group"><input id="confirmPassword" type="password" name="confirmPassword" class="form-control-sm" placeholder="Confirm Password" ></div>
+            <div class="form-group"><span id="error5" style="color: red"></span></div>
+            <div class="form-group"><input id="profileImage" type="text" name="profileImage" class="form-control-sm" placeholder="profileImage" ></div>
+            <div class="form-group"><span id="error5" style="color: red"></span></div>
+            <div><button type="submit" name="button" class="btn-dark">Register</button></div>
+        </form>
     </div>
 {% endblock %}

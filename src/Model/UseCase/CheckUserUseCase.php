@@ -23,6 +23,7 @@ class CheckUserUseCase
     }
 
     public function __invoke(array $rawData){
+
         return $this->repo->getUserId($rawData['email'], md5($rawData['password']));
     }
 }
