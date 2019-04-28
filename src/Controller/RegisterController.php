@@ -95,36 +95,7 @@ class RegisterController
         }
     }
 
-    public function insertVerificationKey($userId, $key) {
-        $sql = "INSERT INTO verification_key(user_id, verification_key) VALUES(?user_id, ?verification_key)";
-        $stmt = $this->database->prepare($sql);
-        $stmt->bindValue("user_id", $userId, 'integer');
-        $stmt->bindValue("verification_key", $key, 'string');
-        $stmt->execute();
-    }
 
-    public function checkVerification($key) {
-        $sql = "SELECT COUNT(*) AS count, user_id FROM verification_key WHERE verification_key = ?verification_key GROUP BY user_id";
-        $stmt = $this->database->prepare($sql);
-        $stmt->bindValue("verification_key", $key, 'string');
-        $stmt->execute();
-
-        $verification = $stmt->fetch();
-
-        if ($verification['count'] == 0){
-            return FALSE;
-        }
-
-        return $verification['user_id'];
-    }
-
-    public function updateVerified($userId)
-    {
-        $sql = "UPDATE user SET verified = 1 WHERE id = ?user_id";
-        $stmt = $this->database->prepare($sql);
-        $stmt->bindValue("user_id", $userId, 'integer');
-        $stmt->execute();
-    }
 
 
 
