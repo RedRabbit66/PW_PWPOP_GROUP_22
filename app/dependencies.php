@@ -17,6 +17,25 @@ $container['doctrine'] = function($container){
     return $conn;
 };
 
+$container['phpmailer'] = function($container) {
+    $settings = $container->get('settings')['mailer'];
+
+    $mail = new \PHPMailer\PHPMailer\PHPMailer(true);                              // Passing `true` enables exceptions
+    //Server settings
+    $mail->SMTPDebug = 0;                                 // Enable verbose debug output
+    $mail->isSMTP();                                      // Set mailer to use SMTP
+    $mail->Host = $settings['host'];  // Specify main and backup SMTP servers
+    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+    $mail->Username = $settings['username'];                 // SMTP username
+    $mail->Password = $settings['password'];                           // SMTP password
+    $mail->SMTPSecure = $settings['encryption'];                            // Enable TLS encryption, `ssl` also accepted
+    $mail->Port = $settings['port'];
+
+    $mail->setFrom($settings['username'], 'Mailer');
+
+    return $mail;
+};
+
 $container['user_repository'] = function ($container){
     $repository = new SallePW\pwpop\Model\Implementation\DoctrineUserRepository(
         $container->get('doctrine')
@@ -60,4 +79,37 @@ $container['delete_user_repository'] = function ($container){
     );
     return $service;
 };
+
+$container['send_mail_service'] = function($container) {
+    $service = new SallePW\pwpop\Model\Services\SendMailService(
+        $container->get('mailer_repository')
+    );
+
+    return $service;
+};
+
+$container['post_verification_key_service'] = function($container) {
+    $service = new SallePW\pwpop\Model\Services\PostVerificationKeyService(
+        $container->get('user_repository')
+    );
+
+    return $service;
+};
+
+$container['check_verification_service'] = function($container) {
+    $service = new SallePW\pwpop\Model\Services\CheckVerificationService(
+        $container->get('user_repository')
+    );
+
+    return $service;
+};
+
+$container['update_verified_service'] = function($container) {
+    $service = new SallePW\pwpop\Model\Services\UpdateVerifiedService(
+        $container->get('user_repository')
+    );
+
+    return $service;
+};
+
 

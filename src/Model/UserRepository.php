@@ -16,4 +16,7 @@ Interface UserRepository
     public function searchUser();
     public function updateUser();
     public function deleteUser();
+    public function insertVerificationKey($userId, $key);
+    public function checkVerification($key);
+    public function updateVerified($userId);
 }
