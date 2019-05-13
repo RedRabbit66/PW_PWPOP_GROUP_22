@@ -38,7 +38,7 @@ class DoctrineFileRepository implements FileRepository {
             //echo($hashids . "+++++++++++");
            //echo($userId . "+++++++++++");
            // echo($folderName . "+++++++++++");
-            echo($rootFolder . "+++++++++++¿¿");
+           // echo($rootFolder . "+++++++++++¿¿");
 
             $sql = 'INSERT INTO folders(hash_id, user_id, folder_name, root_folder) VALUES (:hash_id, :user_id, :folder_name, :root_folder)';
             $stmt = $this->database->prepare($sql);

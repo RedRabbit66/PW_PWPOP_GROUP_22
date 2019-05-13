@@ -30,7 +30,9 @@ class HomeController
      */
     public function __invoke(Request $request, Response $response)
     {
-        session_start();
+        if(session_status() == "PHP_SESSION_ACTIVE "){
+            session_start();
+        }
 
         if (empty($_SESSION['user_id'])) {
             $user_id = -1;
