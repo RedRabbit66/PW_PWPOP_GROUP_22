@@ -10,5 +10,5 @@ $app->post('/updateuser', 'SallePW\pwpop\Controller\UpdateUserController');
 $app->post('/deleteuser', 'SallePW\pwpop\Controller\DeleteUserController');
 $app->get('/logout', 'SallePW\pwpop\Controller\LogoutController');
 $app
-    ->post('/files', FileController::class . ':uploadAction')
+    ->post('/files',  ImageUploadController::class . ':uploadAction')
     ->setName('upload');

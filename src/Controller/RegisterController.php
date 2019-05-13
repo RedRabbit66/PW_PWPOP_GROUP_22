@@ -11,6 +11,8 @@ namespace SallePW\pwpop\Controller;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\RequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use \Slim\Http\UploadedFile;
+use \Psr\Http\Message\UploadedFileInterface;
 
 class RegisterController
 {
@@ -27,9 +29,47 @@ class RegisterController
             $status = 302;
         } else {
             try {
+                //Registramos al usuario
                 $data = $request->getParsedBody();
                 $service = $this->container->get('post_user_repository');
                 $service($data);
+
+               //Buscamos su hash_id guardado en la base de datos para crear la carpeta del usuario
+                $data = $request->getParsedBody();
+                $service = $this->container->get('check_user_repository');
+                $data = $service($data);
+
+                $userId = $data['user_id'];
+                $folderName = $userId;
+                $folderId= $userId;
+
+                $pathname = __DIR__ . '/../../public/uploads/' . $userId;
+                $pathnameImage = __DIR__ . '/../../public/uploads/' . $userId . "/ImageProfile";
+                $pathnameProduct = __DIR__ . '/../../public/uploads/' . $userId . "/Products";
+
+                $rootFolder = 1;
+                $service = $this->container->get('post_folder_repository');
+                $service($userId, $folderId, $folderName, $rootFolder);
+                if(!is_dir( $pathname )){
+                    mkdir ($pathname);
+                }
+
+                $folderName = "ImageProfile";
+                $rootFolder = 0;
+                $service = $this->container->get('post_folder_repository');
+                $service($userId, $folderId, $folderName, $rootFolder);
+                if(!is_dir( $pathnameImage )) {
+                    mkdir($pathnameImage);
+                }
+
+                $folderName = "Products";
+                $rootFolder = 0;
+                $service = $this->container->get('post_folder_repository');
+                $service($userId, $folderId, $folderName, $rootFolder);
+                if(!is_dir( $pathnameProduct )) {
+                    mkdir($pathnameProduct);
+                }
+
 
                 $status = 200;
             } catch (\Exception $e) {

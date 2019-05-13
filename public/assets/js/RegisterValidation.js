@@ -2,11 +2,11 @@ $(document).ready(function() {
     $('#register').submit(function (event) {
         errorName = document.getElementById("errorName");
         errorUser = document.getElementById("errorUser");
-        errorUserMail = document.getElementById("errorUserMail");
+        errorUserMail = document.getElementById("errorMail");
         errorDate = document.getElementById("errorBirthdate");
         errorNumber = document.getElementById("errorNumber");
         errorPassword = document.getElementById("errorPassword");
-        errorConfirmPassword = document.getElementById("errorValidation");
+        errorConfirmPassword = document.getElementById("errorConfirm");
         errorImage = document.getElementById("errorImage");
 
         errorName.innerHTML = "";

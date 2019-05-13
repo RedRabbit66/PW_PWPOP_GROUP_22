@@ -61,3 +61,63 @@ $container['delete_user_repository'] = function ($container){
     return $service;
 };
 
+
+
+
+$container['file_repository'] = function ($container){
+    $repository = new SallePW\pwpop\Model\Implementation\DoctrineFileRepository(
+        $container->get('doctrine')
+    );
+    return $repository;
+};
+
+$container['post_file_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\PostFileUseCase(
+        $container->get('file_repository')
+    );
+    return $service;
+};
+
+$container['delete_file_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\DeleteFileUseCase(
+        $container->get('file_repository')
+    );
+    return $service;
+};
+
+$container['update_file_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\UpdateFileUseCase(
+        $container->get('file_repository')
+    );
+    return $service;
+};
+
+$container['check_folder_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\CheckFolderUseCase(
+        $container->get('file_repository')
+    );
+    return $service;
+};
+
+$container['post_folder_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\PostFolderUseCase(
+        $container->get('file_repository')
+    );
+    return $service;
+};
+
+$container['delete_folder_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\DeleteFolderUseCase(
+        $container->get('file_repository')
+    );
+    return $service;
+};
+
+$container['update_folder_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\UpdateFolderUseCase(
+        $container->get('file_repository')
+    );
+    return $service;
+};
+
+
