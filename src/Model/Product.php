@@ -27,9 +27,9 @@ class Product
     private $price;
 
     /**
-     * @var array
+     * @var string
      */
-    private $product_image = array();
+    private $product_image;
 
     /**
      * @var int
@@ -44,7 +44,7 @@ class Product
      * @param array $product_image
      * @param int $category
      */
-    public function __construct(string $title, string $description, int $price, array $product_image, int $category)
+    public function __construct(string $title, string $description, int $price, string $product_image, int $category)
     {
         $this->title = $title;
         $this->description = $description;
@@ -80,7 +80,7 @@ class Product
     /**
      * @return array
      */
-    public function getProductImage(): array
+    public function getProductImage(): string
     {
         return $this->product_image;
     }

@@ -9,6 +9,9 @@ $app->get('/profile', 'SallePW\pwpop\Controller\UpdateUserViewController')->add(
 $app->post('/updateuser', 'SallePW\pwpop\Controller\UpdateUserController');
 $app->post('/deleteuser', 'SallePW\pwpop\Controller\DeleteUserController');
 $app->get('/logout', 'SallePW\pwpop\Controller\LogoutController');
+$app->get('/product[/{productid}]', 'SallePW\pwpop\Controller\ProductViewController');
+$app->post('/product[/{productid}]', 'SallePW\pwpop\Controller\ProductController');
+
 
 /*$app->get('/logout', function(Request $request, Response $response) {
     $_SESSION['id'] = null;

@@ -17,4 +17,6 @@ interface FileRepository{
     public function saveFolder($userId, $folderId, $folderName, $rootFolder);
     public function deleteFolder($userId, $folderId);
     public function renameFolder($userId, $folderId, $folderName);
+    public function getProducts();
+    public function getProduct($productId);
 }

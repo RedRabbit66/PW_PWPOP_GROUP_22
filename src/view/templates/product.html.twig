@@ -1,0 +1,51 @@
+{% extends "base.html.twig" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+    {%  if user_id == -1 %}
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSODALYDYo2dqN0DG_kPNi2X7EAy1K8SpRRZQWkNv9alC62IHggOw" border="1" alt="img user" width="32" height="32">
+        <a href="{{ url }}/login">Sing In</a><br>
+        <a href="{{ url }}/register">Sing Up</a>
+        <h1 class="text-center alert alert-primary">Dashboard</h1>
+
+    {%  else %}
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSODALYDYo2dqN0DG_kPNi2X7EAy1K8SpRRZQWkNv9alC62IHggOw" border="1" alt="img user" width="32" height="32">
+        <a href="{{ url }}/profile">User Profile</a><br>
+        <a href="{{ url }}/logout">Log Out</a>
+        <h1 class="text-center alert alert-primary">Dashboard</h1>
+
+    {%  endif %}
+
+    <div class="container">
+
+            <div class="row">
+
+                <div class="col-sm-4">
+                    <div class="row">
+                        <a class="product" href="products/{{ product['id'] }}"><img class="product" src="{{ base_url }}../assets/images/{{ product['file_path'] }}?2"></a>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="row">
+                        Price:
+                        {{ product['price'] }}
+                    </div>
+                    <div class="row">
+                        Product name:
+                        {{ product['file_name'] }}
+                    </div>
+                    <div class="row">
+                        Product Description:
+                        {{ product['description'] }}
+                    </div>
+                    <div class="row">
+                        <button type="submit" name="button" class="btn-dark" action="/product/{{ product['id'] }}" enctype="application/x-www-form-urlencoded" method="POST">BUY</button>
+                    </div>
+
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+
+{% endblock %}

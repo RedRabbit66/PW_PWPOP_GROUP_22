@@ -171,4 +171,17 @@ $container['update_folder_repository'] = function ($container){
     return $service;
 };
 
+$container['get_products_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\GetProductsUseCase(
+        $container->get('file_repository')
+    );
+    return $service;
+};
+
+$container['get_product_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\GetProductUseCase(
+        $container->get('file_repository')
+    );
+    return $service;
+};
 

@@ -17,6 +17,7 @@ namespace SallePW\pwpop\Model\Implementation;
     use SallePW\pwpop\Model\File;
     use SallePW\pwpop\Model\Folder;
     use SallePW\pwpop\Model\FileRepository;
+    use SallePW\pwpop\Model\Product;
 
 class DoctrineFileRepository implements FileRepository {
     const DATE_FORMAT = 'Y-m-d';
@@ -463,6 +464,26 @@ class DoctrineFileRepository implements FileRepository {
         }
 
         return $id;
+    }
+
+    public function getProducts() {
+        $sql = 'SELECT * FROM products ORDER BY datetime DESC LIMIT 5';
+        $stmt = $this->database->prepare($sql);
+        //$stmt->bindValue('hash_id', $folderHashId, 'string');
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        /*$products = array();
+
+        foreach($result as $row) {
+            //$hashId = $row['hash_id'];
+            $title = $row['file_name'];
+            $path = $row['file_path'];
+            $aux = new Product($title, 'default description', 2000, 'car.jpg', 1);
+            $products[] = $aux;
+        }*/
+
+        return $result;
     }
 
 }
