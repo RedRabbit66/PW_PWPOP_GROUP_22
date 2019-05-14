@@ -15,7 +15,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 class RegisterViewController
 {
-    protected $container;
+    private $container;
 
     public function __construct(ContainerInterface $container){
         $this->container = $container;

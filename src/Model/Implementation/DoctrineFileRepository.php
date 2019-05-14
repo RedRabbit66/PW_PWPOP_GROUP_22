@@ -486,4 +486,14 @@ class DoctrineFileRepository implements FileRepository {
         return $result;
     }
 
+    public function getProduct($productId) {
+        $sql = 'SELECT * FROM products WHERE id LIKE :productId';
+        $stmt = $this->database->prepare($sql);
+        $stmt->bindValue('productId', $productId, 'int');
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        return $result;
+    }
+
 }

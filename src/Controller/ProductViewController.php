@@ -8,6 +8,9 @@
 
 namespace SallePW\pwpop\Controller;
 
+use Psr\Container\ContainerInterface;
+use Psr\Http\Message\RequestInterface as Request;
+use Psr\Http\Message\ResponseInterface as Response;
 
 class ProductViewController
 {
@@ -26,12 +29,15 @@ class ProductViewController
      */
     public function __invoke(Request $request, Response $response, array $args)
     {
+        $product = NULL;
         if (isset($args['productid'])) {
             $service = $this->container->get('get_product_repository');
             $product = $service($args['productid']);
+            return $this->container->get('view')->render($response, 'product.html.twig', ['product' => $product]);
         } else {
             //Error
+            return $this->container->get('view')->render($response, 'home.html.twig');
         }
-        return $this->container->get('view')->render($response, 'product.html.twig', ['product' => $product]);
+
     }
 }
