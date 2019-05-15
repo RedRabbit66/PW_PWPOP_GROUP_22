@@ -52,20 +52,14 @@ class User
      */
     private $password;
 
-    /**
-     * @var string
-     */
-    private $profileImage;
 
-
-    public function __construct($name, $username, $email, $birthdate, $phoneNumber, $password, $profileImage) {
+    public function __construct($name, $username, $email, $birthdate, $phoneNumber, $password) {
             $this->name = $name;
             $this->username = $username;
             $this->email = $email;
             $this->password = $password;
             $this->phoneNumber = $phoneNumber;
             $this->birthdate = $birthdate;
-            $this->profileImage = $profileImage;
         }
 
     public function generateHashId() {
@@ -142,14 +136,5 @@ class User
     public function getBirthdate()
     {
         return $this->birthdate;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getProfileImage()
-    {
-        return $this->profileImage;
     }
 }
