@@ -125,16 +125,27 @@ function comprovaInput(update) {
 
         //COMPROBACIÓN PHONE NUMBER
         console.log(phoneNumber.length);
-        console.log("holaaa");
-        if ((phoneNumber.length ==0 || phoneNumber.length < 9) && telephoneRegex.test(phoneNumber)) {
+        console.log(phoneNumber.value);
+        if (phoneNumber.length < 9) {
             document.getElementById('error6').textContent = '';
             document.getElementById('phoneNumber').style.borderColor = "white";
-        }else if ((!telephoneRegex.test(phoneNumber)) || phoneNumber.length>9) {
+            if (!telephoneRegex.test(phoneNumber) && phoneNumber.length >= 1){
+                textError = document.createTextNode("*Phone number should only contain digits");
+                document.getElementById('error6').textContent = '';
+                document.getElementById('error6').appendChild(textError);
+                document.getElementById('phoneNumber').style.borderColor = "red";
+            }
+        }else if (!telephoneRegex.test(phoneNumber)) {
+            textError = document.createTextNode("*Phone number should only contain digits");
+            document.getElementById('error6').textContent = '';
+            document.getElementById('error6').appendChild(textError);
+            document.getElementById('phoneNumber').style.borderColor = "red";
+        } else if(phoneNumber.length>9) {
             textError = document.createTextNode("*Field must follow XXXXXXXXX format");
             document.getElementById('error6').textContent = '';
             document.getElementById('error6').appendChild(textError);
             document.getElementById('phoneNumber').style.borderColor = "red";
-        } else {
+        }else{
             document.getElementById('error6').textContent = '';
             document.getElementById('phoneNumber').style.borderColor = "green";
         }
