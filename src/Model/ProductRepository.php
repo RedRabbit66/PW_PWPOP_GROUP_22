@@ -13,4 +13,5 @@ interface ProductRepository{
     public function getProducts();
     public function getProduct($productId);
     public function saveFile($userId, $folderId, $fileName, $fileSize, $fileExtension);
+    public function setProductSoldOut($productId);
 }

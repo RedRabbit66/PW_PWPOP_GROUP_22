@@ -113,4 +113,14 @@ class DoctrineProductRepository implements ProductRepository {
 
         return $result;
     }
+
+    public function setProductSoldOut($productId){
+        $sql = 'UPDATE products SET soldOut = :sold_out WHERE hash_id LIKE :productId';
+        $stmt = $this->database->prepare($sql);
+        $stmt->bindValue('sold_out', 1, 'string');
+        $stmt->bindValue('productId', $productId, 'string');
+        $stmt->execute();
+
+    }
+
 }
