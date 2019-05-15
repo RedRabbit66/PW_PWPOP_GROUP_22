@@ -39,7 +39,5 @@ class PostUserUseCase
         );
 
         $this->repo->saveUser($user);
-        echo("hola3:::");
-
     }
 }

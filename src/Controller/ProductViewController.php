@@ -33,10 +33,12 @@ class ProductViewController
         if (isset($args['productid'])) {
             $service = $this->container->get('get_product_repository');
             $product = $service($args['productid']);
+
+            //echo($product[0]['title']);
             return $this->container->get('view')->render($response, 'product.html.twig', ['product' => $product]);
         } else {
             //Error
-            return $this->container->get('view')->render($response, 'home.html.twig');
+           //return $this->container->get('view')->render($response, 'home.html.twig');
         }
         //return $this->container->get('view')->render($response, 'home.html.twig');
     }
