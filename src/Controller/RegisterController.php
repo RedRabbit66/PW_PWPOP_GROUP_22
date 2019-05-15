@@ -9,7 +9,7 @@
 namespace SallePW\pwpop\Controller;
 
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\RequestInterface as Request;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use \Slim\Http\UploadedFile;
 use \Psr\Http\Message\UploadedFileInterface;
@@ -19,7 +19,7 @@ class RegisterController
     protected $container;
 
     //ZONA CONSTANTES IMAGEN
-    private const UPLOADS_DIR = __DIR__ . '/../../assets/images';
+    private const UPLOADS_DIR = __DIR__ . '/../../public/assets/images';
 
     private const UNEXPECTED_ERROR = "An unexpected error occurred uploading the file '%s'...";
 
@@ -40,49 +40,14 @@ class RegisterController
         if (0 != 0) {
             $status = 302;
         } else {
+
             try {
                 $this -> uploadAction($request, $response);
                 //Registramos al usuario
                 $data = $request->getParsedBody();
                 $service = $this->container->get('post_user_repository');
                 $service($data);
-/*
-               //Buscamos su hash_id guardado en la base de datos para crear la carpeta del usuario
-                $data = $request->getParsedBody();
-                $service = $this->container->get('check_user_repository');
-                $data = $service($data);
 
-                $userId = $data['user_id'];
-                $folderName = $userId;
-                $folderId= $userId;
-
-                $pathname = __DIR__ . '/../../public/uploads/' . $userId;
-                $pathnameImage = __DIR__ . '/../../public/uploads/' . $userId . "/ImageProfile";
-                $pathnameProduct = __DIR__ . '/../../public/uploads/' . $userId . "/Products";
-
-                $rootFolder = 1;
-                $service = $this->container->get('post_folder_repository');
-                $service($userId, $folderId, $folderName, $rootFolder);
-                if(!is_dir( $pathname )){
-                    mkdir ($pathname);
-                }
-
-                $folderName = "ImageProfile";
-                $rootFolder = 0;
-                $service = $this->container->get('post_folder_repository');
-                $service($userId, $folderId, $folderName, $rootFolder);
-                if(!is_dir( $pathnameImage )) {
-                    mkdir($pathnameImage);
-                }
-
-                $folderName = "Products";
-                $rootFolder = 0;
-                $service = $this->container->get('post_folder_repository');
-                $service($userId, $folderId, $folderName, $rootFolder);
-                if(!is_dir( $pathnameProduct )) {
-                    mkdir($pathnameProduct);
-                }
-*/
                 $status = 200;
             } catch (\Exception $e) {
                 $status = 302;
@@ -95,7 +60,7 @@ class RegisterController
             ->withStatus($status)
             ->withHeader('Location', $protocol . $_SERVER['SERVER_NAME'] . '/?status=' . $status);
 
-        return $response;
+       // return $response;
     }
 
     public function validateUser(){
@@ -171,6 +136,7 @@ class RegisterController
 
         $errors = [];
 
+        var_dump($uploadedFiles);
         /** @var UploadedFileInterface $uploadedFile */
         foreach ($uploadedFiles['files'] as $uploadedFile) {
             if ($uploadedFile->getError() !== UPLOAD_ERR_OK) {
@@ -181,6 +147,7 @@ class RegisterController
             $name = $uploadedFile->getClientFilename();
 
             $fileInfo = pathinfo($name);
+            echo (self::UPLOADS_DIR . DIRECTORY_SEPARATOR . $name);
 
             $format = $fileInfo['extension'];
 

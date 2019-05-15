@@ -124,7 +124,7 @@ function comprovaInput(update) {
 
 
         //COMPROBACIÓN PHONE NUMBER
-        console.log(phoneNumber);
+        console.log(phoneNumber.length);
         console.log("holaaa");
         if ((phoneNumber.length ==0 || phoneNumber.length < 9) && telephoneRegex.test(phoneNumber)) {
             document.getElementById('error6').textContent = '';

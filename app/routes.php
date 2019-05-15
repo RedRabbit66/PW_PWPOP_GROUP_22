@@ -22,4 +22,4 @@ $app->post('/product[/{productid}]', 'SallePW\pwpop\Controller\ProductController
 
 $app->post('/files',  ImageUploadController::class . ':uploadAction')->setName('upload');
 
-$app->get('/Activation_mail[/{key}]', '\Pwbox\controller\ActivationMailController');
+$app->get('/Activation_mail[/{key}]', 'SallePW\pwpop\controller\ActivationMailController');

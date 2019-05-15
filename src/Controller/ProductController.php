@@ -9,7 +9,7 @@
 namespace SallePW\pwpop\Controller;
 
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\RequestInterface as Request;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class ProductController
