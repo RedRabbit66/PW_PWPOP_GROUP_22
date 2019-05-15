@@ -38,6 +38,6 @@ class ProductViewController
             //Error
             return $this->container->get('view')->render($response, 'home.html.twig');
         }
-
+        //return $this->container->get('view')->render($response, 'home.html.twig');
     }
 }
