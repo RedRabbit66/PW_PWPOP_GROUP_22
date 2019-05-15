@@ -27,7 +27,6 @@ class RegisterController
 
     // We use this const to define the extensions that we are going to allow
     private const ALLOWED_EXTENSIONS = ['jpg', 'png'];
-    //FIN CONSTANTES IMAGEN
 
 
     public function __construct(ContainerInterface $container) {
@@ -60,7 +59,7 @@ class RegisterController
             ->withStatus($status)
             ->withHeader('Location', $protocol . $_SERVER['SERVER_NAME'] . '/?status=' . $status);
 
-       // return $response;
+        //return $response;
     }
 
     public function validateUser(){
@@ -136,7 +135,7 @@ class RegisterController
 
         $errors = [];
 
-        var_dump($uploadedFiles);
+        //var_dump($_FILES['files']['name'][0]);
         /** @var UploadedFileInterface $uploadedFile */
         foreach ($uploadedFiles['files'] as $uploadedFile) {
             if ($uploadedFile->getError() !== UPLOAD_ERR_OK) {
@@ -157,7 +156,7 @@ class RegisterController
             }
 
             // We generate a custom name here instead of using the one coming form the form
-            $uploadedFile->moveTo(self::UPLOADS_DIR . DIRECTORY_SEPARATOR . $name);
+            $uploadedFile->moveTo(self::UPLOADS_DIR . DIRECTORY_SEPARATOR . $_POST['username']. '_ImageProfile_' . $name);
         }
 
         return $this->container->get('view')->render($response, 'home.html.twig');
