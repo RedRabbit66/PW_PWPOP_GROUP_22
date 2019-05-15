@@ -8,13 +8,13 @@
 
 namespace SallePW\pwpop\Model\UseCase;
 
-use SallePW\pwpop\Model\FileRepository;
+use SallePW\pwpop\Model\ProductRepository;
 
 class GetProductsUseCase {
 
     private $repo;
 
-    public function __construct(FileRepository $repo) {
+    public function __construct(ProductRepository $repo) {
         $this->repo = $repo;
     }
 

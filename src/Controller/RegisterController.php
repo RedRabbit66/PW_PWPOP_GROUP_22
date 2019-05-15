@@ -33,7 +33,7 @@ class RegisterController
                 $data = $request->getParsedBody();
                 $service = $this->container->get('post_user_repository');
                 $service($data);
-
+/*
                //Buscamos su hash_id guardado en la base de datos para crear la carpeta del usuario
                 $data = $request->getParsedBody();
                 $service = $this->container->get('check_user_repository');
@@ -69,8 +69,7 @@ class RegisterController
                 if(!is_dir( $pathnameProduct )) {
                     mkdir($pathnameProduct);
                 }
-
-
+*/
                 $status = 200;
             } catch (\Exception $e) {
                 $status = 302;

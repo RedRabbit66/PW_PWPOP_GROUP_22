@@ -14,7 +14,12 @@ class Product
     /**
      * @var string
      */
-    private $title;
+    private $hashId;
+
+    /**
+     * @var string
+     */
+    private $userId;
 
     /**
      * @var string
@@ -22,14 +27,14 @@ class Product
     private $description;
 
     /**
+     * @var string
+     */
+    private $dateUpload;
+
+    /**
      * @var int
      */
     private $price;
-
-    /**
-     * @var string
-     */
-    private $product_image;
 
     /**
      * @var int
@@ -38,27 +43,59 @@ class Product
 
     /**
      * Product constructor.
-     * @param string $title
+     * @param string $hashId
+     * @param string $userId
      * @param string $description
+     * @param string $dateUpload
      * @param int $price
-     * @param array $product_image
      * @param int $category
      */
-    public function __construct(string $title, string $description, int $price, string $product_image, int $category)
-    {
-        $this->title = $title;
+    public function __construct(
+        string $hashId,
+        string $userId,
+        string $description,
+        string $dateUpload,
+        int $price,
+        int $category
+    ) {
+        $this->hashId = $hashId;
+        $this->userId = $userId;
         $this->description = $description;
+        $this->dateUpload = $dateUpload;
         $this->price = $price;
-        $this->product_image = $product_image;
         $this->category = $category;
     }
 
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getHashId(): string
     {
-        return $this->title;
+        return $this->hashId;
+    }
+
+    /**
+     * @param string $hashId
+     */
+    public function setHashId(string $hashId): void
+    {
+        $this->hashId = $hashId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserId(): string
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param string $userId
+     */
+    public function setUserId(string $userId): void
+    {
+        $this->userId = $userId;
     }
 
     /**
@@ -70,6 +107,30 @@ class Product
     }
 
     /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateUpload(): string
+    {
+        return $this->dateUpload;
+    }
+
+    /**
+     * @param string $dateUpload
+     */
+    public function setDateUpload(string $dateUpload): void
+    {
+        $this->dateUpload = $dateUpload;
+    }
+
+    /**
      * @return int
      */
     public function getPrice(): int
@@ -78,11 +139,11 @@ class Product
     }
 
     /**
-     * @return array
+     * @param int $price
      */
-    public function getProductImage(): string
+    public function setPrice(int $price): void
     {
-        return $this->product_image;
+        $this->price = $price;
     }
 
     /**
@@ -93,6 +154,24 @@ class Product
         return $this->category;
     }
 
+    /**
+     * @param int $category
+     */
+    public function setCategory(int $category): void
+    {
+        $this->category = $category;
+    }
+
+
+
+    /**
+     * Product constructor.
+     * @param string $title
+     * @param string $description
+     * @param int $price
+     * @param array $product_image
+     * @param int $category
+     */
 
 
 }

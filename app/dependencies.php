@@ -113,63 +113,34 @@ $container['update_verified_service'] = function($container) {
 };
 
 
-
-
 $container['file_repository'] = function ($container){
-    $repository = new SallePW\pwpop\Model\Implementation\DoctrineFileRepository(
+    $repository = new SallePW\pwpop\Model\Implementation\DoctrineProductRepository(
         $container->get('doctrine')
     );
     return $repository;
 };
 
 $container['post_file_repository'] = function ($container){
-    $service = new SallePW\pwpop\Model\UseCase\PostFileUseCase(
+    $service = new SallePW\pwpop\Model\UseCase\PostProductUseCase(
         $container->get('file_repository')
     );
     return $service;
 };
 
 $container['delete_file_repository'] = function ($container){
-    $service = new SallePW\pwpop\Model\UseCase\DeleteFileUseCase(
+    $service = new SallePW\pwpop\Model\UseCase\DeleteProductUseCase(
         $container->get('file_repository')
     );
     return $service;
 };
 
 $container['update_file_repository'] = function ($container){
-    $service = new SallePW\pwpop\Model\UseCase\UpdateFileUseCase(
+    $service = new SallePW\pwpop\Model\UseCase\UpdateProductUseCase(
         $container->get('file_repository')
     );
     return $service;
 };
 
-$container['check_folder_repository'] = function ($container){
-    $service = new SallePW\pwpop\Model\UseCase\CheckFolderUseCase(
-        $container->get('file_repository')
-    );
-    return $service;
-};
-
-$container['post_folder_repository'] = function ($container){
-    $service = new SallePW\pwpop\Model\UseCase\PostFolderUseCase(
-        $container->get('file_repository')
-    );
-    return $service;
-};
-
-$container['delete_folder_repository'] = function ($container){
-    $service = new SallePW\pwpop\Model\UseCase\DeleteFolderUseCase(
-        $container->get('file_repository')
-    );
-    return $service;
-};
-
-$container['update_folder_repository'] = function ($container){
-    $service = new SallePW\pwpop\Model\UseCase\UpdateFolderUseCase(
-        $container->get('file_repository')
-    );
-    return $service;
-};
 
 $container['get_products_repository'] = function ($container){
     $service = new SallePW\pwpop\Model\UseCase\GetProductsUseCase(
