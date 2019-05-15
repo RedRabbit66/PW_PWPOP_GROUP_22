@@ -18,6 +18,18 @@ class RegisterController
 {
     protected $container;
 
+    //ZONA CONSTANTES IMAGEN
+    private const UPLOADS_DIR = __DIR__ . '/../../assets/images';
+
+    private const UNEXPECTED_ERROR = "An unexpected error occurred uploading the file '%s'...";
+
+    private const INVALID_EXTENSION_ERROR = "The received file extension '%s' is not valid";
+
+    // We use this const to define the extensions that we are going to allow
+    private const ALLOWED_EXTENSIONS = ['jpg', 'png'];
+    //FIN CONSTANTES IMAGEN
+
+
     public function __construct(ContainerInterface $container) {
         $this->container = $container;
     }
@@ -29,6 +41,7 @@ class RegisterController
             $status = 302;
         } else {
             try {
+                $this -> uploadAction($request, $response);
                 //Registramos al usuario
                 $data = $request->getParsedBody();
                 $service = $this->container->get('post_user_repository');
@@ -101,31 +114,31 @@ class RegisterController
 
                 if ($data == 'username') {
                     if (!preg_match("/^[A-Za-z0-9_-]+$/i", $val) || strlen($val) > 20) {
-                        $errors['username'] = "t can only contain alphanumeric characters and should never exceed the 20 characters";
+                        $errors['username'] = "Username field can only contain alphanumeric characters and should never exceed the 20 characters";
                     }
                 } elseif($data == 'name') {
                     if (!preg_match("/^[A-Za-z0-9_-]+$/i", $val)) {
-                        $errors['name'] = "It can only contain alphanumeric characters";
+                        $errors['name'] = "Name field can only contain letters";
                     }
                 } elseif($data == 'email') {
                     if (!preg_match("/^\S+@\S+\.\S+$/", $val)) {
-                        $errors['email'] = "It must be a valid email address";
+                        $errors['email'] = "Email field must be a valid email address";
                     }
                 } elseif ($data == 'birthday') {
                     $year = substr($val, 0, 4);
 
                     if($year < 1850 || $year > 2019){
-                        $errors['birthday'] = "It must be a valid date";
+                        $errors['birthday'] = "Birthday field must be a valid date";
                     }
                 } elseif($data == 'phoneNumber') {
                     if (!is_numeric($val)) {
-                        $errors['name'] = "All numbers must follow the format nxx xxx xxx";
+                        $errors['name'] = "In phone number field all numbers must follow the format nxx xxx xxx";
                     }
                 } elseif ($data == 'password') {
                     $password = $val;
 
                     if (strlen($val) < 6) {
-                        $errors['password'] = "It must contain at least 6 characters";
+                        $errors['password'] = "Password must contain at least 6 characters";
                     }
                 } elseif ($data == 'confirmPassword') {
                     if ($val != $password) {
@@ -149,4 +162,44 @@ class RegisterController
         }
         return $errors;
     }
+
+
+    //ZONA COMPRUEBA + CARGA IMAGEN
+
+    public function uploadAction(Request $request, Response $response){
+        $uploadedFiles = $request->getUploadedFiles();
+
+        $errors = [];
+
+        /** @var UploadedFileInterface $uploadedFile */
+        foreach ($uploadedFiles['files'] as $uploadedFile) {
+            if ($uploadedFile->getError() !== UPLOAD_ERR_OK) {
+                $errors[] = sprintf(self::UNEXPECTED_ERROR, $uploadedFile->getClientFilename());
+                continue;
+            }
+
+            $name = $uploadedFile->getClientFilename();
+
+            $fileInfo = pathinfo($name);
+
+            $format = $fileInfo['extension'];
+
+            if (!$this->isValidFormat($format)) {
+                $errors[] = sprintf(self::INVALID_EXTENSION_ERROR, $format);
+                continue;
+            }
+
+            // We generate a custom name here instead of using the one coming form the form
+            $uploadedFile->moveTo(self::UPLOADS_DIR . DIRECTORY_SEPARATOR . $name);
+        }
+
+        return $this->container->get('view')->render($response, 'home.html.twig');
+    }
+
+    private function isValidFormat(string $extension): bool
+    {
+        return in_array($extension, self::ALLOWED_EXTENSIONS, true);
+    }
+
+
 }
