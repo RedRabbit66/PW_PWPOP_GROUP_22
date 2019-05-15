@@ -16,7 +16,7 @@ use Psr\Http\Message\UploadedFileInterface;
 
 final class FileController
 {
-    private const UPLOADS_DIR = __DIR__ . '/../../uploads';
+    private const UPLOADS_DIR = __DIR__ . '/../../assets/images';
 
     private const UNEXPECTED_ERROR = "An unexpected error occurred uploading the file '%s'...";
 
@@ -40,7 +40,7 @@ final class FileController
 
     public function indexAction(Request $request, Response $response): Response
     {
-        return $this->container->get('view')->render($response, 'form.twig', []);
+        return $this->container->get('view')->render($response, 'home.hmtl.twig', []);
     }
 
     public function uploadAction(Request $request, Response $response): Response
@@ -71,9 +71,11 @@ final class FileController
             $uploadedFile->moveTo(self::UPLOADS_DIR . DIRECTORY_SEPARATOR . $name);
         }
 
-        return $this->container->get('view')->render($response, 'upload.twig', [
+        echo(UPLOADS_DIR);
+
+        /*return $this->container->get('view')->render($response, 'upload.twig', [
             'errors' => $errors,
-        ]);
+        ]);*/
     }
 
     private function isValidFormat(string $extension): bool

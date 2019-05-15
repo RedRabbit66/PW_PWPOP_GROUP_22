@@ -5,9 +5,9 @@ return [
       'displayErrorDetails' => true,
       'database' => [
           'dbname' => 'pwpopdb',
-          'user' => 'homestead',
-          'password' => 'secret',
-          'host' => '192.168.10.10',
+          'user' => 'root',
+          'password' => '',
+          'host' => 'localhost',
           'driver' => 'pdo_mysql'
       ],
       'mailer' => [
