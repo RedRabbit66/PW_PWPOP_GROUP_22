@@ -1,14 +1,16 @@
 <?php
 
-$app->get('/', 'SallePW\pwpop\Controller\HomeController')->add(\SallePW\pwpop\Controller\Middleware\SessionMiddleware::class);
+$app->get('/', 'SallePW\pwpop\Controller\HomeController')->add('\SallePW\pwpop\Controller\Middleware\SessionMiddleware');
 $app->get('/login', 'SallePW\pwpop\Controller\LoginViewController');
 $app->post('/login', 'SallePW\pwpop\Controller\LoginController');
 $app->get('/register', 'SallePW\pwpop\Controller\RegisterViewController');
 $app->post('/register', 'SallePW\pwpop\Controller\RegisterController');
-$app->get('/profile', 'SallePW\pwpop\Controller\UpdateUserViewController'); //->add(\SallePW\pwpop\Controller\Middleware\UserLoggedMiddleware::class);
+$app->get('/profile', 'SallePW\pwpop\Controller\UpdateUserViewController');
 $app->post('/updateuser', 'SallePW\pwpop\Controller\UpdateUserController');
 $app->post('/deleteuser', 'SallePW\pwpop\Controller\DeleteUserController');
 $app->get('/logout', 'SallePW\pwpop\Controller\LogoutController');
+$app->get('/uploadproduct', 'SallePW\pwpop\Controller\UploadProductViewController');
+$app->post('/uploadproduct', 'SallePW\pwpop\Controller\UploadProductController');
 $app->get('/product[/{productid}]', 'SallePW\pwpop\Controller\ProductViewController');
 $app->post('/product[/{productid}]', 'SallePW\pwpop\Controller\ProductController');
 
@@ -18,8 +20,6 @@ $app->post('/product[/{productid}]', 'SallePW\pwpop\Controller\ProductController
     return $response->withStatus(302)->withHeader('Location', '/');
 });*/
 
-$app
-    ->post('/files',  ImageUploadController::class . ':uploadAction')
-    ->setName('upload');
+$app->post('/files',  ImageUploadController::class . ':uploadAction')->setName('upload');
 
 $app->get('/Activation_mail[/{key}]', '\Pwbox\controller\ActivationMailController');

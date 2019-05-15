@@ -20,9 +20,16 @@ class ProductController
             $service = $this->container->get('get_product_repository');
             $product = $service($args['productid']);
 
+            if($product[0]['sold_out']){
+                //No hay disponibles
+                $soldOut = 1;
+            }else{
+                //Restar 1 en el stock
+                //enviar mail
+            }
             //Hacer las tareas de comprar producto a base de datos blablabla
         } else {
-            //Error
+            //Error, no product
         }
 
         return $response->withStatus(200)->withHeader('Location', '/');
