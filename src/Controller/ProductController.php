@@ -12,11 +12,19 @@ use Psr\Container\ContainerInterface;
 
 use SallePW\pwpop\Controller\Mailer;
 
-use Psr\Http\Message\RequestInterface as Request;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 class ProductController
 {
+
+    private $container;
+
+    public function __construct(ContainerInterface $container) {
+        $this->container = $container;
+    }
+
+
     public function __invoke(Request $request, Response $response, array $args)
     {
         if (isset($args['productid'])) {
@@ -29,6 +37,8 @@ class ProductController
             }else{
                 //Restar 1 en el stock ($soldOut = 1) en sql
                 $service = $this->container->get('set_product_soldout_repository');
+                $service($product[0]['productid']);
+
                 if(session_status() == PHP_SESSION_ACTIVE){
                     session_start();
                 }
