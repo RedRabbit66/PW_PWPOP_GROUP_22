@@ -39,6 +39,7 @@ class LoginController
 
                 $id = $data['user_id'];
                 session_start();
+
             } catch (\Exception $e) {
                 $id = '-1';
             }
