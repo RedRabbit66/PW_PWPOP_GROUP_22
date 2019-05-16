@@ -1,11 +1,79 @@
+function comprovaUpload_Name() {
+    console.log("Entrando en Validation.js - Comprova Upload_Name");
+    var textError = '';
+    var product_name = document.getElementById('uploadProduct_Name').value;
+    //Name not empty
+    if (product_name.length == 0) {
+        textError = document.createTextNode("*This field is required");
+        document.getElementById('errorUpload_Name').textContent = '';
+        document.getElementById('errorUpload_Name').appendChild(textError);
+        document.getElementById('uploadProduct_Name').style.borderColor = "red";
+    } else {
+        document.getElementById('errorUpload_Name').textContent = '';
+        document.getElementById('uploadProduct_Name').style.borderColor = "green";
+    }
+}
+
+function comprovaUpload_Description(){
+    console.log("Entrando en Validation.js - Comprova Upload_Description");
+    var textError = '';
+    var product_description = document.getElementById('uploadProduct_Description').value;
+    //Description min length = 20
+    if (product_description.length == 0) {
+        document.getElementById('errorUpload_Description').textContent = '';
+        document.getElementById('uploadProduct_Description').style.borderColor = "white";
+    } else if (product_description.length < 20) {
+        textError = document.createTextNode("*This field must be at least 20 characters long.");
+        document.getElementById('errorUpload_Description').textContent = '';
+        document.getElementById('errorUpload_Description').appendChild(textError);
+        document.getElementById('uploadProduct_Description').style.borderColor = "red";
+    } else {
+        document.getElementById('errorUpload_Description').textContent = '';
+        document.getElementById('uploadProduct_Description').style.borderColor = "green";
+    }
+}
+
+function comprovaUpload_Category(){
+    console.log("Entrando en Validation.js - Comprova Upload_Category");
+    console.log(document.getElementById('uploadProduct_Category').selectedIndex);
+    var textError = '';
+    var product_category = document.getElementById('uploadProduct_Category').selectedIndex;
+    //Category must be chosen
+    if (product_category == 0){
+        textError = document.createTextNode("*Please select a category");
+        document.getElementById('errorUpload_Category').textContent = '';
+        document.getElementById('errorUpload_Category').appendChild(textError);
+        document.getElementById('uploadProduct_Category').style.borderColor = "red";
+    } else{
+        document.getElementById('errorUpload_Category').textContent = '';
+        document.getElementById('uploadProduct_Category').style.borderColor = "green";
+    }
+}
+
+function comprovaUpload_Price(){
+    var priceRegex = /^[0-9]+$/;
+    console.log("Entrando en Validation.js - Comprova Upload_Price");
+    var textError = '';
+    var product_price = document.getElementById('uploadProduct_Price').value;
+    //Price must be a valid number
+    if (product_price < 0 || !priceRegex.test(product_price)){
+        textError = document.createTextNode("*Please enter a valid integer positive price value");
+        document.getElementById('errorUpload_Price').textContent = '';
+        document.getElementById('errorUpload_Price').appendChild(textError);
+        document.getElementById('uploadProduct_Price').style.borderColor = "red";
+    }else{
+        document.getElementById('errorUpload_Price').textContent = '';
+        document.getElementById('uploadProduct_Price').style.borderColor = "green";
+    }
+}
+
 function comprovaInput(update) {
-    console.log("Enrando en Validation.js");
-    var usernameRegex = /^[A-Za-z0-9_-]+$/i;
+    console.log("Enrando en Validation.js - Comprova input");
+    var usernameRegex = /^[A-Za-z0-9]+$/i;
     var emailRegex = /^\S+@\S+\.\S+$/;
     var telephoneRegex = /^[0-9]+$/;
     var passwordRegex = /^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})\S+$/;
     var textError = '';
-
 
     //CAMPOS A COMPROBAR SOLO SI ES REGISTER O UPDATE
     if (update == 'login') {
@@ -19,6 +87,7 @@ function comprovaInput(update) {
             if (!usernameLogin.includes('@')) {
                 if (usernameRegex.test(usernameLogin)) {
                     document.getElementById('error1').textContent = '';
+                    document.getElementById('error1_1').textContent = '';
                     document.getElementById('usernameLogin').style.borderColor = "green";
 
                 } else {
@@ -209,8 +278,8 @@ function isValidDate(birthdate) {
         return false;
 
     var parts = birthdate.split("/");
-    var day = parseInt(parts[1], 10);
-    var month = parseInt(parts[0], 10);
+    var day = parseInt(parts[0], 10);
+    var month = parseInt(parts[1], 10);
     var year = parseInt(parts[2], 10);
 
     if (year < 1900 || year > 2020 || month == 0 || month > 12) {
