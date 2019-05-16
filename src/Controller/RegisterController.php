@@ -156,7 +156,7 @@ class RegisterController
             }
 
             // We generate a custom name here instead of using the one coming form the form
-            $uploadedFile->moveTo(self::UPLOADS_DIR . DIRECTORY_SEPARATOR . $_POST['username']. '_ImageProfile_' . $name);
+            $uploadedFile->moveTo(self::UPLOADS_DIR . DIRECTORY_SEPARATOR . 'ImageProfile_' . $_POST['username']. '_' . $name);
         }
 
         return $this->container->get('view')->render($response, 'home.html.twig');

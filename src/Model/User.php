@@ -64,8 +64,6 @@ class User
     public function generateHashId() {
         $hashids = new Hashids($this->username . $this->email);
         $this->hash_id = $hashids->encode(1, 2, 3);
-
-        echo("!!!!!!" . $this->hash_id . "!!!!!!!");
     }
 
     /**

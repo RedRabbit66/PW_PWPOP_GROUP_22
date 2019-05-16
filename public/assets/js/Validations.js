@@ -268,6 +268,7 @@ function comprovaInput(update) {
         }
     }
 }
+
 function sendForm(form, delete_user) {
     var id = document.getElementById(form.id).id;
     document.getElementById(id).submit();

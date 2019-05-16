@@ -112,4 +112,26 @@ class DoctrineProductRepository implements ProductRepository {
 
         return $result;
     }
+
+    public function uploadProduct($product){
+        $product->generateHashId();
+        //falta gestion image
+        $user_hash_id = $_SESSION['user_id'];
+
+        $user_id = $this->getUserIdByHashId($user_hash_id);
+
+        $sql = 'INSERT INTO users(hash_id, user_id, description, price, category, title, product_image) 
+                VALUES(:hash_id, :user_id, :description, :price, :category, :title, :product_image)';
+
+        $stmt = $this->database->prepare($sql);
+        $stmt->bindValue('hash_id', $product->getHashId(), 'string');
+        $stmt->bindValue('name', $user_id, 'string');
+        $stmt->bindValue('username', $product->getDescription(), 'string');
+        $stmt->bindValue('birth_date', $product->getPrice(), 'string');
+        $stmt->bindValue('phone_number', $product->getCategory(), 'string');
+        $stmt->bindValue('password', $product->getTitle(), 'string');
+        $stmt->bindValue('profile_image', 'photo', 'string');
+
+        $stmt->execute();
+    }
 }

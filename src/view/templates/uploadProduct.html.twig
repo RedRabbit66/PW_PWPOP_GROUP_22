@@ -11,7 +11,7 @@
             <div class="form-group"><input id="uploadProduct_Description" type="text" name="uploadProduct_Description" class="form-control-sm" placeholder="Product Description" style="width: 600px" onkeyup="comprovaUpload_Description()"></div>
             <div class="form-group"><span id="errorUpload_Description" style="color: red"></span></div>
             <div class="form-group" onclick="comprovaUpload_Category()">
-                <select class="form-group-sm" id="uploadProduct_Category">
+                <select class="form-group-sm" id="uploadProduct_Category" name="uploadProduct_Category">
                     <option value="empty" disabled selected>Select your category</option>
                     <option value="Computers_and_electronic">1. Computers and electronic</option>
                     <option value="Cars">2. Cars</option>
@@ -26,7 +26,7 @@
             <div class="form-group"><input id="uploadProduct_Price" type="text" name="uploadProduct_Price" class="form-control-sm" placeholder="Price" style="width: 75px" onkeyup="comprovaUpload_Price()"> €</div>
             <div class="form-group"><span id="errorUpload_Price" style="color: red"></span></div>
 
-            <input type="file" name="files[]">
+            <input type="file" name="file[]">
             {% if errors is defined %}
                 <ol>
                     {% for error in errors %}

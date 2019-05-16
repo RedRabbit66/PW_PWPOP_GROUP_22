@@ -19,7 +19,6 @@ class ProductViewController
     public function __construct(ContainerInterface $container){
         $this->container = $container;
     }
-
     /**
      * @param Request $request
      * @param Response $response

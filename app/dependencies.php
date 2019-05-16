@@ -127,9 +127,9 @@ $container['post_product_repository'] = function ($container){
     return $service;
 };
 
-$container['delete_file_repository'] = function ($container){
+$container['delete_product_repository'] = function ($container){
     $service = new SallePW\pwpop\Model\UseCase\DeleteProductUseCase(
-        $container->get('file_repository')
+        $container->get('product_repository')
     );
     return $service;
 };
@@ -148,5 +148,4 @@ $container['get_products_repository'] = function ($container){
     );
     return $service;
 };
-
 

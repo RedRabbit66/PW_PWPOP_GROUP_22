@@ -7,7 +7,7 @@
  */
 
 namespace SallePW\pwpop\Model;
-
+use \Hashids\Hashids;
 
 class Product
 {
@@ -29,41 +29,34 @@ class Product
     /**
      * @var string
      */
-    private $dateUpload;
+    private $title;
 
     /**
-     * @var int
+     * @var string
      */
     private $price;
 
     /**
-     * @var int
+     * @var string
      */
     private $category;
 
-    /**
-     * Product constructor.
-     * @param string $hashId
-     * @param string $userId
-     * @param string $description
-     * @param string $dateUpload
-     * @param int $price
-     * @param int $category
-     */
     public function __construct(
-        string $hashId,
-        string $userId,
+        string $title,
         string $description,
-        string $dateUpload,
-        int $price,
-        int $category
+        string $price,
+        string $category
     ) {
-        $this->hashId = $hashId;
-        $this->userId = $userId;
+        $this->title = $title;
         $this->description = $description;
-        $this->dateUpload = $dateUpload;
         $this->price = $price;
         $this->category = $category;
+    }
+
+    public function generateHashId(){
+
+        $hashId = new Hashids($this->title . $this->description);
+        $this->hashId = $hashId->encode(1, 2, 3);
     }
 
     /**
@@ -75,27 +68,11 @@ class Product
     }
 
     /**
-     * @param string $hashId
-     */
-    public function setHashId(string $hashId): void
-    {
-        $this->hashId = $hashId;
-    }
-
-    /**
      * @return string
      */
     public function getUserId(): string
     {
         return $this->userId;
-    }
-
-    /**
-     * @param string $userId
-     */
-    public function setUserId(string $userId): void
-    {
-        $this->userId = $userId;
     }
 
     /**
@@ -107,71 +84,27 @@ class Product
     }
 
     /**
-     * @param string $description
+     * @return string
      */
-    public function setDescription(string $description): void
+    public function getTitle(): string
     {
-        $this->description = $description;
+        return $this->title;
     }
 
     /**
      * @return string
      */
-    public function getDateUpload(): string
-    {
-        return $this->dateUpload;
-    }
-
-    /**
-     * @param string $dateUpload
-     */
-    public function setDateUpload(string $dateUpload): void
-    {
-        $this->dateUpload = $dateUpload;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPrice(): int
+    public function getPrice(): string
     {
         return $this->price;
     }
 
     /**
-     * @param int $price
+     * @return string
      */
-    public function setPrice(int $price): void
-    {
-        $this->price = $price;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCategory(): int
+    public function getCategory(): string
     {
         return $this->category;
     }
-
-    /**
-     * @param int $category
-     */
-    public function setCategory(int $category): void
-    {
-        $this->category = $category;
-    }
-
-
-
-    /**
-     * Product constructor.
-     * @param string $title
-     * @param string $description
-     * @param int $price
-     * @param array $product_image
-     * @param int $category
-     */
-
 
 }
