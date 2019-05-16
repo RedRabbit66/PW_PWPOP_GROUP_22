@@ -69,7 +69,7 @@ function comprovaUpload_Price(){
 
 function comprovaInput(update) {
     console.log("Enrando en Validation.js - Comprova input");
-    var usernameRegex = /^[A-Za-z0-9_-]+$/i;
+    var usernameRegex = /^[A-Za-z0-9]+$/i;
     var emailRegex = /^\S+@\S+\.\S+$/;
     var telephoneRegex = /^[0-9]+$/;
     var passwordRegex = /^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})\S+$/;
@@ -278,8 +278,8 @@ function isValidDate(birthdate) {
         return false;
 
     var parts = birthdate.split("/");
-    var day = parseInt(parts[1], 10);
-    var month = parseInt(parts[0], 10);
+    var day = parseInt(parts[0], 10);
+    var month = parseInt(parts[1], 10);
     var year = parseInt(parts[2], 10);
 
     if (year < 1900 || year > 2020 || month == 0 || month > 12) {

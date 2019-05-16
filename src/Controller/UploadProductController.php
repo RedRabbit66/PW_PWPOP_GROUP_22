@@ -21,4 +21,19 @@ class UploadProductController
     public function __construct(ContainerInterface $container) {
         $this->container = $container;
     }
+
+    public function _invoke(Request $request, Response $response){
+        if (0!=0){
+            $status = 302;
+        }else{
+
+        }
+    }
+
+    public function validateProductUpload{}
+
+    public function uploadProductAction(Request $request, Response $response){
+        $uploadedFiles = $request->getUploadedFiles();
+
+    }
 }
