@@ -13,5 +13,5 @@ interface ProductRepository{
     public function getProducts();
     public function getProduct($productId);
     public function setProductSoldOut($productId);
-    public function uploadProduct($product);
+    public function uploadProduct(Product $product);
 }

@@ -21,7 +21,6 @@ class PostProductUseCase{
     }
 
     public function __invoke(array $rawData){
-        var_dump($rawData);
 
         $product = new Product(
             $rawData['uploadProduct_Name'],

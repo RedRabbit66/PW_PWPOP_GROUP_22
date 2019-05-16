@@ -13,8 +13,6 @@ namespace SallePW\pwpop\Model\Implementation;
     use \PDO;
     use \Hashids\Hashids;
     use \Doctrine\DBAL\Driver\Connection;
-    use SallePW\pwpop\Model\File;
-    use SallePW\pwpop\Model\Folder;
     use SallePW\pwpop\Model\ProductRepository;
     use SallePW\pwpop\Model\Product;
 
@@ -26,30 +24,6 @@ class DoctrineProductRepository implements ProductRepository {
         $this->database = $database;
     }
 
-
-    public function saveFile($userId, $folderId, $fileName, $fileSize, $fileExtension) {
-        $folderPath = '';
-        $error = false;
-
-        $hashids = new Hashids((new \DateTime())->format('Y-m-d H:i:s') . $userId . $folderId . $fileName);
-        $filePath = $hashids->encode(1, 2, 3);
-
-            $folderPath = $this->getFolderPath($folderId);
-
-            if (!$this->updateRemainingStorage($folderId, $fileSize)) {
-                $error = true;
-            } else {
-                if (!$this->registerFile($fileName, $filePath, $folderId, $fileExtension)) {
-                    $error = true;
-                }
-            }
-
-        if ($error == true) {
-            return '';
-        }
-
-        return $folderPath . '/' . $filePath . '.' . $fileExtension;
-    }
 
     private function getUserIdByEmail($email) {
         $id = -1;
@@ -122,14 +96,15 @@ class DoctrineProductRepository implements ProductRepository {
 
     }
 
-    public function uploadProduct($product){
+    public function uploadProduct(Product $product){
         $product->generateHashId();
         //falta gestion image
+        session_start();
         $user_hash_id = $_SESSION['user_id'];
 
         $user_id = $this->getUserIdByHashId($user_hash_id);
 
-        $sql = 'INSERT INTO users(hash_id, user_id, description, price, category, title, product_image) 
+        $sql = 'INSERT INTO products(hash_id, user_id, description, price, category, title, product_image) 
                 VALUES(:hash_id, :user_id, :description, :price, :category, :title, :product_image)';
 
         $stmt = $this->database->prepare($sql);
@@ -140,6 +115,13 @@ class DoctrineProductRepository implements ProductRepository {
         $stmt->bindValue('phone_number', $product->getCategory(), 'string');
         $stmt->bindValue('password', $product->getTitle(), 'string');
         $stmt->bindValue('profile_image', 'photo', 'string');
+
+        echo ($product->getHashId());
+        echo ($user_id);
+        echo ($product->getDescription());
+        echo ($product->getPrice());
+        echo ($product->getCategory());
+        echo ($product->getTitle());
 
         $stmt->execute();
     }

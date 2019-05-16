@@ -56,7 +56,7 @@ class UploadProductController
             ->withStatus($status)
             ->withHeader('Location', $protocol . $_SERVER['SERVER_NAME'] . '/?status=' . $status);
 
-        return $response;
+        //return $response;
     }
 
     public function validateProductUpload(){}
