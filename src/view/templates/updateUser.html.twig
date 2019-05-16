@@ -22,7 +22,6 @@
                 <div class="form-group"><input id="confirmPassword" type="password" name="confirmPassword" class="form-control-sm" placeholder="Confirm New Password" onkeyup="comprovaInput('notLogin')"></div>
                 <div class="form-group"><span id="error5" style="color: red"></span></div>
                 <div><button type="submit" name="button" class="btn-dark" onclick="sendForm(this)">Update Account</button></div><br>
-
                 <input type="file" name="files[]" >
                 {% if errors is defined %}
                     <ol>
@@ -31,9 +30,7 @@
                         {% endfor %}
                     </ol>
                 {% endif %}
-
                 <div><button type="submit" name="button" class="btn-dark">Register</button></div>
-
             </form>
         </div>
         <div>
