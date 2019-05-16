@@ -1,0 +1,43 @@
+{% extends "base.html.twig" %}
+{% block title %}Landing{% endblock %}
+{% block content %}
+    <h1 class="text-center alert alert-primary">PWPop - Online Storage</h1>
+    <div class="row m-4 text-center">
+
+        <form id="form_login" class="col" action="/uploadproduct" enctype="application/x-www-form-urlencoded" method="POST">
+            <h2 class="mb-4">Upload new product</h2>
+            <div class="form-group"><input id="uploadProduct_Name" type="text" name="uploadProduct_Name" class="form-control-sm" placeholder="Product Name" style="width: 400px; font-size: 20px" onkeyup="comprovaUpload_Name()"></div>
+            <div class="form-group"><span id="errorUpload_Name" style="color: red"></span></div>
+            <div class="form-group"><input id="uploadProduct_Description" type="text" name="uploadProduct_Description" class="form-control-sm" placeholder="Product Description" style="width: 600px" onkeyup="comprovaUpload_Description()"></div>
+            <div class="form-group"><span id="errorUpload_Description" style="color: red"></span></div>
+            <div class="form-group" onclick="comprovaUpload_Category()">
+                <select class="form-group-sm" id="uploadProduct_Category">
+                    <option value="empty" disabled selected>Select your category</option>
+                    <option value="Computers_and_electronic">1. Computers and electronic</option>
+                    <option value="Cars">2. Cars</option>
+                    <option value="Sports">3. Sports</option>
+                    <option value="Games">4. Games</option>
+                    <option value="Fashion">5. Fashion</option>
+                    <option value="Home">6. Home</option>
+                    <option value="Other">7. Other</option>
+                </select>
+            </div>
+            <div class="form-group"><span id="errorUpload_Category" style="color: red"></span></div>
+            <div class="form-group"><input id="uploadProduct_Price" type="text" name="uploadProduct_Price" class="form-control-sm" placeholder="Price" style="width: 75px" onkeyup="comprovaUpload_Price()"> €</div>
+            <div class="form-group"><span id="errorUpload_Price" style="color: red"></span></div>
+
+            <input type="file" name="files[]">
+            {% if errors is defined %}
+                <ol>
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ol>
+            {% endif %}
+
+            <div class="form-group"><span id="errorUpload_Picture" style="color: red"></span></div>
+            <div><button type="submit" name="button" class="btn-dark">Upload</button></div>
+
+        </form>
+    </div>
+{% endblock %}

@@ -73,7 +73,7 @@ final class FileController
 
         echo(UPLOADS_DIR);
 
-        /*return $this->container->get('view')->render($response, 'upload.twig', [
+        /*return $this->container->get('view')->render($response, 'uploadProduct.html.twig', [
             'errors' => $errors,
         ]);*/
     }

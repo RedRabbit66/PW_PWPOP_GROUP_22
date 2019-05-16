@@ -1,5 +1,5 @@
 {% extends "base.html.twig" %}
-{% block title %}Landing{% endblock %}
+{% block title %}Register{% endblock %}
 {% block content %}
     <h1 class="text-center alert alert-primary">PWPop - Online Storage</h1>
     <div class="row m-4 text-center">
@@ -12,7 +12,7 @@
             <div class="form-group"><span id="error1_1" style="color: red"></span></div>
             <div class="form-group"><input id="email" type="email" name="email" class="form-control-sm" placeholder="Email" onkeyup="comprovaInput('notLogin')"></div>
             <div class="form-group"><span id="error2" style="color: red"></span></div>
-            <div class="form-group"><input id="birthday" type="text" name="birthday" class="form-control-sm" placeholder="01/02/1990" onkeyup="comprovaInput('notLogin')"></div>
+            <div class="form-group"><input id="birthday" type="text" name="birthday" class="form-control-sm" placeholder="Birthday:   dd/mm/yyyy" onkeyup="comprovaInput('notLogin')"></div>
             <div class="form-group"><span id="error3" style="color: red"></span></div>
             <div class="form-group"><input id="phoneNumber" type="text" name="phoneNumber" class="form-control-sm" placeholder="XXXXXXXXX" onkeyup="comprovaInput('notLogin')"></div>
             <div class="form-group"><span id="error6" style="color: red"></span></div>
@@ -23,7 +23,7 @@
             <!--<div class="form-group"><input id="profileImage" type="text" name="profileImage" class="form-control-sm" placeholder="profileImage" ></div>
             <div class="form-group"><span id="error7" style="color: red"></span></div>*/-->
 
-            <input type="file" name="file" >
+            <input type="file" name="files[]" >
             {% if errors is defined %}
                 <ol>
                     {% for error in errors %}

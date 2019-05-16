@@ -1,13 +1,12 @@
 <?php
-
 return [
   'settings' => [
       'displayErrorDetails' => true,
       'database' => [
           'dbname' => 'pwpopdb',
-          'user' => 'root',
-          'password' => '',
-          'host' => 'localhost',
+          'user' => 'homestead',
+          'password' => 'secret',
+          'host' => '192.168.10.10',
           'driver' => 'pdo_mysql'
       ],
       'mailer' => [

@@ -9,7 +9,7 @@
 namespace SallePW\pwpop\Controller;
 
 use Psr\Container\ContainerInterface;
-use Psr\Http\Message\RequestInterface as Request;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 
@@ -39,6 +39,7 @@ class LoginController
 
                 $id = $data['user_id'];
                 session_start();
+
             } catch (\Exception $e) {
                 $id = '-1';
             }
@@ -51,8 +52,10 @@ class LoginController
         if ($id == '-1') {
             $status = 302;
             $url = $url . '/?action=login_user&status=error';
+
         } else {
             $_SESSION['user_id'] = $id;
+            $url = $url . '/' . '?action=login_user&status=success';
 
             $status = 200;
         }
@@ -61,7 +64,7 @@ class LoginController
             ->withStatus($status)
             ->withHeader('Location', $url);
 
-        return $response;
+       return $response;
     }
 
     public function validateUser(){

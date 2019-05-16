@@ -11,7 +11,6 @@ namespace SallePW\pwpop\Model\Implementation;
 
 
     use \PDO;
-    use \DateTime;
     use \Hashids\Hashids;
     use \Doctrine\DBAL\Driver\Connection;
     use SallePW\pwpop\Model\File;

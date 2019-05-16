@@ -12,6 +12,8 @@ use \Hashids\Hashids;
 use \Doctrine\DBAL\Driver\Connection;
 use SallePW\pwpop\Model\User;
 use SallePW\pwpop\Model\UserRepository;
+use \DateTime;
+
 
 class DoctrineUserRepository implements UserRepository
 {
@@ -25,6 +27,9 @@ class DoctrineUserRepository implements UserRepository
     public function saveUser(User $user)
     {
         $user->generateHashId();
+
+        $imageProfileName = $user->getUsername() . '_ImageProfile_' . $_FILES['files']['name'][0];
+
         $sql = 'INSERT INTO users(hash_id, name, username, email, birth_date, phone_number, password, profile_image) VALUES(:hash_id, :name, :username, :email, :birth_date, :phone_number, :password, :profile_image)';
         $stmt = $this->database->prepare($sql);
         $stmt->bindValue('hash_id', $user->getHashId(), 'string');
@@ -34,7 +39,7 @@ class DoctrineUserRepository implements UserRepository
         $stmt->bindValue('birth_date', $user->getBirthdate(), 'string');
         $stmt->bindValue('phone_number', $user->getphoneNumber(), 'string');
         $stmt->bindValue('password', $user->getEncryptedPassword(), 'string');
-        $stmt->bindValue('profile_image', $user->getprofileImage(), 'string');
+        $stmt->bindValue('profile_image', $imageProfileName, 'string');
         $stmt->execute();
     }
 

@@ -33,9 +33,7 @@ class PostUserUseCase
             $rawData['email'],
             $rawData['birthday'],
             $rawData['phoneNumber'],
-            $rawData['password'],
-            $rawData['profileImage']
-
+            $rawData['password']
         );
 
         $this->repo->saveUser($user);
