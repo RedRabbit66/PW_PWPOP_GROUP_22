@@ -30,7 +30,7 @@ class UploadProductController
         }
     }
 
-    public function validateProductUpload{}
+    public function validateProductUpload(){}
 
     public function uploadProductAction(Request $request, Response $response){
         $uploadedFiles = $request->getUploadedFiles();

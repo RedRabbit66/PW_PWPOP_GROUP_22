@@ -1,6 +1,6 @@
 <?php
 
-$app->get('/', 'SallePW\pwpop\Controller\HomeController')->add('\SallePW\pwpop\Controller\Middleware\SessionMiddleware');
+$app->get('/', 'SallePW\pwpop\Controller\HomeController');//->add('\SallePW\pwpop\Controller\Middleware\SessionMiddleware');
 $app->get('/login', 'SallePW\pwpop\Controller\LoginViewController');
 $app->post('/login', 'SallePW\pwpop\Controller\LoginController');
 $app->get('/register', 'SallePW\pwpop\Controller\RegisterViewController');
