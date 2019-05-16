@@ -1,4 +1,6 @@
 <?php
+
+//SPM
 $container = $app->getContainer();
 
 $container['view'] = function($container){
