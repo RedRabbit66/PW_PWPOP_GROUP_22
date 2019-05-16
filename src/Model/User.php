@@ -8,7 +8,6 @@
 namespace SallePW\pwpop\Model;
 
 use \Hashids\Hashids;
-use DateTime;
 
 class User
 {
@@ -38,7 +37,7 @@ class User
     private $email;
 
     /**
-     * @var DateTime
+     * @var String
      */
     private $birthdate;
 
@@ -65,6 +64,8 @@ class User
     public function generateHashId() {
         $hashids = new Hashids($this->username . $this->email);
         $this->hash_id = $hashids->encode(1, 2, 3);
+
+        echo("!!!!!!" . $this->hash_id . "!!!!!!!");
     }
 
     /**
@@ -131,7 +132,7 @@ class User
     }
 
     /**
-     * @return DateTime
+     * @return String
      */
     public function getBirthdate()
     {
