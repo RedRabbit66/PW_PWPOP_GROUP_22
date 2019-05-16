@@ -1,9 +1,10 @@
 function comprovaUpload_Name() {
     console.log("Entrando en Validation.js - Comprova Upload_Name");
+    var textError = '';
     var product_name = document.getElementById('uploadProduct_Name').value;
     //Name not empty
     if (product_name.length == 0) {
-        textError = document.createTextNode("*This field is required".);
+        textError = document.createTextNode("*This field is required");
         document.getElementById('errorUpload_Name').textContent = '';
         document.getElementById('errorUpload_Name').appendChild(textError);
         document.getElementById('uploadProduct_Name').style.borderColor = "red";
@@ -15,6 +16,7 @@ function comprovaUpload_Name() {
 
 function comprovaUpload_Description(){
     console.log("Entrando en Validation.js - Comprova Upload_Description");
+    var textError = '';
     var product_description = document.getElementById('uploadProduct_Description').value;
     //Description min length = 20
     if (product_description.length == 0) {
@@ -33,9 +35,11 @@ function comprovaUpload_Description(){
 
 function comprovaUpload_Category(){
     console.log("Entrando en Validation.js - Comprova Upload_Category");
-    var product_category = document.getElementById('uploadProduct_Category').value;
+    console.log(document.getElementById('uploadProduct_Category').selectedIndex);
+    var textError = '';
+    var product_category = document.getElementById('uploadProduct_Category').selectedIndex;
     //Category must be chosen
-    if (product_category.value == ''){
+    if (product_category == 0){
         textError = document.createTextNode("*Please select a category");
         document.getElementById('errorUpload_Category').textContent = '';
         document.getElementById('errorUpload_Category').appendChild(textError);
@@ -47,17 +51,19 @@ function comprovaUpload_Category(){
 }
 
 function comprovaUpload_Price(){
+    var priceRegex = /^[0-9]+$/;
     console.log("Entrando en Validation.js - Comprova Upload_Price");
+    var textError = '';
     var product_price = document.getElementById('uploadProduct_Price').value;
     //Price must be a valid number
-    if (product_price.value < 0 || product_price.valueOf() > 1000000){
-        textError = document.createTextNode("*Please enter a valid price);
+    if (product_price < 0 || !priceRegex.test(product_price)){
+        textError = document.createTextNode("*Please enter a valid integer positive price value");
         document.getElementById('errorUpload_Price').textContent = '';
         document.getElementById('errorUpload_Price').appendChild(textError);
         document.getElementById('uploadProduct_Price').style.borderColor = "red";
     }else{
         document.getElementById('errorUpload_Price').textContent = '';
-        document.getElementById('uploadProduct_Price').style.borderColor = "red";
+        document.getElementById('uploadProduct_Price').style.borderColor = "green";
     }
 }
 
