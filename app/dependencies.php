@@ -17,10 +17,10 @@ $container['doctrine'] = function($container){
     return $conn;
 };
 
-$container['phpmailer'] = function($container) {
+$container['send_mail'] = function($container) {
     $settings = $container->get('settings')['mailer'];
 
-    $mail = new \PHPMailer\PHPMailer\PHPMailer(true);                              // Passing `true` enables exceptions
+    $mail = new \PHPMailer\PHPMailer\PHPMailer(true);  // Passing `true` enables exceptions
     //Server settings
     $mail->SMTPDebug = 0;                                 // Enable verbose debug output
     $mail->isSMTP();                                      // Set mailer to use SMTP
@@ -81,11 +81,18 @@ $container['delete_user_repository'] = function ($container){
 };
 
 $container['send_mail_service'] = function($container) {
-    $service = new SallePW\pwpop\Model\Services\SendMailService(
+    $service = new SallePW\pwpop\Model\UseCase\SendMailUseCase(
         $container->get('mailer_repository')
     );
 
     return $service;
+};
+
+$container['mailer_repository'] = function($container) {
+    $repository = new SallePW\pwpop\Model\Implementation\DoctrineMailerRepository(
+        $container->get('send_mail')
+    );
+    return $repository;
 };
 
 $container['post_verification_key_service'] = function($container) {
@@ -162,4 +169,5 @@ $container['set_product_soldout_repository'] = function ($container){
     );
     return $service;
 };
+
 

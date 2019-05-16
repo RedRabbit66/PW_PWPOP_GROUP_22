@@ -12,6 +12,8 @@ use \Hashids\Hashids;
 use \Doctrine\DBAL\Driver\Connection;
 use SallePW\pwpop\Model\User;
 use SallePW\pwpop\Model\UserRepository;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 use \DateTime;
 
 
@@ -64,6 +66,7 @@ class DoctrineUserRepository implements UserRepository
 
     public function searchUser(){
 
+        session_start();
         $hash_id = $_SESSION['user_id'];
 
         if($hash_id != -1){
@@ -169,4 +172,24 @@ class DoctrineUserRepository implements UserRepository
         $stmt->bindValue("user_id", $userId, 'integer');
         $stmt->execute();
     }
+
+    public function sendMail($username, $to, $message) {
+        try {
+            $this->mail->setFrom('pwpop22@outlook.com', 'NO-REPLY');
+            $this->mail->addAddress($to, $username);
+
+            $this->mail->isHTML(true);
+            $this->mail->Subject = 'Pwpop Buy Product';
+            $this->mail->Body = $message;
+            $this->mail->AltBody = $message;
+
+            $this->mail->send();
+        } catch (Exception $exeption) {
+            echo 'Email has not been sent. Mailer Error: ', $this->mail->ErrorInfo;
+
+        }
+
+    }
+
+
 }

@@ -6,11 +6,13 @@
  * Time: 21:33
  */
 
-namespace SallePW\pwpop\Model\Services;
+namespace SallePW\pwpop\Model\UseCase;
 
+
+use SallePW\pwpop\Model\MailerRepository;
 use SallePW\pwpop\Model\UserRepository;
 
-class SendMailService
+class SendMailUseCase
 {
     /**
      * @var MailerRepository
@@ -18,7 +20,7 @@ class SendMailService
     private $repository;
 
     /**
-     * SendMailService constructor.
+     * SendMailUseCase constructor.
      * @param MailerRepository $repository
      */
     public function __construct(MailerRepository $repository)

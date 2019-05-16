@@ -2,11 +2,12 @@
 /**
  * Created by PhpStorm.
  * User: llure29
- * Date: 2019-04-28
- * Time: 21:35
+ * Date: 2019-05-16
+ * Time: 19:53
  */
 
 namespace SallePW\pwpop\Model;
+
 
 interface MailerRepository
 {

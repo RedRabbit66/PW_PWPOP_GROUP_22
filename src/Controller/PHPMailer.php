@@ -24,7 +24,7 @@ final class PHPMailer implements Mailer
             $this->mail->addAddress($to, $username);
 
             $this->mail->isHTML(true);
-            $this->mail->Subject = 'Pwpop Confirmation email';
+            $this->mail->Subject = 'Pwpop Buy Product';
             $this->mail->Body = $message;
             $this->mail->AltBody = $message;
 
