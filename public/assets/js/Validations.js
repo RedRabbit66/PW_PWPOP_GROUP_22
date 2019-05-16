@@ -87,6 +87,7 @@ function comprovaInput(update) {
             if (!usernameLogin.includes('@')) {
                 if (usernameRegex.test(usernameLogin)) {
                     document.getElementById('error1').textContent = '';
+                    document.getElementById('error1_1').textContent = '';
                     document.getElementById('usernameLogin').style.borderColor = "green";
 
                 } else {
