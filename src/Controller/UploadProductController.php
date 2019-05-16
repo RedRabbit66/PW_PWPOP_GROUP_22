@@ -37,7 +37,7 @@ class UploadProductController
             $status = 302;
         }else{
             try {
-                //$this -> uploadAction($request, $response);
+                $this -> uploadAction($request, $response);
                 //Upload del producto
                 $data = $request->getParsedBody();
                 $service = $this->container->get('post_product_repository');
@@ -67,9 +67,8 @@ class UploadProductController
 
         //var_dump($_FILES['files']['name'][0]);
         /** @var UploadedFileInterface $uploadedFile */
-        /*var_dump($uploadedFiles['file']);
-        var_dump($uploadedFile);*/
-        foreach ($uploadedFiles['file'] as $uploadedFile) {
+        var_dump($uploadedFiles['files']);
+        foreach ($uploadedFiles['files'] as $uploadedFile) {
             if ($uploadedFile->getError() !== UPLOAD_ERR_OK) {
                 $errors[] = sprintf(self::UNEXPECTED_ERROR, $uploadedFile->getClientFilename());
                 continue;
