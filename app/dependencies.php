@@ -127,9 +127,9 @@ $container['post_product_repository'] = function ($container){
     return $service;
 };
 
-$container['delete_product_repository'] = function ($container){
+$container['delete_file_repository'] = function ($container){
     $service = new SallePW\pwpop\Model\UseCase\DeleteProductUseCase(
-        $container->get('product_repository')
+        $container->get('file_repository')
     );
     return $service;
 };
@@ -144,6 +144,20 @@ $container['update_product_repository'] = function ($container){
 
 $container['get_products_repository'] = function ($container){
     $service = new SallePW\pwpop\Model\UseCase\GetProductsUseCase(
+        $container->get('product_repository')
+    );
+    return $service;
+};
+
+$container['get_product_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\GetProductUseCase(
+        $container->get('product_repository')
+    );
+    return $service;
+};
+
+$container['set_product_soldout_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\SetProductSoldOutsUseCase(
         $container->get('product_repository')
     );
     return $service;

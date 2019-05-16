@@ -12,6 +12,5 @@ namespace SallePW\pwpop\Model;
 interface ProductRepository{
     public function getProducts();
     public function getProduct($productId);
-    public function saveFile($userId, $folderId, $fileName, $fileSize, $fileExtension);
-    public function uploadProduct($product);
+    public function setProductSoldOut($productId);
 }
