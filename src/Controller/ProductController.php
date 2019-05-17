@@ -66,7 +66,6 @@ class ProductController
 
 
 
-
             }
 
         } else {
