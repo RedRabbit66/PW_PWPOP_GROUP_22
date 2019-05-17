@@ -12,13 +12,5 @@ use SallePW\pwpop\Model\ProductRepository;
 
 class UpdateProductUseCase
 {
-    private $repo;
 
-    public function __construct(ProductRepository $repo) {
-        $this->repo = $repo;
-    }
-
-    public function __invoke($userId, $fileId, $filename) {
-        return $this->repo->changeFileName($userId, $fileId, $filename);
-    }
 }

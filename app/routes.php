@@ -13,6 +13,7 @@ $app->get('/uploadproduct', 'SallePW\pwpop\Controller\UploadProductViewControlle
 $app->post('/uploadproduct', 'SallePW\pwpop\Controller\UploadProductController');
 $app->get('/product[/{productid}]', 'SallePW\pwpop\Controller\ProductViewController');
 $app->post('/product[/{productid}]', 'SallePW\pwpop\Controller\ProductController');
+$app->get('/search', 'SallePW\pwpop\Controller\SearchProductController');
 
 
 /*$app->get('/logout', function(Request $request, Response $response) {

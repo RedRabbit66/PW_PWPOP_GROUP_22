@@ -156,19 +156,20 @@ $container['post_product_repository'] = function ($container){
     return $service;
 };
 
-$container['delete_file_repository'] = function ($container){
+$container['delete_product_repository'] = function ($container){
     $service = new SallePW\pwpop\Model\UseCase\DeleteProductUseCase(
-        $container->get('file_repository')
+        $container->get('product_repository')
     );
     return $service;
 };
 
+/*
 $container['update_product_repository'] = function ($container){
     $service = new SallePW\pwpop\Model\UseCase\UpdateProductUseCase(
         $container->get('product_repository')
     );
     return $service;
-};
+};*/
 
 
 $container['get_products_repository'] = function ($container){
@@ -191,5 +192,13 @@ $container['set_product_soldout_repository'] = function ($container){
     );
     return $service;
 };
+
+$container['search_product_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\SearchProductUseCase(
+        $container->get('product_repository')
+    );
+    return $service;
+};
+
 
 

@@ -16,16 +16,19 @@ namespace SallePW\pwpop\Model\Implementation;
     use SallePW\pwpop\Model\ProductRepository;
     use SallePW\pwpop\Model\Product;
 
-class DoctrineProductRepository implements ProductRepository {
+class DoctrineProductRepository implements ProductRepository
+{
     const DATE_FORMAT = 'Y-m-d';
     private $database;
 
-    public function __construct(Connection $database) {
+    public function __construct(Connection $database)
+    {
         $this->database = $database;
     }
 
 
-    private function getUserIdByEmail($email) {
+    private function getUserIdByEmail($email)
+    {
         $id = -1;
 
         $sql = 'SELECT id FROM users WHERE email LIKE :email';
@@ -34,14 +37,15 @@ class DoctrineProductRepository implements ProductRepository {
         $stmt->execute();
         $result = $stmt->fetchAll();
 
-        foreach($result as $row) {
+        foreach ($result as $row) {
             $id = $row['id'];
         }
 
         return $id;
     }
 
-    private function getUserIdByHashId($userId) {
+    private function getUserIdByHashId($userId)
+    {
         $id = -1;
 
         $sql = 'SELECT id FROM users WHERE hash_id LIKE :hash_id';
@@ -50,14 +54,15 @@ class DoctrineProductRepository implements ProductRepository {
         $stmt->execute();
         $result = $stmt->fetchAll();
 
-        foreach($result as $row) {
+        foreach ($result as $row) {
             $id = $row['id'];
         }
 
         return $id;
     }
 
-    public function getProducts() {
+    public function getProducts()
+    {
         $sql = 'SELECT * FROM products ORDER BY dateUpload DESC LIMIT 5';
         $stmt = $this->database->prepare($sql);
         //$stmt->bindValue('hash_id', $folderHashId, 'string');
@@ -77,7 +82,8 @@ class DoctrineProductRepository implements ProductRepository {
         return $result;
     }
 
-    public function getProduct($productId) {
+    public function getProduct($productId)
+    {
         $sql = 'SELECT * FROM products WHERE id LIKE :productId';
         $stmt = $this->database->prepare($sql);
         $stmt->bindValue('productId', $productId, 'string');
@@ -87,7 +93,8 @@ class DoctrineProductRepository implements ProductRepository {
         return $result;
     }
 
-    public function setProductSoldOut($productId){
+    public function setProductSoldOut($productId)
+    {
         $sql = 'UPDATE products SET sold_out = :sold_out WHERE id LIKE :productId';
         $stmt = $this->database->prepare($sql);
         $stmt->bindValue('sold_out', 1, 'string');
@@ -96,7 +103,8 @@ class DoctrineProductRepository implements ProductRepository {
 
     }
 
-    public function uploadProduct(Product $product){
+    public function uploadProduct(Product $product)
+    {
         $product->generateHashId();
         //falta gestion image
         session_start();
@@ -116,14 +124,34 @@ class DoctrineProductRepository implements ProductRepository {
         $stmt->bindValue('password', $product->getTitle(), 'string');
         $stmt->bindValue('profile_image', 'photo', 'string');
 
-        echo ($product->getHashId());
-        echo ($user_id);
-        echo ($product->getDescription());
-        echo ($product->getPrice());
-        echo ($product->getCategory());
-        echo ($product->getTitle());
+        echo($product->getHashId());
+        echo($user_id);
+        echo($product->getDescription());
+        echo($product->getPrice());
+        echo($product->getCategory());
+        echo($product->getTitle());
 
         $stmt->execute();
     }
 
+    public function searchProduct($input)
+    {
+        $inputSearch1 = '%' . $input . '%';
+        $inputSearch2 = $input . '%';
+        $inputSearch3 = '%' . $input;
+
+        $sql = 'SELECT * FROM products WHERE title LIKE 
+                :inputSearch1 OR title LIKE :inputSearch2 OR title LIKE :inputSearch3 ORDER BY dateUpload DESC LIMIT 5';
+        $stmt = $this->database->prepare($sql);
+        $stmt->bindValue('inputSearch1', $inputSearch1, 'string');
+        $stmt->bindValue('inputSearch2', $inputSearch2, 'string');
+        $stmt->bindValue('inputSearch3', $inputSearch3, 'string');
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        if(empty($result)){
+            $result = -1;
+        }
+        return $result;
+    }
 }
