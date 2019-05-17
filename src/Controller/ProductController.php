@@ -8,6 +8,7 @@
 
 namespace SallePW\pwpop\Controller;
 
+use PHPMailer\PHPMailer\Exception;
 use Psr\Container\ContainerInterface;
 
 use SallePW\pwpop\Model\UseCase\SendMailUseCase;
@@ -57,8 +58,12 @@ class ProductController
 
 
                 //Enviar mail
-                $service = $this->container->get('send_mail_service');
-                $service($username, $to, "Hi :)");
+                /*$service = $this->container->get('send_mail_service');
+                $service($username, $to, "<html><head><title>TITOL</title></head><body><h1>Hola</h1></body></html>");
+                */
+
+                $this->sendMail($username, $to, "<html><head><title>TITOL</title></head><body><h1>Hola</h1></body></html>");
+
 
 
 
@@ -71,4 +76,34 @@ class ProductController
 
         //return $response->withStatus(200)->withHeader('Location', '/');
     }
+
+    private function sendMail(string $username, string $to, string $message){
+
+
+
+        try {
+            $settings = $this->container->get('settings')['mailer'];
+
+            $mail = new \PHPMailer\PHPMailer\PHPMailer(true);  // Passing `true` enables exceptions
+            //Server settings
+            $mail->CharSet="UTF-8";
+            $mail->SMTPDebug = 2;                                 // Enable verbose debug output
+            $mail->isSMTP();                                      // Set mailer to use SMTP
+            $mail->Host = $settings['host'];  // Specify main and backup SMTP servers
+            $mail->SMTPAuth = true;                               // Enable SMTP authentication
+            $mail->Username = $settings['username'];                 // SMTP username
+            $mail->Password = $settings['password'];                           // SMTP password
+            $mail->SMTPSecure = $settings['encryption'];                            // Enable TLS encryption, `ssl` also accepted
+            $mail->Port = $settings['port'];
+            $mail->addAddress($to);
+            $mail->MsgHTML($message);
+            $mail->setFrom($settings['username'], 'Mailer');
+
+            $mail->send();
+
+        } catch (Exception $e) {
+
+        }
+    }
+
 }

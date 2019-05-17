@@ -19,5 +19,5 @@ Interface UserRepository
     public function insertVerificationKey($userId, $key);
     public function checkVerification($key);
     public function updateVerified($userId);
-    public function sendMail($username, $to, $message);
+    //public function sendMail($username, $to, $message);
 }

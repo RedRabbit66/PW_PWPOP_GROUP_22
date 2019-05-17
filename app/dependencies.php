@@ -1,6 +1,5 @@
 <?php
 
-//SPM
 $container = $app->getContainer();
 
 $container['view'] = function($container){
@@ -24,7 +23,28 @@ $container['send_mail'] = function($container) {
 
     $mail = new \PHPMailer\PHPMailer\PHPMailer(true);  // Passing `true` enables exceptions
     //Server settings
-    $mail->SMTPDebug = 0;                                 // Enable verbose debug output
+    $mail->CharSet="UTF-8";
+    $mail->SMTPDebug = 2;                                 // Enable verbose debug output
+    $mail->isSMTP();                                      // Set mailer to use SMTP
+    $mail->Host = $settings['host'];  // Specify main and backup SMTP servers
+    $mail->SMTPAuth = true;                               // Enable SMTP authentication
+    $mail->Username = $settings['username'];                 // SMTP username
+    $mail->Password = $settings['password'];                           // SMTP password
+    $mail->SMTPSecure = $settings['encryption'];                            // Enable TLS encryption, `ssl` also accepted
+    $mail->Port = $settings['port'];
+
+    $mail->setFrom($settings['username'], 'Mailer');
+
+    return $mail;
+};
+
+$container['send_mail'] = function($container) {
+    $settings = $container->get('settings')['mailer'];
+
+    $mail = new \PHPMailer\PHPMailer\PHPMailer(true);  // Passing `true` enables exceptions
+    //Server settings
+    $mail->CharSet="UTF-8";
+    $mail->SMTPDebug = 2;                                 // Enable verbose debug output
     $mail->isSMTP();                                      // Set mailer to use SMTP
     $mail->Host = $settings['host'];  // Specify main and backup SMTP servers
     $mail->SMTPAuth = true;                               // Enable SMTP authentication
