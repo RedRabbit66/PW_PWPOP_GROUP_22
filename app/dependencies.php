@@ -73,6 +73,14 @@ $container['post_user_repository'] = function ($container){
     return $service;
 };
 
+$container['get_user_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\GetUserUseCase(
+
+        $container->get('user_repository')
+    );
+    return $service;
+};
+
 $container['check_user_repository'] = function ($container){
     $service = new SallePW\pwpop\Model\UseCase\CheckUserUseCase(
         $container->get('user_repository')

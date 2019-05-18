@@ -191,5 +191,24 @@ class DoctrineUserRepository implements UserRepository
 
     }
 
+    public function getUser($id){
+        $sql = 'SELECT name, username, email, birth_date, phone_number FROM users WHERE id LIKE :id';
+        $stmt = $this->database->prepare($sql);
+        $stmt->bindValue('id', $id, 'string');
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        foreach($result as $row) {
+            $name = $row['name'];
+            $username = $row['username'];
+            $email = $row['email'];
+            $birthday = $row['birth_date'];
+            $phone_number = $row['phone_number'];
+        }
+
+        $data = array('name' => $name, 'username' => $username,  'email' => $email, 'birthday' => $birthday, 'phone_number' => $phone_number);
+        return $data;
+    }
+
 
 }
