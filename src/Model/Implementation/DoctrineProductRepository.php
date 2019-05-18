@@ -121,12 +121,12 @@ class DoctrineProductRepository implements ProductRepository
 
         $stmt = $this->database->prepare($sql);
         $stmt->bindValue('hash_id', $product->getHashId(), 'string');
-        $stmt->bindValue('user_id', $user_id, 'string');
-        $stmt->bindValue('description', $product->getDescription(), 'string');
-        $stmt->bindValue('price', $product->getPrice(), 'string');
-        $stmt->bindValue('category', $product->getCategory(), 'string');
-        $stmt->bindValue('title', $product->getTitle(), 'string');
-        $stmt->bindValue('product_image', 'photo', 'string');
+        $stmt->bindValue('name', $user_id, 'string');
+        $stmt->bindValue('username', $product->getDescription(), 'string');
+        $stmt->bindValue('birth_date', $product->getPrice(), 'string');
+        $stmt->bindValue('phone_number', $product->getCategory(), 'string');
+        $stmt->bindValue('password', $product->getTitle(), 'string');
+        $stmt->bindValue('profile_image', 'photo', 'string');
 
         echo($product->getHashId());
         echo($user_id);
@@ -175,9 +175,11 @@ class DoctrineProductRepository implements ProductRepository
     public function getMyProducts(){
 
         $userHashId = $_SESSION['user_id'];
+        echo($userHashId);
 
         $user_id = $this->getUserIdByHashId($userHashId);
 
+        echo($user_id);
         $sql = 'SELECT * FROM products WHERE user_id LIKE :user_id';
         $stmt = $this->database->prepare($sql);
         $stmt->bindValue('user_id', $user_id, 'string');
