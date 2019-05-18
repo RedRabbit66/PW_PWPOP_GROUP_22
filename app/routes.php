@@ -21,6 +21,7 @@ $app->get('/MyProducts', 'SallePW\pwpop\Controller\MyProductsViewController');
 $app->post('/MyProducts', 'SallePW\pwpop\Controller\MyProductsController');
 $app->get('/Myproduct[/{productid}]', 'SallePW\pwpop\Controller\MyProductViewController');
 $app->post('/Myproduct[/{productid}]', 'SallePW\pwpop\Controller\MyProductController');
+$app->post('/deleteProduct[/{productid}]', 'SallePW\pwpop\Controller\DeleteProductController');
 
 
 

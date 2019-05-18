@@ -1,11 +1,10 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Sergio
- * Date: 30/04/2019
- * Time: 12:54
+ * User: llure29
+ * Date: 2019-05-18
+ * Time: 19:10
  */
-
 namespace SallePW\pwpop\Model\UseCase;
 
 use SallePW\pwpop\Model\ProductRepository;
@@ -19,7 +18,7 @@ class DeleteProductUseCase
         $this->repo = $repo;
     }
 
-    public function __invoke($userId, $fileId) {
-        return $this->repo->deleteFile($userId, $fileId);
+    public function __invoke($productId) {
+        return $this->repo->deleteProduct($productId);
     }
 }

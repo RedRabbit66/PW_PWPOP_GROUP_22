@@ -33,47 +33,48 @@ class ProductController
             $service = $this->container->get('get_product_repository');
             $product = $service($args['productid']);
 
+            if(!$product[0]['is_active']){
+                echo("No product, not avaliable");
+            }else {
+
+                if ($product[0]['sold_out']) {
+                    //No hay disponibles
+                    $soldOut = 1;
+
+                } else {
+                    //Restar 1 en el stock ($soldOut = 1) en sql
+                    $service = $this->container->get('set_product_soldout_repository');
+                    $service($product[0]['id']);
+                    $productPropietary = $product[0]['user_id'];
+
+                    if (session_status() == PHP_SESSION_ACTIVE) {
+                        session_start();
+                    }
+
+                    $service = $this->container->get('search_user_repository');
+                    $user = $service();
+
+                    $username = $user['username'];
+                    $to = $user['email'];
+                    //$message = "Your product has been buyed! by " . $user['username'] . "\n Get in contact with him with his email: " . $user['email'];
 
 
-            if($product[0]['sold_out']){
-                //No hay disponibles
-                $soldOut = 1;
+                    //Enviar mail
+                    /*$service = $this->container->get('send_mail_service');
+                    $service($username, $to, "<html><head><title>TITOL</title></head><body><h1>Hola</h1></body></html>");
+                    */
 
-            }else{
-                //Restar 1 en el stock ($soldOut = 1) en sql
-                $service = $this->container->get('set_product_soldout_repository');
-                $service($product[0]['id']);
-                $productPropietary = $product[0]['user_id'];
+                    $this->sendMail($username, $to, "<html><head><title>TITOL</title></head><body><h1>Hola</h1></body></html>");
 
-                if(session_status() == PHP_SESSION_ACTIVE){
-                    session_start();
+                    return $response->withStatus(200)->withHeader('Location', '/');
+
                 }
-
-                $service = $this->container->get('search_user_repository');
-                $user = $service();
-
-                $username = $user['username'];
-                $to = $user['email'];
-                //$message = "Your product has been buyed! by " . $user['username'] . "\n Get in contact with him with his email: " . $user['email'];
-
-
-                //Enviar mail
-                /*$service = $this->container->get('send_mail_service');
-                $service($username, $to, "<html><head><title>TITOL</title></head><body><h1>Hola</h1></body></html>");
-                */
-
-                $this->sendMail($username, $to, "<html><head><title>TITOL</title></head><body><h1>Hola</h1></body></html>");
-
-
-
             }
 
-        } else {
-            echo("No product, dont edit link!!!");
-            //Error, no product
         }
 
-        return $response->withStatus(200)->withHeader('Location', '/');
+
+
     }
 
     private function sendMail(string $username, string $to, string $message){

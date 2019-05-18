@@ -61,7 +61,7 @@
 
         <div class="row m-4 text-center">
 
-            <form id="form_login" class="col" action="/upgradeProduct" enctype="multipart/form-data" method="POST">
+            <form id="form_product" class="col" action="/upgradeProduct" enctype="multipart/form-data" method="POST">
                 <h2 class="mb-4">Upgrade your product: {{ product[0]['title'] }}</h2>
                 <div class="form-group"><input id="uploadProduct_Name" type="text" name="uploadProduct_Name" class="form-control-sm" style="width: 400px; font-size: 20px" onkeyup="comprovaUpload_Name()" value={{ product[0]['title'] }}></div>
                 <div class="form-group"><span id="errorUpload_Name" style="color: red"></span></div>
@@ -84,11 +84,16 @@
                 <div class="form-group"><span id="errorUpload_Price" style="color: red"></span></div>
 
                 <div><button type="submit" name="button" class="btn-dark">Upgrade Product</button></div>
-                <div><button type="submit" name="button" class="btn-dark">Delete Product</button></div>
-
-
 
             </form>
+
+            <div>
+                <form id="form_delete_product" action="/deleteProduct/{{ product[0]['id'] }}"  enctype="application/x-www-form-urlencoded" method="POST">
+                    <button id="delete" type="submit" name="button" class="btn-dark" formaction="/deleteProduct/{{ product[0]['id'] }}" onclick="sendForm(this)">Delete Product</button>
+                </form>
+            </div>
+
+
         </div>
 
     {% endif %}

@@ -17,4 +17,5 @@ interface ProductRepository{
     public function searchProduct($input);
     public function upgradeProduct($productId, $title, $description, $price, $category);
     public function getMyProducts($user_id);
+    public function deleteProduct($productId);
 }
