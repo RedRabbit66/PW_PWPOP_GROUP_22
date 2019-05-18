@@ -30,24 +30,22 @@ class MyProductsViewController
     {
 
         session_start();
-
-        //echo($_SESSION['user_id']);
-
         if (empty($_SESSION['user_id'])) {
             $user_id = -1;
-            //echo($user_id);
-
-
+            $products = null;
+            $found = 0;
         } else{
             $user_id = $_SESSION['user_id'];
+
+            $service = $this->container->get('get_my_products_repository');
+            $products = $service();
+            $found = 1;
+
+            var_dump($products);
         }
 
-        //echo("User id: " . $user_id);
 
-        $service = $this->container->get('get_products_repository');
-        $products = $service();
-
-        return $this->container->get('view')->render($response, 'MyProducts.html.twig', ['user_id' => $user_id, 'products' => $products]);
+        return $this->container->get('view')->render($response, 'myproducts.html.twig', ['user_id' => $user_id, 'products' => $products, 'found' => $found]);
 
 
 
@@ -71,7 +69,7 @@ class MyProductsViewController
         $service = $this->container->get('get_my_products_repository');
         $products = $service($user_id);
 
-        return $this->container->get('view')->render($response, 'MyProducts.html.twig', ['user_id' => $user_id, 'products' => $products]);
+        return $this->container->get('view')->render($response, 'myproducts.html.twig', ['user_id' => $user_id, 'products' => $products]);
         */
     }
 }

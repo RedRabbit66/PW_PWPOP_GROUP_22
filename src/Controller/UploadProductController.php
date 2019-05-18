@@ -88,8 +88,6 @@ class UploadProductController
         return $errors;
     }
 
-    public function validateProductUpload(){}
-
     public function uploadAction(Request $request, Response $response){
         $uploadedFiles = $request->getUploadedFiles();
 

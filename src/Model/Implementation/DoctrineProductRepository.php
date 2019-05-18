@@ -172,11 +172,17 @@ class DoctrineProductRepository implements ProductRepository
 
     }
 
-    public function getMyProducts($user_id){
+    public function getMyProducts(){
+
+        $userHashId = $_SESSION['user_id'];
+        echo($userHashId);
+
+        $user_id = $this->getUserIdByHashId($userHashId);
+
+        echo($user_id);
         $sql = 'SELECT * FROM products WHERE user_id LIKE :user_id';
         $stmt = $this->database->prepare($sql);
         $stmt->bindValue('user_id', $user_id, 'string');
-        $stmt = $this->database->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
 
