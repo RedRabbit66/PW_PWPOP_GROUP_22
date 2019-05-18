@@ -30,10 +30,9 @@
                         {% endfor %}
                     </ol>
                 {% endif %}
-
             </form>
         </div>
-        <div>
+        <div><br>
             <form id="form_deleteuser" action="/deleteuser"  enctype="application/x-www-form-urlencoded" method="POST">
                 <button id="delete" type="submit" name="button" class="btn-dark" formaction="/deleteuser" onclick="sendForm(this)">Delete Account</button>
             </form>

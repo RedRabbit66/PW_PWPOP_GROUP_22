@@ -23,11 +23,12 @@ class UpdateUserController
 
     public function __invoke(Request $request, Response $response)
     {
-        //$error = $this->validateUser();
+        $errors = $this->validateUser();
         $statusMessage = "";
 
         if (0 != 0) {
             $status = 302;
+            echo "<script>alert('This is an alert');</script>";
             $statusMessage = "error";
         } else {
             try {

@@ -30,6 +30,13 @@ class LoginViewController
      */
     public function __invoke(Request $request, Response $response)
     {
+        $params = $request->getQueryParams();
+        if (sizeof($params)!=0){
+            $action = $params['action'];
+            $status = $params['status'];
+            return $this->container->get('view')->render($response, 'login.html.twig', ['action' => $action, 'statusValue' => $status]);
+        }
+
         return $this->container->get('view')->render($response, 'login.html.twig');
     }
 }

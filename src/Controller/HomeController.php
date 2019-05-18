@@ -51,7 +51,13 @@ class HomeController
         $service = $this->container->get('get_products_repository');
         $products = $service();
 
+        $params = $request->getQueryParams();
+        if (sizeof($params)!=0){
+            $action = $params['action'];
+            $status = $params['status'];
+            return $this->container->get('view')->render($response, 'login.html.twig', ['action' => $action, 'statusValue' => $status]);
+        }
+
         return $this->container->get('view')->render($response, 'home.html.twig', ['user_id' => $user_id, 'products' => $products, 'found' => $found]);
     }
-
 }

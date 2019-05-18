@@ -15,6 +15,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 class LoginController
 {
+
     protected $container;
 
     public function __construct(ContainerInterface $container) {
@@ -26,18 +27,19 @@ class LoginController
             session_destroy();
         }
 
-        $errors = $this->validateUser();
-        $id = 0;
+        $errors[] = $this->validateUser();
+        $id = '0';
 
-        /*if (!empty($errors)) {
+        if (!empty($errors)) {
+            $id = '-1';
+            if(isset($errors['usernameLogin_1'])){}
+            if(isset($errors['UsernameLogin_1_1'])){}
+            if(isset($errors['usernameLogin_1'])){}
+            if(isset($errors['usernameLogin_1'])){}
 
-             *
-             *
-             * ventana de errores PHP
-             *
-             */
-        if(0!=0){
-        } else {
+
+
+        }else {
             try {
                 $data = $request->getParsedBody();
                 $service = $this->container->get('check_user_repository');
@@ -57,7 +59,7 @@ class LoginController
 
         if ($id == '-1') {
             $status = 302;
-            $url = $url . '/?action=login_user&status=error';
+            $url = $url . '/login' . '?action=login_user&status=error';
 
         } else {
             $_SESSION['user_id'] = $id;
@@ -75,42 +77,37 @@ class LoginController
 
     public function validateUser(){
 
-        $errors = [];
-
+        $errors = array();
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
             foreach ($_POST as $data => $val) {
-                if($data == 'usernameLogin') {
-                    if (strlen($val)==0){
-                        $errors['usernameLogin']="Username/login field is required";
+                if ($data == 'email') {
+                    if (strlen($val) == 0) {
+                        $errors['usernameLogin_1'] = "Username/email field is required";
                     }else{
-                        if (strpos($val, '@')){
-                            if (!preg_match("/^[A-Za-z0-9]+$/i", $val)){
-                                $errors['usernameLogin_1']="Username must only contain alphanumeric characters";
+                        if (!strpos($val, '@')) {
+                            if (!preg_match("/^[A-Za-z0-9]+$/i", $val)) {
+                                $errors['usernameLogin_1'] = "Username must only contain alphanumeric characters";
                             }
-                            if (strlen($val)>20){
-                                $errors['UsernameLogin_1_1']="Username must contain a maximum of 20 characters";
+                            if (strlen($val) > 20) {
+                                $errors['UsernameLogin_1_1'] = "Username must contain a maximum of 20 characters";
                             }
-                        }elseif (!preg_match("/^\S+@\S+\.\S+$/", $val)){
-                            $errors['usernameLogin_1']="Must input a valid email address as username";
+                        } elseif (!preg_match("/^\S+@\S+\.\S+$/", $val)) {
+                            $errors['usernameLogin_1'] = "Must input a valid email address as username";
                         }
                     }
-                } elseif ($data == 'password') {
-                    if (strlen($val)==0){
-                        $errors['password']="Password field is required";
-                    }else{
+                }elseif ($data == 'password') {
+                    if (strlen($val) == 0) {
+                        $errors['password'] = "Password field is required";
+                    } else {
                         if (strlen($val) < 6 || strlen($val) > 12) {
                             $errors['password'] = "Password must be 6 to 12 characters long";
-                        }elseif (!preg_match("/^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})\S+$/", $val)){
-                            $errors['password'] = "Password must at least contain one number and a capital letter.";
+                        } elseif (!preg_match("/^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})\S+$/", $val)) {
+                            $errors['password_1'] = "Password must at least contain one number and a capital letter.";
                         }
                     }
                 }
             }
-
-            return $errors;
         }
-
-        return -1;
+        return $errors;
     }
 }

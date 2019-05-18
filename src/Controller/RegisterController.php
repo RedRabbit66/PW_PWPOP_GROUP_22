@@ -81,7 +81,7 @@ class RegisterController
             $confirmPassword = $data['confirmPassword'];*/
 
             foreach ($_POST as $data => $val) {
-
+                var_dump($_POST);
                 if ($data == 'name') {
                     if (strlen($val)==0){
                         $errors['name'] = "The name field is required";
@@ -148,7 +148,6 @@ class RegisterController
                     }
                 }
             }
-            return $errors;
         }
         return $errors;
     }
