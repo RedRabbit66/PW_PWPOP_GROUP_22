@@ -184,5 +184,13 @@ class DoctrineProductRepository implements ProductRepository
         return $result;
     }
 
+    public function deleteProduct($productId){
+        $sql = 'UPDATE products SET is_active = :is_active WHERE id LIKE :productId';
+        $stmt = $this->database->prepare($sql);
+        $stmt->bindValue('is_active', 1, 'string');
+        $stmt->bindValue('productId', $productId, 'string');
+        $stmt->execute();
+    }
+
 
 }
