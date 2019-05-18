@@ -63,6 +63,7 @@ class ProductController
                     $buyerPhone = $user['phone_number'];
 
 
+
                     $message = "<html><head><title>Your product has been buyed</title></head><body>The buyer is " . $buyerUsername . "\n Get in contact with him with his email: " . $buyerEmail . " and his mobile phone: " . $buyerPhone . "</body></html>";
 
 
