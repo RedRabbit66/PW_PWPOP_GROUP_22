@@ -33,28 +33,30 @@
         <div class="container">
             {% for product in products %}
                 {% if  product['sold_out'] == 0 %}
-                    <div class="row">
+                    {% if product['is_active'] == 1 %}
+                        <div class="row">
 
-                        <div class="col-sm-4">
-                            <div class="row">
-                                <a class="product" href="product/{{ product['id'] }}"><img class="product" src="{{ base_url }}../assets/images/{{ product['product_image'] }}"></a>
+                            <div class="col-sm-4">
+                                <div class="row">
+                                    <a class="product" href="product/{{ product['id'] }}"><img class="product" src="{{ base_url }}../assets/images/{{ product['product_image'] }}"></a>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="row">
+                                    Price:
+                                    {{ product['price'] }}
+                                </div>
+                                <div class="row">
+                                    Product name:
+                                    {{ product['title'] }}
+                                </div>
+                                <div class="row">
+                                    Product Description:
+                                    {{ product['description'] }}
+                                </div>
                             </div>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="row">
-                                Price:
-                                {{ product['price'] }}
-                            </div>
-                            <div class="row">
-                                Product name:
-                                {{ product['title'] }}
-                            </div>
-                            <div class="row">
-                                Product Description:
-                                {{ product['description'] }}
-                            </div>
-                        </div>
-                    </div>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
 
@@ -94,36 +96,37 @@
             {% for product in products %}
                 {% if  product['sold_out'] == 0 %}
                     {% if product['user_id'] != user_id %}
+                        {% if product['is_active'] == 1 %}
+                            <div class="row">
 
-                        <div class="row">
-
-                            <div class="col-sm-4">
-                                <div class="row">
-                                    <a class="product" href="product/{{ product['id'] }}"><img class="product" src="{{ base_url }}../assets/images/{{ product['product_image'] }}"></a>
+                                <div class="col-sm-4">
+                                    <div class="row">
+                                        <a class="product" href="product/{{ product['id'] }}"><img class="product" src="{{ base_url }}../assets/images/{{ product['product_image'] }}"></a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="row">
+                                        Price:
+                                        {{ product['price'] }}
+                                    </div>
+                                    <div class="row">
+                                        Product name:
+                                        {{ product['title'] }}
+                                    </div>
+                                    <div class="row">
+                                        Product Description:
+                                        {{ product['description'] }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        <form action="/buy/{{ product['id'] }}" method="POST"><button type="submit" name="button" class="btn btn-success btn-product" enctype="application/x-www-form-urlencoded" ><span class="glyphicon glyphicon-shopping-cart"></span>BUY</button></form>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-6">
+                                        <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
-                                <div class="row">
-                                    Price:
-                                    {{ product['price'] }}
-                                </div>
-                                <div class="row">
-                                    Product name:
-                                    {{ product['title'] }}
-                                </div>
-                                <div class="row">
-                                    Product Description:
-                                    {{ product['description'] }}
-                                </div>
-                                <div class="col-md-6">
-                                    <form action="/buy/{{ product['id'] }}" method="POST"><button type="submit" name="button" class="btn btn-success btn-product" enctype="application/x-www-form-urlencoded" ><span class="glyphicon glyphicon-shopping-cart"></span>BUY</button></form>
-                                </div>
-                                <br>
-                                <div class="col-md-6">
-                                    <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
-                                </div>
-                            </div>
-                        </div>
+                        {% endif %}
                     {% endif %}
                 {% endif %}
             {% endfor %}

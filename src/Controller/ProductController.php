@@ -33,9 +33,9 @@ class ProductController
             $service = $this->container->get('get_product_repository');
             $product = $service($args['productid']);
 
-            if(!$product[0]['is_active']){
-                echo("No product, not avaliable");
-            }else {
+            echo($product[0]['is_active']);
+
+
 
                 if ($product[0]['sold_out']) {
                     //No hay disponibles
@@ -69,7 +69,7 @@ class ProductController
                     return $response->withStatus(200)->withHeader('Location', '/');
 
                 }
-            }
+
 
         }
 
