@@ -28,13 +28,25 @@ class ProductViewController
      */
     public function __invoke(Request $request, Response $response, array $args)
     {
+
+        session_start();
+
+        if (empty($_SESSION['user_id'])) {
+            $user_id = -1;
+            //echo($user_id);
+
+
+        } else{
+            $user_id = $_SESSION['user_id'];
+        }
+
         $product = NULL;
         if (isset($args['productid'])) {
             $service = $this->container->get('get_product_repository');
             $product = $service($args['productid']);
 
             //echo($product[0]['title']);
-            return $this->container->get('view')->render($response, 'product.html.twig', ['product' => $product]);
+            return $this->container->get('view')->render($response, 'product.html.twig', ['user_id' => $user_id, 'product' => $product]);
         } else {
             //Error
            //return $this->container->get('view')->render($response, 'home.html.twig');

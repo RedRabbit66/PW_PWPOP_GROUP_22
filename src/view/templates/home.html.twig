@@ -21,6 +21,44 @@
 
         <h1 class="text-center alert alert-primary">Home</h1>
 
+        {% if found == 0 %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                No products found!:(
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {%  endif %}
+
+
+        <div class="container">
+            {% for product in products %}
+                <div class="row">
+
+                    <div class="col-sm-4">
+                        <div class="row">
+                            <a class="product" href="product/{{ product['id'] }}"><img class="product" src="{{ base_url }}../assets/images/{{ product['product_image'] }}"></a>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="row">
+                            Price:
+                            {{ product['price'] }}
+                        </div>
+                        <div class="row">
+                            Product name:
+                            {{ product['title'] }}
+                        </div>
+                        <div class="row">
+                            Product Description:
+                            {{ product['description'] }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
     {%  else %}
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSODALYDYo2dqN0DG_kPNi2X7EAy1K8SpRRZQWkNv9alC62IHggOw" border="1" alt="img user" width="52" height="52">
         <form id="form_login" class="col" action="/search" enctype="application/x-www-form-urlencoded" method="GET">
@@ -41,51 +79,57 @@
         <a href="{{ url }}/logout">Log Out</a><br>
         <h1 class="text-center alert alert-primary">Home</h1>
 
-    {%  endif %}
-
-    {% if found == 0 %}
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            No products found!:(
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    {%  endif %}
-
-
-    <div class="container">
-        {% for product in products %}
-            <div class="row">
-
-                <div class="col-sm-4">
-                    <div class="row">
-                        <a class="product" href="product/{{ product['id'] }}"><img class="product" src="{{ base_url }}../assets/images/{{ product['product_image'] }}"></a>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="row">
-                        Price:
-                        {{ product['price'] }}
-                    </div>
-                    <div class="row">
-                        Product name:
-                        {{ product['title'] }}
-                    </div>
-                    <div class="row">
-                        Product Description:
-                        {{ product['description'] }}
-                    </div>
-                    <div class="col-md-6">
-                        <form action="/buy/{{ product['id'] }}" method="POST"><button type="submit" name="button" class="btn btn-success btn-product" enctype="application/x-www-form-urlencoded" ><span class="glyphicon glyphicon-shopping-cart"></span>BUY</button></form>
-                    </div>
-                    <br>
-                    <div class="col-md-6">
-                        <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
-                    </div>
-                </div>
+        {% if found == 0 %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                No products found!:(
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-        {% endfor %}
+        {%  endif %}
 
-    </div>
+
+        <div class="container">
+            {% for product in products %}
+                {% if product['user_id'] == user_id %}
+
+                {% else %}
+                    <div class="row">
+
+                        <div class="col-sm-4">
+                            <div class="row">
+                                <a class="product" href="product/{{ product['id'] }}"><img class="product" src="{{ base_url }}../assets/images/{{ product['product_image'] }}"></a>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                Price:
+                                {{ product['price'] }}
+                            </div>
+                            <div class="row">
+                                Product name:
+                                {{ product['title'] }}
+                            </div>
+                            <div class="row">
+                                Product Description:
+                                {{ product['description'] }}
+                            </div>
+                            <div class="col-md-6">
+                                <form action="/buy/{{ product['id'] }}" method="POST"><button type="submit" name="button" class="btn btn-success btn-product" enctype="application/x-www-form-urlencoded" ><span class="glyphicon glyphicon-shopping-cart"></span>BUY</button></form>
+                            </div>
+                            <br>
+                            <div class="col-md-6">
+                                <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+        </div>
+
+    {%  endif %}
+
+
 
 {% endblock %}
