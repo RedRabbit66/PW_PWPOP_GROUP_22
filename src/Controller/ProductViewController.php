@@ -45,8 +45,14 @@ class ProductViewController
             $service = $this->container->get('get_product_repository');
             $product = $service($args['productid']);
 
-            //echo($product[0]['title']);
-            return $this->container->get('view')->render($response, 'product.html.twig', ['user_id' => $user_id, 'product' => $product]);
+
+            if(!$product[0]['is_active']){
+                echo("No product, not avaliable");
+
+            }else{
+                //echo($product[0]['title']);
+                return $this->container->get('view')->render($response, 'product.html.twig', ['user_id' => $user_id, 'product' => $product]);
+            }
         } else {
             //Error
            //return $this->container->get('view')->render($response, 'home.html.twig');
