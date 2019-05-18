@@ -76,37 +76,57 @@ class RegisterController
 
             foreach ($_POST as $data => $val) {
 
-                if ($data == 'username') {
-                    if (!preg_match("/^[A-Za-z0-9_-]+$/i", $val) || strlen($val) > 20) {
-                        $errors['username'] = "Username field can only contain alphanumeric characters and should never exceed the 20 characters";
+                if ($data == 'name') {
+                    if (strlen($val)==0){
+                        $errors['name'] = "The name field is required";
+                    }elseif (!preg_match("/^[A-Za-z0-9]+$/i", $val)) {
+                        $errors['name'] = "Name field can only contain alphanumeric characters";
                     }
-                } elseif($data == 'name') {
-                    if (!preg_match("/^[A-Za-z0-9_-]+$/i", $val)) {
-                        $errors['name'] = "Name field can only contain letters";
+                } elseif($data == 'username') {
+                    if (strlen($val)==0){
+                        $errors['username'] = "The username field is required";
+                    }else{
+                        if (!preg_match("/^[A-Za-z0-9]+$/i", $val)) {
+                            $errors['username'] = "Username field can only contain alphanumeric characters";
+                        }
+                        if (strlen($val)>20){
+                            $errrors['username_1']="Username field must contain a maximum of 20 characters";
+                        }
                     }
                 } elseif($data == 'email') {
-                    if (!preg_match("/^\S+@\S+\.\S+$/", $val)) {
-                        $errors['email'] = "Email field must be a valid email address";
+                    if (strlen($val)==0){
+                        $errors['email'] = "Email field is required";
+                    }elseif (!preg_match("/^\S+@\S+\.\S+$/", $val)) {
+                        $errors['email'] = "Email field must contain a valid email address";
                     }
                 } elseif ($data == 'birthday') {
-                    $year = substr($val, 0, 4);
-
-                    if($year < 1850 || $year > 2019){
-                        $errors['birthday'] = "Birthday field must be a valid date";
+                    if (strlen($val)!=0){
+                        if (!$this->isValidDate($val)){
+                            $errors['birthday']="Please, enter a valid date";
+                        }
                     }
                 } elseif($data == 'phoneNumber') {
-                    if (!is_numeric($val)) {
-                        $errors['name'] = "In phone number field all numbers must follow the format nxx xxx xxx";
+                    if(strlen($val)==0){
+                        $errors['phoneNumber']="Phone field is required";
+                    }elseif(!is_numeric($val)) {
+                        $errors['name'] = "Phone number should only contain digits";
+                    }elseif(strlen($val)!=9){
+                        $errors['name'] = "Phone field must follow XXXXXXXXX format";
                     }
                 } elseif ($data == 'password') {
                     $password = $val;
-
-                    if (strlen($val) < 6) {
-                        $errors['password'] = "Password must contain at least 6 characters";
+                    if(strlen($val)==0){
+                        $errors['password']="Password field is required";
+                    }elseif (strlen($val) < 6 || strlen($val)>12) {
+                        $errors['password'] = "Password must be 6 to 12 characters long";
+                    }elseif(!preg_match("/^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})\S+$/", $val)){
+                        $errors['password']="Password must at least contain one number and a capital letter.";
                     }
                 } elseif ($data == 'confirmPassword') {
-                    if ($val != $password) {
-                        $errors['confirmPassword'] = 5;
+                    if(strlen($val)==0){
+                        $errors['confirmPassword']="Confirm password field is required";
+                    }elseif ($val != $password) {
+                        $errors['confirmPassword'] = "Password mismatch";
                     }
 
                     //https://phppot.com/php/php-image-upload-with-size-type-dimension-validation/
@@ -167,5 +187,29 @@ class RegisterController
         return in_array($extension, self::ALLOWED_EXTENSIONS, true);
     }
 
+    private function isValidDate(string $date){
 
+        if(!preg_match("/^\d{2}\/\d{2}\/\d{4}$/", $date)){
+            return false;
+        }
+
+        $monthLength = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+
+        $dateSplitted = explode("/", $date);
+
+        $day = intval($dateSplitted[0]);
+        $month = intval($dateSplitted[1]);
+        $year = intval($dateSplitted[2]);
+
+        if ($year < 1900 || $year > 2020 || $month == 0 || $month > 12) {
+            return false;
+        }elseif ($month < 0 || $month > 12){
+            return false;
+        }elseif ($year % 400 == 0 || ($year % 100 != 0 && $year % 4 == 0)){
+            $monthLength[1] = 29;
+        }elseif (($day > 0) && ($day <= $monthLength[$month - 1])){
+            return false;
+        }
+        return true;
+    }
 }

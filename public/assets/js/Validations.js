@@ -35,7 +35,7 @@ function comprovaUpload_Description(){
 
 function comprovaUpload_Category(){
     console.log("Entrando en Validation.js - Comprova Upload_Category");
-    console.log(document.getElementById('uploadProduct_Category').selectedIndex);
+    console.log(document.getElementById('uploadProduct_Category').value);
     var textError = '';
     var product_category = document.getElementById('uploadProduct_Category').selectedIndex;
     //Category must be chosen
@@ -102,7 +102,10 @@ function comprovaInput(update) {
                     document.getElementById('error1_1').textContent = '';
                     document.getElementById('error1_1').appendChild(textError);
                     document.getElementById('usernameLogin').style.borderColor = "red";
+                }else{
+                    document.getElementById('error1_1').textContent = '';
                 }
+
             } else {
                 if (emailRegex.test(usernameLogin)) {
                     document.getElementById('error1').textContent = '';
@@ -131,7 +134,12 @@ function comprovaInput(update) {
         if (name.length == 0) {
             document.getElementById('error0').textContent = '';
             document.getElementById('name').style.borderColor = "white";
-        } else {
+        }else if (!usernameRegex.test(name)) {
+            textError = document.createTextNode("*Only alphanumeric characters");
+            document.getElementById('error0').textContent = '';
+            document.getElementById('error0').appendChild(textError);
+            document.getElementById('name').style.borderColor = "red";
+        }else{
             document.getElementById('error0').textContent = '';
             document.getElementById('name').style.borderColor = "green";
         }
@@ -139,6 +147,7 @@ function comprovaInput(update) {
         //COMPROBACION USERNAME
         if (username.length == 0) {
             document.getElementById('error1').textContent = '';
+            document.getElementById('error1_1').textContent = '';
             document.getElementById('username').style.borderColor = "white";
         } else {
             if (usernameRegex.test(username)) {
@@ -155,6 +164,8 @@ function comprovaInput(update) {
                 document.getElementById('error1_1').textContent = '';
                 document.getElementById('error1_1').appendChild(textError);
                 document.getElementById('username').style.borderColor = "red";
+            }else{
+                document.getElementById('error1_1').textContent = '';
             }
         }
 
@@ -171,11 +182,12 @@ function comprovaInput(update) {
                 textError = document.createTextNode("*Must input a valid email address");
                 document.getElementById('error2').textContent = '';
                 document.getElementById('error2').appendChild(textError);
+                document.getElementById('email').style.borderColor = "red";
             }
         }
 
 
-        //COMPROBACIÓN BIRTHDAy
+        //COMPROBACIÓN BIRTHDAY
         if (birthday.length == 0) {
             document.getElementById('error3').textContent = '';
             document.getElementById('birthday').style.borderColor = "white";
@@ -275,7 +287,7 @@ function sendForm(form, delete_user) {
 }
 
 function isValidDate(birthdate) {
-    if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(birthdate))
+    if (!/^\d{2}\/\d{2}\/\d{4}$/.test(birthdate))
         return false;
 
     var parts = birthdate.split("/");

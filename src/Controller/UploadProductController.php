@@ -34,8 +34,16 @@ class UploadProductController
     }
 
     public function __invoke(Request $request, Response $response){
-        if (0!=0){
-            $status = 302;
+        $errors = $this->validateProductUpload();
+
+
+        /*if (!empty($errors)){
+             *
+             * ventana con los errores
+             *
+             *
+            $status = 302;*/
+        if(0!=0){
         }else{
             try {
                 $this -> uploadAction($request, $response);
@@ -56,10 +64,38 @@ class UploadProductController
             ->withStatus($status)
             ->withHeader('Location', $protocol . $_SERVER['SERVER_NAME'] . '/?status=' . $status);
 
-        //return $response;
+        return $response;
     }
 
-    public function validateProductUpload(){}
+    public function validateProductUpload(){
+        $errors = [];
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            foreach ($_POST as $data => $val) {
+
+                if ($data == 'uploadProduct_Name') {
+                    if (strlen($val) == 0) {
+                        $errors['uploadProduct_Name'] = "Title field is required";
+                    }
+                } elseif ($data == 'uploadProduct_Description') {
+                    if (strlen($val) == 0) {
+                        $errors['uploadProduct_Description'] = "Product description field is required";
+                    } elseif (strlen($val) < 20) {
+                        $errors['uploadProduct_Description'] = "Product description field must be at least 20 characters long";
+                    }
+                } elseif ($data == 'uploadProduct_Category') {
+                    if (strcmp($val, "empty") == 0) {
+                        $errors['uploadProduct_Category'] = "You must choose a product category";
+                    }
+                } elseif ($data == 'uploadProduct_Price') {
+                    if (($val < 0) || !preg_match("/^[0-9]+$/", $val)) {
+                        $errors['uploadProduct_Price'] = "Price must be a valid integer positive value";
+                    }
+                }
+            }
+        }
+        return $errors;
+    }
+
 
     public function uploadAction(Request $request, Response $response){
         $uploadedFiles = $request->getUploadedFiles();

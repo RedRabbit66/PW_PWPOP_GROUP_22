@@ -49,7 +49,9 @@ class HomeController
         $service = $this->container->get('get_products_repository');
         $products = $service();
 
-        return $this->container->get('view')->render($response, 'home.html.twig', ['user_id' => $user_id, 'products' => $products]);
+        return $this->container->get('view')->render($response,
+            'home.html.twig',
+            ['user_id' => $user_id, 'products' => $products]);
     }
 
 }

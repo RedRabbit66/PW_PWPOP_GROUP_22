@@ -26,11 +26,17 @@ class LoginController
             session_destroy();
         }
 
-        //$error = $this->validateUser();
+        $errors = $this->validateUser();
         $id = 0;
 
-        if (0 != 0) {
-            $id = '-1';
+        /*if (!empty($errors)) {
+
+             *
+             *
+             * ventana de errores PHP
+             *
+             */
+        if(0!=0){
         } else {
             try {
                 $data = $request->getParsedBody();
@@ -68,25 +74,41 @@ class LoginController
     }
 
     public function validateUser(){
+
+        $errors = [];
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $password = '';
-            $error = 0;
 
-            foreach ($_POST as $name => $val) {
-                if($name == 'email') {
-                    if (!preg_match("/^\S+@\S+\.\S+$/", $val)) {
-                        $error = 1;
+            foreach ($_POST as $data => $val) {
+                if($data == 'usernameLogin') {
+                    if (strlen($val)==0){
+                        $errors['usernameLogin']="Username/login field is required";
+                    }else{
+                        if (strpos($val, '@')){
+                            if (!preg_match("/^[A-Za-z0-9]+$/i", $val)){
+                                $errors['usernameLogin_1']="Username must only contain alphanumeric characters";
+                            }
+                            if (strlen($val)>20){
+                                $errors['UsernameLogin_1_1']="Username must contain a maximum of 20 characters";
+                            }
+                        }elseif (!preg_match("/^\S+@\S+\.\S+$/", $val)){
+                            $errors['usernameLogin_1']="Must input a valid email address as username";
+                        }
                     }
-                } elseif ($name == 'password') {
-                    $password = $val;
-
-                    if (!preg_match("/^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})\S+$/", $val) || strlen($val) < 6 || strlen($val) > 12) {
-                        $error = 2;
+                } elseif ($data == 'password') {
+                    if (strlen($val)==0){
+                        $errors['password']="Password field is required";
+                    }else{
+                        if (strlen($val) < 6 || strlen($val) > 12) {
+                            $errors['password'] = "Password must be 6 to 12 characters long";
+                        }elseif (!preg_match("/^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})\S+$/", $val)){
+                            $errors['password'] = "Password must at least contain one number and a capital letter.";
+                        }
                     }
                 }
             }
 
-            return $error;
+            return $errors;
         }
 
         return -1;
