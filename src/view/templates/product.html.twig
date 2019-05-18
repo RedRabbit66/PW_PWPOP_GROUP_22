@@ -8,52 +8,65 @@
 
     {%  if user_id == -1 %}
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSODALYDYo2dqN0DG_kPNi2X7EAy1K8SpRRZQWkNv9alC62IHggOw" border="1" alt="img user" width="32" height="32">
-        <a href="{{ url }}/login">Sing In</a><br>
-        <a href="{{ url }}/register">Sing Up</a>
+        <a href="{{ url }}/MyProducts">My Products</a><br>
         <h1 class="text-center alert alert-primary">{{ product[0]['title'] }}</h1>
 
     {%  else %}
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSODALYDYo2dqN0DG_kPNi2X7EAy1K8SpRRZQWkNv9alC62IHggOw" border="1" alt="img user" width="32" height="32">
         <a href="{{ url }}/profile">User Profile</a><br>
         <a href="{{ url }}/logout">Log Out</a>
-        <h1 class="text-center alert alert-primary">{{ product[0]['title'] }}</h1>
+
 
     {%  endif %}
 
-    <div class="container">
+    {% if product[0]['user_id'] != user_id %}
+        <h1 class="text-center alert alert-primary">{{ product[0]['title'] }}</h1>
 
-        <div class="col-sm-6 col-md-4">
-            <div class="thumbnail" >
-                <h4 class="text-center"><span class="label label-info">{{ product[0]['category'] }}</span></h4>
-                <div class="row">
-                    <a class="product" href="product/{{ product[0]['id'] }}"><img class="product" src="{{ base_url }}../assets/images/{{ product[0]['product_image'] }}"></a>
-                </div>
-                <div class="caption">
+        <div class="container">
+
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail" >
+                    <h4 class="text-center"><span class="label label-info">{{ product[0]['category'] }}</span></h4>
                     <div class="row">
-                        <div class="col-md-6 col-xs-6">
-                            <h3>{{ product[0]['file_name'] }}</h3>
-                        </div>
-                        <div class="col-md-6 col-xs-6 price">
-                            <h3>
-                                <label>{{ product[0]['price'] }} €</label></h3>
-                        </div>
+                        <a class="product" href="product/{{ product[0]['id'] }}"><img class="product" src="{{ base_url }}../assets/images/{{ product[0]['product_image'] }}"></a>
                     </div>
-                    <p>{{ product[0]['description'] }}</p>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
+                    <div class="caption">
+                        <div class="row">
+                            <div class="col-md-6 col-xs-6">
+                                <h3>{{ product[0]['file_name'] }}</h3>
+                            </div>
+                            <div class="col-md-6 col-xs-6 price">
+                                <h3>
+                                    <label>{{ product[0]['price'] }} €</label></h3>
+                            </div>
                         </div>
-                        <br>
-                        <div class="col-md-6">
-                            <form action="/product/{{ product[0]['id'] }}" method="POST"><button type="submit" name="button" class="btn btn-success btn-product" enctype="application/x-www-form-urlencoded" ><span class="glyphicon glyphicon-shopping-cart"></span>BUY</button></form>
+                        <p>{{ product[0]['description'] }}</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a>
+                            </div>
+                            <br>
+                            <div class="col-md-6">
+                                <form action="/product/{{ product[0]['id'] }}" method="POST"><button type="submit" name="button" class="btn btn-success btn-product" enctype="application/x-www-form-urlencoded" ><span class="glyphicon glyphicon-shopping-cart"></span>BUY</button></form>
+                            </div>
                         </div>
+                        <p> </p>
                     </div>
-                    <p> </p>
                 </div>
             </div>
+
         </div>
 
-    </div>
+    {% else %}
+
+
+
+    {% endif %}
+
+
+
+
+
     <input type="button" value="Go back" class="btn-dark" onclick="history.back()">
 
 {% endblock %}
