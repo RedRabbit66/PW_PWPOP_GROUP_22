@@ -28,7 +28,7 @@
                 <div class="thumbnail" >
                     <h4 class="text-center"><span class="label label-info">{{ product[0]['category'] }}</span></h4>
                     <div class="row">
-                        <a class="product" href="product/{{ product[0]['id'] }}"><img class="product" src="{{ base_url }}../assets/images/{{ product[0]['product_image'] }}"></a>
+                        <a class="product" href="{{ url }}product/{{ product[0]['id'] }}"><img class="product" src="{{ base_url }}../assets/images/{{ product[0]['product_image'] }}"></a>
                     </div>
                     <div class="caption">
                         <div class="row">
@@ -47,7 +47,7 @@
                             </div>
                             <br>
                             <div class="col-md-6">
-                                <form action="/product/{{ product[0]['id'] }}" method="POST"><button type="submit" name="button" class="btn btn-success btn-product" enctype="application/x-www-form-urlencoded" ><span class="glyphicon glyphicon-shopping-cart"></span>BUY</button></form>
+                                <form action="{{ url }}/product/{{ product[0]['id'] }}" method="POST"><button type="submit" name="button" class="btn btn-success btn-product" enctype="application/x-www-form-urlencoded" ><span class="glyphicon glyphicon-shopping-cart"></span>BUY</button></form>
                             </div>
                         </div>
                         <p> </p>
