@@ -63,21 +63,15 @@ class DoctrineProductRepository implements ProductRepository
 
     public function getProducts()
     {
-        $sql = 'SELECT * FROM products ORDER BY dateUpload DESC LIMIT 5';
+        $user_hash_id = $_SESSION['user_id'];
+
+        $userId = $this->getUserIdByHashId($user_hash_id);
+
+        $sql = 'SELECT * FROM products WHERE user_id NOT LIKE :user_id ORDER BY dateUpload LIMIT 5';
         $stmt = $this->database->prepare($sql);
-        //$stmt->bindValue('hash_id', $folderHashId, 'string');
+        $stmt->bindValue('user_id', $userId, 'string');
         $stmt->execute();
         $result = $stmt->fetchAll();
-
-        /*$products = array();
-
-        foreach($result as $row) {
-            //$hashId = $row['hash_id'];
-            $title = $row['file_name'];
-            $path = $row['file_path'];
-            $aux = new Product($title, 'default description', 2000, 'car.jpg', 1);
-            $products[] = $aux;
-        }*/
 
         return $result;
     }
