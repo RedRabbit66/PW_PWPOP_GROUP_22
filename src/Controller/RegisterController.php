@@ -36,6 +36,12 @@ class RegisterController
     public function __invoke(Request $request, Response $response) {
        // $error[] = $this->validateUser();
 
+        session_start();
+
+        if (!empty($_SESSION['user_id'])) {
+            return $response->withHeader('Location', '/');
+        }
+
         if (0 != 0) {
             $status = 302;
         } else {
@@ -57,7 +63,7 @@ class RegisterController
             || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
         $response = $response
             ->withStatus($status)
-            ->withHeader('Location', $protocol . $_SERVER['SERVER_NAME'] . '/?status=' . $status);
+            ->withHeader('Location', '/login');
 
         return $response;
     }

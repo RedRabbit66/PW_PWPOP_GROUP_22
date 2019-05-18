@@ -86,8 +86,7 @@
                 <button type="submit" name="button" class="btn-dark">Upgrade Product</button>
 
             </form>
-            </div>
-            <div>
+
                 <form id="form_delete_product" action="{{ url }}/deleteProduct/{{ product[0]['id'] }}"  enctype="application/x-www-form-urlencoded" method="POST">
                     <button id="delete" type="submit" name="button" class="btn-dark" formaction="/deleteProduct/{{ product[0]['id'] }}" onclick="sendForm(this)">Delete Product</button>
                 </form>
