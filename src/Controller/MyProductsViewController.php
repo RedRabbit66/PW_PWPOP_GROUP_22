@@ -40,8 +40,6 @@ class MyProductsViewController
             $service = $this->container->get('get_my_products_repository');
             $products = $service();
             $found = 1;
-
-            var_dump($products);
         }
 
 

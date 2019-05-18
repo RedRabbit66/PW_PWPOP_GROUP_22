@@ -95,7 +95,7 @@ class UploadProductController
 
         //var_dump($_FILES['files']['name'][0]);
         /** @var UploadedFileInterface $uploadedFile */
-        var_dump($uploadedFiles['files']);
+//        var_dump($uploadedFiles['files']);
         foreach ($uploadedFiles['files'] as $uploadedFile) {
             if ($uploadedFile->getError() !== UPLOAD_ERR_OK) {
                 $errors[] = sprintf(self::UNEXPECTED_ERROR, $uploadedFile->getClientFilename());
@@ -118,7 +118,7 @@ class UploadProductController
             $uploadedFile->moveTo(self::UPLOADS_DIR . DIRECTORY_SEPARATOR . 'ImageProduct_' .$_POST['uploadProduct_Name']. '_' . $name);
         }
 
-        return $this->container->get('view')->render($response, 'home.html.twig');
+       // return $this->container->get('view')->render($response, 'home.html.twig');
     }
 
     private function isValidFormat(string $extension): bool
