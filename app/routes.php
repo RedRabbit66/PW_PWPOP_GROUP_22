@@ -18,8 +18,6 @@ $app->post('/product[/{productid}]', 'SallePW\pwpop\Controller\ProductController
 $app->post('/buy[/{productid}]', 'SallePW\pwpop\Controller\ProductController');
 $app->get('/search', 'SallePW\pwpop\Controller\SearchProductController');
 $app->get('/myproducts', 'SallePW\pwpop\Controller\MyProductsViewController');
-$app->get('/Myproduct[/{productid}]', 'SallePW\pwpop\Controller\MyProductViewController');
-$app->post('/Myproduct[/{productid}]', 'SallePW\pwpop\Controller\MyProductController');
 $app->post('/deleteProduct[/{productid}]', 'SallePW\pwpop\Controller\DeleteProductController');
 
 
