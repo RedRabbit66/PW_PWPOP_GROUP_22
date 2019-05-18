@@ -34,16 +34,8 @@ class UploadProductController
     }
 
     public function __invoke(Request $request, Response $response){
-        $errors = $this->validateProductUpload();
-
-
-        /*if (!empty($errors)){
-             *
-             * ventana con los errores
-             *
-             *
-            $status = 302;*/
-        if(0!=0){
+        if (0!=0){
+            $status = 302;
         }else{
             try {
                 $this -> uploadAction($request, $response);
@@ -96,6 +88,7 @@ class UploadProductController
         return $errors;
     }
 
+    public function validateProductUpload(){}
 
     public function uploadAction(Request $request, Response $response){
         $uploadedFiles = $request->getUploadedFiles();

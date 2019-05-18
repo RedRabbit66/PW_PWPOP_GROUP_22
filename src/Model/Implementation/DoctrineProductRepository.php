@@ -112,6 +112,10 @@ class DoctrineProductRepository implements ProductRepository
 
         $user_id = $this->getUserIdByHashId($user_hash_id);
 
+        //echo($user_id);
+
+        //$user_id = $_SESSION['user_id'];
+
         $sql = 'INSERT INTO products(hash_id, user_id, description, price, category, title, product_image) 
                 VALUES(:hash_id, :user_id, :description, :price, :category, :title, :product_image)';
 
@@ -154,4 +158,31 @@ class DoctrineProductRepository implements ProductRepository
         }
         return $result;
     }
+
+    public function upgradeProduct($productId, $title, $description, $price, $category){
+
+            $sql = 'UPDATE products SET title = :title, price = :price, description = :description, category =:category WHERE id LIKE :id';
+            $stmt = $this->database->prepare($sql);
+            $stmt->bindValue('title', $title, 'string');
+            $stmt->bindValue('price', $price, 'string');
+            $stmt->bindValue('description', $description, 'string');
+            $stmt->bindValue('category', $category, 'string');
+            $stmt->bindValue('id', $productId, 'string');
+            $stmt->execute();
+
+    }
+
+    public function getMyProducts($user_id){
+        $sql = 'SELECT * FROM products WHERE user_id LIKE :user_id';
+        $stmt = $this->database->prepare($sql);
+        $stmt->bindValue('user_id', $user_id, 'string');
+        $stmt = $this->database->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+
+        return $result;
+    }
+
+
 }

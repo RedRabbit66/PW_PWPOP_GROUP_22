@@ -1,0 +1,60 @@
+{% extends "base.html.twig" %}
+{% block title %}Landing{% endblock %}
+{% block content %}
+
+    {%  if user_id == -1 %}
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSODALYDYo2dqN0DG_kPNi2X7EAy1K8SpRRZQWkNv9alC62IHggOw" border="1" alt="img user" width="52" height="52">
+
+    <form id="form_login" class="col" action="/search" enctype="application/x-www-form-urlencoded" method="POST">
+        <div class="container h-100">
+            <div class="d-flex justify-content-center h-100">
+                <div class="searchbar">
+                    <input class="search_input" type="text" name="search_input" placeholder="Search...">
+                    <a href="{{ url }}/search" class="search_icon"><i class="fas fa-search"></i></a>
+                </div>
+            </div>
+        </div>
+    </form>
+    <a href="{{ url }}/login" >Sing In</a><br>
+    <a href="{{ url }}/register">Sing Up</a>
+
+
+    {%  else %}
+
+    <a href="{{ url }}/MyProducts">My Products</a><br>
+
+    <h1 class="text-center alert alert-primary">My Products</h1>
+
+    <div class="row m-4 text-center">
+
+        <form id="form_login" class="col" action="/upgradeProduct" enctype="multipart/form-data" method="POST">
+            <h2 class="mb-4">Upgrade your product: {{ product[0]['title'] }}</h2>
+            <div class="form-group"><input id="uploadProduct_Name" type="text" name="uploadProduct_Name" class="form-control-sm" style="width: 400px; font-size: 20px" onkeyup="comprovaUpload_Name()" value={{ product[0]['title'] }}></div>
+            <div class="form-group"><span id="errorUpload_Name" style="color: red"></span></div>
+            <div class="form-group"><input id="uploadProduct_Description" type="text" name="uploadProduct_Description" class="form-control-sm" style="width: 600px" onkeyup="comprovaUpload_Description()" value={{ product[0]['description'] }}></div>
+            <div class="form-group"><span id="errorUpload_Description" style="color: red"></span></div>
+            <div class="form-group" onclick="comprovaUpload_Category()">
+                <select class="form-group-sm" id="uploadProduct_Category" name="uploadProduct_Category">
+                    <option value="empty" disabled selected>Select your category</option>
+                    <option value="Computers_and_electronic">1. Computers and electronic</option>
+                    <option value="Cars">2. Cars</option>
+                    <option value="Sports">3. Sports</option>
+                    <option value="Games">4. Games</option>
+                    <option value="Fashion">5. Fashion</option>
+                    <option value="Home">6. Home</option>
+                    <option value="Other">7. Other</option>
+                </select>
+            </div>
+            <div class="form-group"><span id="errorUpload_Category" style="color: red"></span></div>
+            <div class="form-group"><input id="uploadProduct_Price" type="text" name="uploadProduct_Price" class="form-control-sm" style= "width: 75px" onkeyup="comprovaUpload_Price()" value={{ product[0]['price'] }}> €</div>
+            <div class="form-group"><span id="errorUpload_Price" style="color: red"></span></div>
+
+            <div><button type="submit" name="button" class="btn-dark">Upgrade Product</button></div>
+
+        </form>
+    </div>
+    <input type="button" value="Go back" class="btn-dark" onclick="history.back()">
+
+    {%  endif %}
+
+{% endblock %}

@@ -73,7 +73,7 @@ class ProductController
             //Error, no product
         }
 
-        //return $response->withStatus(200)->withHeader('Location', '/');
+        return $response->withStatus(200)->withHeader('Location', '/');
     }
 
     private function sendMail(string $username, string $to, string $message){
