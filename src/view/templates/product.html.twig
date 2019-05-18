@@ -59,7 +59,37 @@
 
     {% else %}
 
+        <div class="row m-4 text-center">
 
+            <form id="form_login" class="col" action="/upgradeProduct" enctype="multipart/form-data" method="POST">
+                <h2 class="mb-4">Upgrade your product: {{ product[0]['title'] }}</h2>
+                <div class="form-group"><input id="uploadProduct_Name" type="text" name="uploadProduct_Name" class="form-control-sm" style="width: 400px; font-size: 20px" onkeyup="comprovaUpload_Name()" value={{ product[0]['title'] }}></div>
+                <div class="form-group"><span id="errorUpload_Name" style="color: red"></span></div>
+                <div class="form-group"><input id="uploadProduct_Description" type="text" name="uploadProduct_Description" class="form-control-sm" style="width: 600px" onkeyup="comprovaUpload_Description()" value={{ product[0]['description'] }}></div>
+                <div class="form-group"><span id="errorUpload_Description" style="color: red"></span></div>
+                <div class="form-group" onclick="comprovaUpload_Category()">
+                    <select class="form-group-sm" id="uploadProduct_Category" name="uploadProduct_Category">
+                        <option value="empty" disabled selected>Select your category</option>
+                        <option value="Computers_and_electronic">1. Computers and electronic</option>
+                        <option value="Cars">2. Cars</option>
+                        <option value="Sports">3. Sports</option>
+                        <option value="Games">4. Games</option>
+                        <option value="Fashion">5. Fashion</option>
+                        <option value="Home">6. Home</option>
+                        <option value="Other">7. Other</option>
+                    </select>
+                </div>
+                <div class="form-group"><span id="errorUpload_Category" style="color: red"></span></div>
+                <div class="form-group"><input id="uploadProduct_Price" type="text" name="uploadProduct_Price" class="form-control-sm" style= "width: 75px" onkeyup="comprovaUpload_Price()" value={{ product[0]['price'] }}> €</div>
+                <div class="form-group"><span id="errorUpload_Price" style="color: red"></span></div>
+
+                <div><button type="submit" name="button" class="btn-dark">Upgrade Product</button></div>
+                <div><button type="submit" name="button" class="btn-dark">Delete Product</button></div>
+
+
+
+            </form>
+        </div>
 
     {% endif %}
 
