@@ -34,7 +34,7 @@ class HomeController
             session_start();
         }*/
         session_start();
-
+        $found = 1;
         //echo($_SESSION['user_id']);
 
         if (empty($_SESSION['user_id'])) {
@@ -51,9 +51,7 @@ class HomeController
         $service = $this->container->get('get_products_repository');
         $products = $service();
 
-        return $this->container->get('view')->render($response,
-            'home.html.twig',
-            ['user_id' => $user_id, 'products' => $products]);
+        return $this->container->get('view')->render($response, 'home.html.twig', ['user_id' => $user_id, 'products' => $products, 'found' => $found]);
     }
 
 }

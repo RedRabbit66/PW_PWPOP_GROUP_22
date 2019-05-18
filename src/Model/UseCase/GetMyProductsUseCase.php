@@ -18,7 +18,7 @@ class GetMyProductsUseCase
         $this->repo = $repo;
     }
 
-    public function __invoke($user_id) {
-        return $this->repo->getMyProducts($user_id);
+    public function __invoke() {
+        return $this->repo->getMyProducts();
     }
 }

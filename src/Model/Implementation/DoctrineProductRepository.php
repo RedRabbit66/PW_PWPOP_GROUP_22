@@ -176,7 +176,7 @@ class DoctrineProductRepository implements ProductRepository
         $sql = 'SELECT * FROM products WHERE user_id LIKE :user_id';
         $stmt = $this->database->prepare($sql);
         $stmt->bindValue('user_id', $user_id, 'string');
-
+        $stmt = $this->database->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
 
@@ -187,7 +187,7 @@ class DoctrineProductRepository implements ProductRepository
     public function deleteProduct($productId){
         $sql = 'UPDATE products SET is_active = :is_active WHERE id LIKE :productId';
         $stmt = $this->database->prepare($sql);
-        $stmt->bindValue('is_active', 0, 'string');
+        $stmt->bindValue('is_active', 1, 'string');
         $stmt->bindValue('productId', $productId, 'string');
 
         $stmt->execute();
