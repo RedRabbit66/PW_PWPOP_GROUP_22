@@ -110,6 +110,13 @@ $container['delete_user_repository'] = function ($container){
     return $service;
 };
 
+$container['get_image_profile_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\GetImageProfileUseCase(
+        $container->get('user_repository')
+    );
+    return $service;
+};
+
 $container['send_mail_service'] = function($container) {
     $service = new SallePW\pwpop\Model\UseCase\SendMailUseCase(
         $container->get('mailer_repository')

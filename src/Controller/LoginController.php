@@ -27,19 +27,12 @@ class LoginController
             session_destroy();
         }
 
-        $errors[] = $this->validateUser();
+        $errors = $this->validateUser();
         $id = '0';
 
-        if (!empty($errors)) {
-            $id = '-1';
-            if(isset($errors['usernameLogin_1'])){}
-            if(isset($errors['UsernameLogin_1_1'])){}
-            if(isset($errors['usernameLogin_1'])){}
-            if(isset($errors['usernameLogin_1'])){}
-
-
-
-        }else {
+       if(sizeof($errors) != 0){
+            $id = -1;
+        } else {
             try {
                 $data = $request->getParsedBody();
                 $service = $this->container->get('check_user_repository');
@@ -63,8 +56,7 @@ class LoginController
 
         } else {
             $_SESSION['user_id'] = $id;
-            $url = $url . '/' . '?action=login_user&status=success';
-
+            $url = $url . '/'; //. '?action=login_user&status=success';
             $status = 200;
         }
 
@@ -72,42 +64,45 @@ class LoginController
             ->withStatus($status)
             ->withHeader('Location', $url);
 
-       return $response;
+        return $response;
     }
 
-    public function validateUser(){
 
-        $errors = array();
+    public function validateUser(){
+        $errors = [];
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
             foreach ($_POST as $data => $val) {
-                if ($data == 'email') {
-                    if (strlen($val) == 0) {
-                        $errors['usernameLogin_1'] = "Username/email field is required";
+                if($data == 'usernameLogin') {
+                    if (strlen($val)==0){
+                        $errors['usernameLogin']="Username/login field is required";
                     }else{
-                        if (!strpos($val, '@')) {
-                            if (!preg_match("/^[A-Za-z0-9]+$/i", $val)) {
-                                $errors['usernameLogin_1'] = "Username must only contain alphanumeric characters";
+                        if (!strpos($val, '@')){
+                            if (!preg_match("/^[A-Za-z]+$/i", $val)){
+                                $errors['usernameLogin_1']="Username must only contain alphanumeric characters";
                             }
-                            if (strlen($val) > 20) {
-                                $errors['UsernameLogin_1_1'] = "Username must contain a maximum of 20 characters";
+                            if (strlen($val)>10){
+                                $errors['UsernameLogin_1_1']="Username must contain a maximum of 10 characters";
                             }
-                        } elseif (!preg_match("/^\S+@\S+\.\S+$/", $val)) {
-                            $errors['usernameLogin_1'] = "Must input a valid email address as username";
+                        }elseif (!preg_match("/^\S+@\S+\.\S+$/", $val)){
+                            $errors['usernameLogin_1']="Must input a valid email address as username";
                         }
                     }
-                }elseif ($data == 'password') {
-                    if (strlen($val) == 0) {
-                        $errors['password'] = "Password field is required";
-                    } else {
+                } elseif ($data == 'password') {
+                    if (strlen($val)==0){
+                        $errors['password']="Password field is required";
+                    }else{
                         if (strlen($val) < 6 || strlen($val) > 12) {
                             $errors['password'] = "Password must be 6 to 12 characters long";
-                        } elseif (!preg_match("/^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})\S+$/", $val)) {
-                            $errors['password_1'] = "Password must at least contain one number and a capital letter.";
                         }
                     }
                 }
             }
+
+            return $errors;
         }
-        return $errors;
+
+        return -1;
     }
 }

@@ -180,8 +180,10 @@ class RegisterController
                 continue;
             }
 
+            $extension = '.' . explode(".", $_FILES['files']['name'][0])[1];
+
             // We generate a custom name here instead of using the one coming form the form
-            $uploadedFile->moveTo(self::UPLOADS_DIR . DIRECTORY_SEPARATOR . 'ImageProfile_' . $_POST['username']. '_' . $name);
+            $uploadedFile->moveTo(self::UPLOADS_DIR . DIRECTORY_SEPARATOR . 'ImageProfile_' . $_POST['username']. $extension);
         }
 
         return $this->container->get('view')->render($response, 'home.html.twig');

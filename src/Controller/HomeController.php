@@ -35,29 +35,43 @@ class HomeController
         }*/
         session_start();
         $found = 1;
-        //echo($_SESSION['user_id']);
+        $imageProfile = -1;
 
         if (empty($_SESSION['user_id'])) {
             $user_id = -1;
-            //echo($user_id);
 
 
         } else{
-            $user_id = $_SESSION['user_id'];
-        }
 
-        //echo("User id: " . $user_id);
+            $user_id = $_SESSION['user_id'];
+            try {
+                $service = $this->container->get('get_image_profile_repository');
+                $imageProfile = $service();
+                var_dump($imageProfile);
+
+            }catch (\Exception $e) {
+//echo "hola";
+            }
+
+        }
 
         $service = $this->container->get('get_products_repository');
         $products = $service();
+
+
+        if($imageProfile != -1){
+            $imageProfile = '/../../public/assets/images/'. $imageProfile;
+        }else{
+            $imageProfile = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSODALYDYo2dqN0DG_kPNi2X7EAy1K8SpRRZQWkNv9alC62IHggOw';
+        }
 
         $params = $request->getQueryParams();
         if (sizeof($params)!=0){
             $action = $params['action'];
             $status = $params['status'];
-            return $this->container->get('view')->render($response, 'login.html.twig', ['action' => $action, 'statusValue' => $status]);
+            return $this->container->get('view')->render($response, 'login.html.twig', ['action' => $action, 'statusValue' => $status, 'image_profile' => $imageProfile]);
         }
 
-        return $this->container->get('view')->render($response, 'home.html.twig', ['user_id' => $user_id, 'products' => $products, 'found' => $found]);
+        //return $this->container->get('view')->render($response, 'home.html.twig', ['user_id' => $user_id, 'products' => $products, 'found' => $found, 'image_profile' => $imageProfile]);
     }
 }

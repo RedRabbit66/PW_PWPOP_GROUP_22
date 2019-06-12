@@ -63,7 +63,13 @@ class DoctrineProductRepository implements ProductRepository
 
     public function getProducts()
     {
-        $user_hash_id = $_SESSION['user_id'];
+        //echo$_SESSION['user_id'];
+        if(isset($_SESSION['user_id'])) {
+            $user_hash_id = $_SESSION['user_id'];
+        }else{
+
+            return -1;
+        }
 
         $userId = $this->getUserIdByHashId($user_hash_id);
 

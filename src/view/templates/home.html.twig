@@ -3,7 +3,7 @@
 {% block content %}
 
     {%  if user_id == -1 %}
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSODALYDYo2dqN0DG_kPNi2X7EAy1K8SpRRZQWkNv9alC62IHggOw" border="1" alt="img user" width="52" height="52">
+        <img src= {{ image_profile }} border="1" alt="img user" width="52" height="52">
 
         <form id="form_login" class="col" action="/search" enctype="application/x-www-form-urlencoded" method="POST">
             <div class="container h-100">
@@ -63,7 +63,8 @@
         </div>
 
     {%  else %}
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSODALYDYo2dqN0DG_kPNi2X7EAy1K8SpRRZQWkNv9alC62IHggOw" border="1" alt="img user" width="52" height="52">
+        {{ image_profile }}
+        <img src= {{ image_profile }} border="1" alt="img user" width="52" height="52">
         <form id="form_login" class="col" action="/search" enctype="application/x-www-form-urlencoded" method="GET">
             <div class="container h-100">
                 <div class="d-flex justify-content-center h-100">

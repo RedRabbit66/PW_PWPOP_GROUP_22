@@ -20,5 +20,6 @@ Interface UserRepository
     public function checkVerification($key);
     public function updateVerified($userId);
     public function getUser($id);
+    public function getImageProfileUser();
     //public function sendMail($username, $to, $message);
 }

@@ -30,7 +30,8 @@ class DoctrineUserRepository implements UserRepository
     {
         $user->generateHashId();
 
-        $imageProfileName = $user->getUsername() . '_ImageProfile_' . $_FILES['files']['name'][0];
+        $extension = '.' . explode(".", $_FILES['files']['name'][0])[1];
+        $imageProfileName =  'ImageProfile_' . $user->getUsername() . $extension;
 
         $sql = 'INSERT INTO users(hash_id, name, username, email, birth_date, phone_number, password, profile_image) VALUES(:hash_id, :name, :username, :email, :birth_date, :phone_number, :password, :profile_image)';
         $stmt = $this->database->prepare($sql);
@@ -112,6 +113,25 @@ class DoctrineUserRepository implements UserRepository
             $stmt->execute();
         }
     }
+
+    public function getImageProfileUser(){
+        //session_start();
+        $hash_id = $_SESSION['user_id'];
+
+        if($hash_id != -1) {
+            $sql = 'SELECT profile_image FROM users WHERE hash_id LIKE :hash_id';
+            $stmt = $this->database->prepare($sql);
+            $stmt->bindValue('hash_id', $hash_id, 'string');
+            $stmt->execute();
+            $result = $stmt->fetchAll();
+            $imageProfile = $result[0]['profile_image'];
+var_dump($imageProfile);
+            //            return $result[0]['profile_image'];
+        }
+        return 1;
+
+    }
+
 
     public function deleteUser(){
         session_start();
