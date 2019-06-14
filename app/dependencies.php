@@ -194,6 +194,13 @@ $container['get_products_repository'] = function ($container){
     return $service;
 };
 
+$container['get_products2_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\GetProducts2UseCase(
+        $container->get('product_repository')
+    );
+    return $service;
+};
+
 $container['get_product_repository'] = function ($container){
     $service = new SallePW\pwpop\Model\UseCase\GetProductUseCase(
         $container->get('product_repository')

@@ -3,7 +3,6 @@
 {% block content %}
 
     {%  if user_id == -1 %}
-        <img src= {{ image_profile }} border="1" alt="img user" width="52" height="52">
 
         <form id="form_login" class="col" action="/search" enctype="application/x-www-form-urlencoded" method="POST">
             <div class="container h-100">
@@ -18,6 +17,7 @@
         <a href="{{ url }}/login" >Sing In</a><br>
         <a href="{{ url }}/register">Sing Up</a>
 
+
         <h1 class="text-center alert alert-primary">Home</h1>
 
         {% if found == 0 %}
@@ -31,36 +31,41 @@
 
 
         <div class="container">
-            {% for product in products %}
-                {% if  product['sold_out'] == 0 %}
-                    {% if product['is_active'] == 1 %}
-                        <div class="row">
 
-                            <div class="col-sm-4">
-                                <div class="row">
-                                    <a class="product" href="product/{{ product['id'] }}"><img class="product" src="{{ base_url }}../assets/images/{{ product['product_image'] }}"></a>
+                {% for product in products %}
+                    {% if  product['sold_out'] == 0 %}
+                        {% if product['is_active'] == 1 %}
+                            <div class="row">
+
+                                <div class="col-sm-4">
+                                    <div class="row">
+                                        <a class="product" href="product/{{ product['id'] }}"><img class="product" src="{{ base_url }}../assets/images/{{ product['product_image'] }}"></a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="row">
+                                        Price:
+                                        {{ product['price'] }}
+                                    </div>
+                                    <div class="row">
+                                        Product name:
+                                        {{ product['title'] }}
+                                    </div>
+                                    <div class="row">
+                                        Product Description:
+                                        {{ product['description'] }}
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
-                                <div class="row">
-                                    Price:
-                                    {{ product['price'] }}
-                                </div>
-                                <div class="row">
-                                    Product name:
-                                    {{ product['title'] }}
-                                </div>
-                                <div class="row">
-                                    Product Description:
-                                    {{ product['description'] }}
-                                </div>
-                            </div>
-                        </div>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
-            {% endfor %}
+                {% endfor %}
 
         </div>
+
+
+
+
 
     {%  else %}
         {{ image_profile }}

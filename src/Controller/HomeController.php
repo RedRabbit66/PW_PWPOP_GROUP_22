@@ -50,14 +50,18 @@ class HomeController
                 var_dump($imageProfile);
 
             }catch (\Exception $e) {
-//echo "hola";
+
             }
 
         }
 
+        if($user_id != -1){
+
         $service = $this->container->get('get_products_repository');
         $products = $service();
 
+        var_dump($products);
+        echo(sizeof($products));
 
         if($imageProfile != -1){
             $imageProfile = '/../../public/assets/images/'. $imageProfile;
@@ -72,6 +76,21 @@ class HomeController
             return $this->container->get('view')->render($response, 'login.html.twig', ['action' => $action, 'statusValue' => $status, 'image_profile' => $imageProfile]);
         }
 
-        //return $this->container->get('view')->render($response, 'home.html.twig', ['user_id' => $user_id, 'products' => $products, 'found' => $found, 'image_profile' => $imageProfile]);
+        return $this->container->get('view')->render($response, 'home.html.twig', ['user_id' => $user_id, 'products' => $products, 'productsSize' => sizeof($products), 'found' => $found, 'image_profile' => $imageProfile]);
+
+        }
+
+        if ($user_id == -1){
+
+            $service = $this->container->get('get_products_repository');
+            $products = $service();
+
+            return $this->container->get('view')->render($response, 'home.html.twig', ['user_id' => $user_id, 'products' => $products, 'found' => $found, 'image_profile' => $imageProfile]);
+
+
+
+        }
+
+
     }
 }

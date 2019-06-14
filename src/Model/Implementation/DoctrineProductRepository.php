@@ -63,6 +63,17 @@ class DoctrineProductRepository implements ProductRepository
 
     public function getProducts()
     {
+
+        $sql = 'SELECT * FROM products ORDER BY dateUpload';
+        $stmt = $this->database->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        return $result;
+    }
+
+    public function getProducts2()
+    {
         //echo$_SESSION['user_id'];
         if(isset($_SESSION['user_id'])) {
             $user_hash_id = $_SESSION['user_id'];
@@ -81,6 +92,28 @@ class DoctrineProductRepository implements ProductRepository
 
         return $result;
     }
+
+    public function getProducts3()
+    {
+        //echo$_SESSION['user_id'];
+        if(isset($_SESSION['user_id'])) {
+            $user_hash_id = $_SESSION['user_id'];
+        }else{
+
+            return -1;
+        }
+
+        $userId = $this->getUserIdByHashId($user_hash_id);
+
+        $sql = 'SELECT * FROM products WHERE user_id NOT LIKE :user_id ORDER BY dateUpload LIMIT 5';
+        $stmt = $this->database->prepare($sql);
+        $stmt->bindValue('user_id', $userId, 'string');
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+
+        return $result;
+    }
+
 
     public function getProduct($productId)
     {

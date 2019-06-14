@@ -50,13 +50,38 @@ class UploadProductController
             }
         }
 
-        $protocol = $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
-            || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
-        $response = $response
-            ->withStatus($status)
-            ->withHeader('Location', $protocol . $_SERVER['SERVER_NAME'] . '/?status=' . $status);
+        session_start();
+        $found = 1;
+        $imageProfile = -1;
 
-        return $response;
+        if (empty($_SESSION['user_id'])) {
+            $user_id = -1;
+
+
+        } else{
+
+            $user_id = $_SESSION['user_id'];
+            try {
+                $service = $this->container->get('get_image_profile_repository');
+                $imageProfile = $service();
+                var_dump($imageProfile);
+
+            }catch (\Exception $e) {
+
+            }
+            }
+
+
+            $service = $this->container->get('get_products_repository');
+            $products = $service();
+
+        if($imageProfile != -1){
+            $imageProfile = '/../../public/assets/images/'. $imageProfile;
+        }else{
+            $imageProfile = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSODALYDYo2dqN0DG_kPNi2X7EAy1K8SpRRZQWkNv9alC62IHggOw';
+        }
+
+        return $this->container->get('view')->render($response, 'home.html.twig', ['user_id' => $user_id, 'products' => $products, 'found' => $found, 'image_profile' => $imageProfile]);
     }
 
     public function validateProductUpload(){
