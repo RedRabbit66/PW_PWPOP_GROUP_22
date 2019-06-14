@@ -81,6 +81,12 @@ class UploadProductController
             $imageProfile = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSODALYDYo2dqN0DG_kPNi2X7EAy1K8SpRRZQWkNv9alC62IHggOw';
         }
 
+        $response = $response
+            ->withStatus($status)
+            ->withHeader('Location', '/');
+
+
+
         return $this->container->get('view')->render($response, 'home.html.twig', ['user_id' => $user_id, 'products' => $products, 'found' => $found, 'image_profile' => $imageProfile]);
     }
 

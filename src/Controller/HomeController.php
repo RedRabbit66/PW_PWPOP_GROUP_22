@@ -44,6 +44,7 @@ class HomeController
         } else{
 
             $user_id = $_SESSION['user_id'];
+
             try {
                 $service = $this->container->get('get_image_profile_repository');
                 $imageProfile = $service();
@@ -60,8 +61,6 @@ class HomeController
         $service = $this->container->get('get_products_repository');
         $products = $service();
 
-        var_dump($products);
-        echo(sizeof($products));
 
         if($imageProfile != -1){
             $imageProfile = '/../../public/assets/images/'. $imageProfile;
@@ -88,9 +87,7 @@ class HomeController
             return $this->container->get('view')->render($response, 'home.html.twig', ['user_id' => $user_id, 'products' => $products, 'found' => $found, 'image_profile' => $imageProfile]);
 
 
-
         }
-
 
     }
 }

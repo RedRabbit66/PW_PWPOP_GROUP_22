@@ -30,9 +30,12 @@ class LoginController
         $errors = $this->validateUser();
         $id = '0';
 
-       if(sizeof($errors) != 0){
+       /*if(sizeof($errors) != 0){
             $id = -1;
-        } else {
+        */
+       if(0!=0){
+
+       } else {
             try {
                 $data = $request->getParsedBody();
                 $service = $this->container->get('check_user_repository');
@@ -50,7 +53,7 @@ class LoginController
             || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
         $url = $protocol . $_SERVER['SERVER_NAME'];
 
-        if ($id == '-1') {
+        if ($id == -1) {
             $status = 302;
             $url = $url . '/login' . '?action=login_user&status=error';
 

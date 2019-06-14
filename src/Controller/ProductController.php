@@ -44,16 +44,17 @@ class ProductController
                     //Restar 1 en el stock ($soldOut = 1) en sql
                     $service = $this->container->get('set_product_soldout_repository');
                     $service($product[0]['id']);
+
                     $productPropietary = $product[0]['user_id'];
 
                     $service = $this->container->get('get_user_repository');
                     $vendor = $service($productPropietary);
 
+                    session_start();
 
-
-                    if (session_status() == PHP_SESSION_ACTIVE) {
+                    /*if (session_status() == PHP_SESSION_ACTIVE) {
                         session_start();
-                    }
+                    }*/
 
                     $service = $this->container->get('search_user_repository');
                     $user = $service();

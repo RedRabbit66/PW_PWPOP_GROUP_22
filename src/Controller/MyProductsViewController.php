@@ -45,29 +45,5 @@ class MyProductsViewController
 
         return $this->container->get('view')->render($response, 'myproducts.html.twig', ['user_id' => $user_id, 'products' => $products, 'found' => $found]);
 
-
-
-
-        /*
-        session_start();
-
-        //echo($_SESSION['user_id']);
-
-        if (empty($_SESSION['user_id'])) {
-            $user_id = -1;
-            //echo($user_id);
-
-
-        } else{
-            $user_id = $_SESSION['user_id'];
-        }
-
-
-
-        $service = $this->container->get('get_my_products_repository');
-        $products = $service($user_id);
-
-        return $this->container->get('view')->render($response, 'myproducts.html.twig', ['user_id' => $user_id, 'products' => $products]);
-        */
     }
 }

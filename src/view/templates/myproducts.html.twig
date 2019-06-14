@@ -52,7 +52,10 @@
                             Product name:
                             {{ product['title'] }}
                         </div>
-
+                        <div class="row">
+                            Delete product:
+                            <form action="/deleteProduct/{{ product['id'] }}" method="POST"><button type="submit" name="button" class="btn btn-success btn-product" enctype="application/x-www-form-urlencoded" >DELETE</button></form>
+                        </div>
                     </div>
                 </div>
         {% endfor %}

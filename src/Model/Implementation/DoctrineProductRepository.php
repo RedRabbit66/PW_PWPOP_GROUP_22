@@ -141,10 +141,10 @@ class DoctrineProductRepository implements ProductRepository
         $product->generateHashId();
         //falta gestion image
         session_start();
-        $user_hash_id = $_SESSION['user_id'];
-
+        $user_id = $_SESSION['user_id'];
+        /*
         $user_id = $this->getUserIdByHashId($user_hash_id);
-
+        */
         //echo($user_id);
 
         //$user_id = $_SESSION['user_id'];
@@ -160,13 +160,6 @@ class DoctrineProductRepository implements ProductRepository
         $stmt->bindValue('category', $product->getCategory(), 'string');
         $stmt->bindValue('title', $product->getTitle(), 'string');
         $stmt->bindValue('product_image', 'photo', 'string');
-
-        echo($product->getHashId()."!!");
-        echo($user_id ."!!");
-        echo($product->getDescription()."!!");
-        echo($product->getPrice()."!!");
-        echo($product->getCategory()."!!");
-        echo($product->getTitle()."!!");
 
         $stmt->execute();
     }
@@ -207,12 +200,10 @@ class DoctrineProductRepository implements ProductRepository
 
     public function getMyProducts(){
 
-        $userHashId = $_SESSION['user_id'];
-        echo($userHashId);
-
+        $user_id = $_SESSION['user_id'];
+        /*
         $user_id = $this->getUserIdByHashId($userHashId);
-
-        echo($user_id);
+        */
         $sql = 'SELECT * FROM products WHERE user_id LIKE :user_id';
         $stmt = $this->database->prepare($sql);
         $stmt->bindValue('user_id', $user_id, 'string');
@@ -224,10 +215,9 @@ class DoctrineProductRepository implements ProductRepository
     }
 
     public function deleteProduct($productId){
-        $sql = 'UPDATE products SET is_active = :is_active WHERE id LIKE :productId';
+        $sql = 'DELETE FROM products WHERE id LIKE :id';
         $stmt = $this->database->prepare($sql);
-        $stmt->bindValue('is_active', 1, 'string');
-        $stmt->bindValue('productId', $productId, 'string');
+        $stmt->bindValue('id', $productId, 'string');
         $stmt->execute();
     }
 

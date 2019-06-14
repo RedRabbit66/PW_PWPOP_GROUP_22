@@ -50,10 +50,11 @@ class DoctrineUserRepository implements UserRepository
     public function getUserId($email, $password) {
         $hashId = '-1';
 
-        $sql = 'SELECT hash_id FROM users WHERE (email LIKE :email OR username LIKE :email) AND password LIKE :password';
+        $sql = 'SELECT hash_id FROM users WHERE (email LIKE :email OR username LIKE :email) AND password LIKE :password AND is_active LIKE :is_active';
         $stmt = $this->database->prepare($sql);
         $stmt->bindValue('email', $email, 'string');
         $stmt->bindValue('password', $password, 'string');
+        $stmt->bindValue('is_active', '1', 'string');
         $stmt->execute();
         $result = $stmt->fetchAll();
         foreach($result as $row) {
@@ -151,8 +152,15 @@ var_dump($imageProfile);
                 $user_id = $row['id'];
             }
 
-            //Borramos el usuario
-            $sql = 'DELETE FROM users WHERE id LIKE :user_id';
+            //Ponemos a 0 el is_active del usuario
+            $sql = 'UPDATE users SET is_active = 0 WHERE id LIKE :user_id';
+            $stmt = $this->database->prepare($sql);
+            $stmt->bindValue('user_id', $user_id, 'string');
+            $stmt->execute();
+
+
+            //Ponemos a 0 el is_active de los products del usuario
+            $sql = 'UPDATE products SET is_active = 0 WHERE user_id LIKE :user_id';
             $stmt = $this->database->prepare($sql);
             $stmt->bindValue('user_id', $user_id, 'string');
             $stmt->execute();
@@ -212,7 +220,7 @@ var_dump($imageProfile);
     }
 
     public function getUser($id){
-        $sql = 'SELECT name, username, email, birth_date, phone_number FROM users WHERE id LIKE :id';
+        $sql = 'SELECT name, username, email, birth_date, phone_number FROM users WHERE hash_id LIKE :id';
         $stmt = $this->database->prepare($sql);
         $stmt->bindValue('id', $id, 'string');
         $stmt->execute();

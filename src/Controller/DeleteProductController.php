@@ -33,6 +33,6 @@ class DeleteProductController
             //Error, no product
         }
 
-        return $response->withStatus(200)->withHeader('Location', '/');
+        return $response->withStatus(200)->withHeader('Location', '/myproducts');
     }
 }

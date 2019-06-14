@@ -54,18 +54,26 @@ class RegisterController
                 $service($data);
 
                 $status = 200;
+
+                $response = $response
+                    ->withStatus($status)
+                    ->withHeader('Location', '/login');
+
+                return $response;
+
             } catch (\Exception $e) {
                 $status = 302;
+
+                $response = $response
+                    ->withStatus($status)
+                    ->withHeader('Location', '/register');
+
+                return $response;
+
             }
         }
 
-        $protocol = $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
-            || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
-        $response = $response
-            ->withStatus($status)
-            ->withHeader('Location', '/login');
 
-        return $response;
     }
 
     public function validateUser(){
