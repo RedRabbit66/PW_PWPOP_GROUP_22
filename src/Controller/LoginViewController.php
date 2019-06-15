@@ -34,7 +34,7 @@ class LoginViewController
         if (sizeof($params)!=0){
             $action = $params['action'];
             $status = $params['status'];
-            return $this->container->get('view')->render($response, 'login.html.twig', ['action' => $action, 'statusValue' => $status]);
+            return $this->container->get('view')->render($response, 'login.html.twig', ['action' => $action, 'statusValue' => $status, 'LoginFail' => '0']);
         }
 
         return $this->container->get('view')->render($response, 'login.html.twig');

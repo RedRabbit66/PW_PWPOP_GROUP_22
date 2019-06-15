@@ -58,7 +58,7 @@ class HomeController
 
         if($user_id != -1){
 
-        $service = $this->container->get('get_products_repository');
+        $service = $this->container->get('get_products2_repository');
         $products = $service();
 
 

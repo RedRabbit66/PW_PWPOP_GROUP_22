@@ -160,9 +160,10 @@ var_dump($imageProfile);
 
 
             //Ponemos a 0 el is_active de los products del usuario
-            $sql = 'UPDATE products SET is_active = 0 WHERE user_id LIKE :user_id';
+            //DELETE FROM products WHERE id LIKE :id
+            $sql = 'DELETE FROM products WHERE user_id LIKE :user_id';
             $stmt = $this->database->prepare($sql);
-            $stmt->bindValue('user_id', $user_id, 'string');
+            $stmt->bindValue('user_id', $hash_id, 'string');
             $stmt->execute();
 
             //Reedirigimos a la landing page y cerramos la session

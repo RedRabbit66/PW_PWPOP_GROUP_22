@@ -44,16 +44,16 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="row">
-                                        Price:
-                                        {{ product['price'] }}
-                                    </div>
-                                    <div class="row">
                                         Product name:
                                         {{ product['title'] }}
                                     </div>
                                     <div class="row">
                                         Product Description:
                                         {{ product['description'] }}
+                                    </div>
+                                    <div class="row">
+                                        Price:
+                                        {{ product['price'] }}
                                     </div>
                                 </div>
                             </div>
@@ -81,7 +81,7 @@
             </div>
         </form>
         <a href="{{ url }}/profile">User Profile</a><br>
-        <a href="{{ url }}/uploadproduct">Upload Product</a>
+        <a href="{{ url }}/uploadproduct">Add item</a>
         <br>
         <a href="{{ url }}/myproducts">My Products</a>
         <br>
@@ -112,16 +112,16 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="row">
-                                        Price:
-                                        {{ product['price'] }}
-                                    </div>
-                                    <div class="row">
                                         Product name:
                                         {{ product['title'] }}
                                     </div>
                                     <div class="row">
                                         Product Description:
                                         {{ product['description'] }}
+                                    </div>
+                                    <div class="row">
+                                        Price:
+                                        {{ product['price'] }}
                                     </div>
                                     <div class="col-md-6">
                                         <form action="/buy/{{ product['id'] }}" method="POST"><button type="submit" name="button" class="btn btn-success btn-product" enctype="application/x-www-form-urlencoded" ><span class="glyphicon glyphicon-shopping-cart"></span>BUY</button></form>

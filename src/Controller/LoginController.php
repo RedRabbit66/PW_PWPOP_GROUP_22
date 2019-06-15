@@ -37,15 +37,26 @@ class LoginController
 
        } else {
             try {
+                $loginFail = '0';
                 $data = $request->getParsedBody();
                 $service = $this->container->get('check_user_repository');
                 $data = $service($data);
 
+                if($data['user_id'] != '-1'){
+
                 $id = $data['user_id'];
                 session_start();
 
+                }else{
+                    session_destroy();
+                    $loginFail = '1';
+                    return $this->container->get('view')->render($response, 'login.html.twig', ['LoginFail' => $loginFail]);
+                }
+
             } catch (\Exception $e) {
-                $id = '-1';
+                session_destroy();
+                $loginFail = '1';
+                return $this->container->get('view')->render($response, 'login.html.twig', ['LoginFail' => $loginFail]);
             }
         }
 

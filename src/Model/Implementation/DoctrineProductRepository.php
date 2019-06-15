@@ -64,7 +64,7 @@ class DoctrineProductRepository implements ProductRepository
     public function getProducts()
     {
 
-        $sql = 'SELECT * FROM products ORDER BY dateUpload';
+        $sql = 'SELECT * FROM products ORDER BY dateUpload LIMIT 5';
         $stmt = $this->database->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
@@ -75,18 +75,20 @@ class DoctrineProductRepository implements ProductRepository
     public function getProducts2()
     {
         //echo$_SESSION['user_id'];
-        if(isset($_SESSION['user_id'])) {
+        /*if(isset($_SESSION['user_id'])) {
             $user_hash_id = $_SESSION['user_id'];
         }else{
 
             return -1;
         }
 
-        $userId = $this->getUserIdByHashId($user_hash_id);
+        $userId = $this->getUserIdByHashId($user_hash_id);*/
 
-        $sql = 'SELECT * FROM products WHERE user_id NOT LIKE :user_id ORDER BY dateUpload LIMIT 5';
+        $user_id = $_SESSION['user_id'];
+
+        $sql = 'SELECT * FROM products WHERE user_id NOT LIKE :user_id ORDER BY dateUpload';
         $stmt = $this->database->prepare($sql);
-        $stmt->bindValue('user_id', $userId, 'string');
+        $stmt->bindValue('user_id', $user_id, 'string');
         $stmt->execute();
         $result = $stmt->fetchAll();
 
@@ -169,13 +171,15 @@ class DoctrineProductRepository implements ProductRepository
         $inputSearch1 = '%' . $input . '%';
         $inputSearch2 = $input . '%';
         $inputSearch3 = '%' . $input;
+        $inputSearch4 = $input;
 
         $sql = 'SELECT * FROM products WHERE title LIKE 
-                :inputSearch1 OR title LIKE :inputSearch2 OR title LIKE :inputSearch3 ORDER BY dateUpload DESC LIMIT 5';
+                :inputSearch1 OR title LIKE :inputSearch2 OR title LIKE :inputSearch3 OR title LIKE :inputSearch4 ORDER BY dateUpload DESC LIMIT 5';
         $stmt = $this->database->prepare($sql);
         $stmt->bindValue('inputSearch1', $inputSearch1, 'string');
         $stmt->bindValue('inputSearch2', $inputSearch2, 'string');
         $stmt->bindValue('inputSearch3', $inputSearch3, 'string');
+        $stmt->bindValue('inputSearch4', $inputSearch4, 'string');
         $stmt->execute();
         $result = $stmt->fetchAll();
 

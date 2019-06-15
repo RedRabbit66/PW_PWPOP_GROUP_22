@@ -10,7 +10,7 @@ namespace SallePW\pwpop\Model\UseCase;
 
 use SallePW\pwpop\Model\ProductRepository;
 
-class GetProductsUseCase {
+class GetProducts2UseCase {
 
     private $repo;
 

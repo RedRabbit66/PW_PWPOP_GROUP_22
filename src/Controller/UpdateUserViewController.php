@@ -24,7 +24,7 @@ class UpdateUserViewController
     public function __invoke(Request $request, Response $response) {
         session_start();
         if (session_status() == PHP_SESSION_ACTIVE) {
-            if (isset($_SESSION['user_id'])) {
+            if (isset($_SESSION['user_id']) && $_SESSION['user_id'] != -1) {
                 $service = $this->container->get('search_user_repository');
                 $user = $service();
                 $protocol = $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
@@ -39,7 +39,20 @@ class UpdateUserViewController
                     ['name' => $user['name'], 'username' => $user['username'],  'email' => $user['email'],
                         'birthday' => $user['birthday'], 'phone_number' => $user['phone_number'], 'url' => $url,
                         'action' => $action, 'statusMessage' => $statusMessage]);
+            }else{
+                $response = $response
+                    ->withStatus(403)
+                    ->withHeader('403 Forbidden', '/');
+                echo "403 Error - You are forbidden!";
+                //return $response;
             }
+        }else{
+            $response = $response
+                ->withStatus(403)
+                ->withHeader('403 Forbidden', '/');
+            echo "403 Error - You are forbidden!";
+            //return $response;
+
         }
     }
 }
