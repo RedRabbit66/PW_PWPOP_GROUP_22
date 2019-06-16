@@ -27,6 +27,6 @@ $app->post('/deleteProduct[/{productid}]', 'SallePW\pwpop\Controller\DeleteProdu
     return $response->withStatus(302)->withHeader('Location', '/');
 });*/
 
-$app->post('/files',  ImageUploadController::class . ':uploadAction')->setName('upload');
+//$app->post('/files',  ImageUploadController::class . ':uploadAction')->setName('upload');
 
-$app->get('/Activation_mail[/{key}]', 'SallePW\pwpop\controller\ActivationMailController');
+//$app->get('/Activation_mail[/{key}]', 'SallePW\pwpop\controller\ActivationMailController');

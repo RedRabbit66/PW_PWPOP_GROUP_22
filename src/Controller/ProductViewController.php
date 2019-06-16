@@ -32,12 +32,19 @@ class ProductViewController
         session_start();
 
         if (empty($_SESSION['user_id'])) {
-            $user_id = -1;
-            //echo($user_id);
 
+            $protocol = $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
+                || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
+            $url = $protocol . $_SERVER['SERVER_NAME'];
+
+            $url = $url . '/login';
+
+            return $this->container->get('view')->render($response->withHeader('Location', $url), 'login.html.twig');
 
         } else{
+
             $user_id = $_SESSION['user_id'];
+
         }
 
         $product = NULL;
@@ -46,14 +53,17 @@ class ProductViewController
             $product = $service($args['productid']);
 
 
-            if(!$product[0]['is_active']){
-                echo("No product, not avaliable");
+            if (!$product[0]['is_active']) {
+                echo("Product not avaliable");
 
+            } elseif ($product[0]['sold_out']){
+                echo("ERROR 404 - Product sold out");
             }else{
                 //echo($product[0]['title']);
                 return $this->container->get('view')->render($response, 'product.html.twig', ['user_id' => $user_id, 'product' => $product]);
             }
         } else {
+            echo "Error 404 - Page not found";
             //Error
            //return $this->container->get('view')->render($response, 'home.html.twig');
         }

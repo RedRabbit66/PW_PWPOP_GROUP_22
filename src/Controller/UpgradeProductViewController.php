@@ -29,17 +29,41 @@ class UpgradeProductViewController
      */
     public function __invoke(Request $request, Response $response, array $args)
     {
-        $product = NULL;
-        if (isset($args['productid'])) {
-            $service = $this->container->get('get_product_repository');
-            $product = $service($args['productid']);
 
-            //echo($product[0]['title']);
-            return $this->container->get('view')->render($response, 'upgradeProduct.html.twig', ['product' => $product]);
-        } else {
-            //Error
-            return $this->container->get('view')->render($response, 'home.html.twig');
+        session_start();
+
+        $protocol = $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
+            || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
+        $url = $protocol . $_SERVER['SERVER_NAME'];
+
+        if (empty($_SESSION['user_id'])){
+            $url = $url . '/login';
+            return $this->container->get('view')->render($response->withHeader('Location', $url), 'login.html.twig');
+
+        }else {
+
+            $product = NULL;
+            if (isset($args['productid'])) {
+
+                $service = $this->container->get('get_product_repository');
+                $product = $service($args['productid']);
+                if($product[0]['id_user'] == $_SESSION['user_id']){
+
+                return $this->container->get('view')->render($response, 'upgradeProduct.html.twig', ['product' => $product]);
+
+                }else{
+
+                    $url = $url . '/login';
+                    return $this->container->get('view')->render($response->withHeader('Location', $url), 'login.html.twig');
+
+                }
+
+            } else {
+
+                return $this->container->get('view')->render($response, 'home.html.twig');
+
+            }
+
         }
-        //return $this->container->get('view')->render($response, 'home.html.twig');
     }
 }

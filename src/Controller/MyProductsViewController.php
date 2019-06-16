@@ -30,20 +30,27 @@ class MyProductsViewController
     {
 
         session_start();
-        if (empty($_SESSION['user_id'])) {
-            $user_id = -1;
-            $products = null;
-            $found = 0;
-        } else{
+
+        $protocol = $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
+            || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
+        $url = $protocol . $_SERVER['SERVER_NAME'];
+
+        if (empty($_SESSION['user_id'])){
+
+            $url = $url . '/login';
+            return $this->container->get('view')->render($response->withHeader('Location', $url), 'login.html.twig');
+
+        }else{
+
             $user_id = $_SESSION['user_id'];
 
             $service = $this->container->get('get_my_products_repository');
             $products = $service();
             $found = 1;
+
+            return $this->container->get('view')->render($response, 'myproducts.html.twig', ['user_id' => $user_id, 'products' => $products, 'found' => $found]);
+
         }
-
-
-        return $this->container->get('view')->render($response, 'myproducts.html.twig', ['user_id' => $user_id, 'products' => $products, 'found' => $found]);
 
     }
 }

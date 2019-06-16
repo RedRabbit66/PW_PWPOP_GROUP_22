@@ -48,7 +48,6 @@ class LoginController
                 session_start();
 
                 }else{
-                    session_destroy();
                     $loginFail = '1';
                     return $this->container->get('view')->render($response, 'login.html.twig', ['LoginFail' => $loginFail]);
                 }

@@ -40,44 +40,57 @@ class ProductController
                     //No hay disponibles
                     $soldOut = 1;
 
+                    $protocol = $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
+                        || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
+                    $url = $protocol . $_SERVER['SERVER_NAME'];
+
+                    $url = $url . '/';
+                    return $this->container->get('view')->render($response->withHeader('Location', $url), 'home.html.twig');
+
+
                 } else {
-                    //Restar 1 en el stock ($soldOut = 1) en sql
-                    $service = $this->container->get('set_product_soldout_repository');
-                    $service($product[0]['id']);
-
-                    $productPropietary = $product[0]['user_id'];
-
-                    $service = $this->container->get('get_user_repository');
-                    $vendor = $service($productPropietary);
 
                     session_start();
 
-                    /*if (session_status() == PHP_SESSION_ACTIVE) {
-                        session_start();
-                    }*/
+                    $protocol = $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
+                        || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
+                    $url = $protocol . $_SERVER['SERVER_NAME'];
 
-                    $service = $this->container->get('search_user_repository');
-                    $user = $service();
+                    if (empty($_SESSION['user_id'])){
 
-                    $buyerUsername = $user['username'];
-                    $buyerEmail = $user['email'];
-                    $buyerPhone = $user['phone_number'];
+                        $url = $url . '/';
+                        return $this->container->get('view')->render($response->withHeader('Location', $url), 'home.html.twig');
 
+                    }else{
 
+                        //Restar 1 en el stock ($soldOut = 1) en sql
+                        $service = $this->container->get('set_product_soldout_repository');
+                        $service($product[0]['id']);
 
-                    $message = "<html><head><title>Your product has been buyed</title></head><body>The buyer is " . $buyerUsername . "\n Get in contact with him with his email: " . $buyerEmail . " and his mobile phone: " . $buyerPhone . "</body></html>";
+                        $productPropietary = $product[0]['user_id'];
 
+                        $service = $this->container->get('get_user_repository');
+                        $vendor = $service($productPropietary);
 
-                    //Enviar mail
-                    /*$service = $this->container->get('send_mail_service');
-                    $service($username, $to, "<html><head><title>TITOL</title></head><body><h1>Hola</h1></body></html>");
-                    */
+                        $service = $this->container->get('search_user_repository');
+                        $user = $service();
 
-                    $this->sendMail2( $vendor['email'], $message);
+                        $buyerUsername = $user['username'];
+                        $buyerEmail = $user['email'];
+                        $buyerPhone = $user['phone_number'];
 
-                    //$this->sendMail($username, $to, "<html><head><title>TITOL</title></head><body><h1>Hola</h1></body></html>");
+                        $message = "<html><head><title>Your product has been buyed</title></head><body>The buyer is " . $buyerUsername . "\n Get in contact with him with his email: " . $buyerEmail . " and his mobile phone: " . $buyerPhone . "</body></html>";
 
-                    return $response->withStatus(200)->withHeader('Location', '/');
+                        //Enviar mail
+                        /*$service = $this->container->get('send_mail_service');
+                        $service($username, $to, "<html><head><title>TITOL</title></head><body><h1>Hola</h1></body></html>");
+                        */
+
+                        $this->sendMail2( $vendor['email'], $message);
+
+                        return $response->withStatus(200)->withHeader('Location', '/');
+
+                    }
 
                 }
 
@@ -88,34 +101,6 @@ class ProductController
 
     }
 
-    private function sendMail(string $username, string $to, string $message){
-
-
-
-        try {
-            $settings = $this->container->get('settings')['mailer'];
-
-            $mail = new \PHPMailer\PHPMailer\PHPMailer(true);  // Passing `true` enables exceptions
-            //Server settings
-            $mail->CharSet="UTF-8";
-            $mail->SMTPDebug = 2;                                 // Enable verbose debug output
-            $mail->isSMTP();                                      // Set mailer to use SMTP
-            $mail->Host = $settings['host'];  // Specify main and backup SMTP servers
-            $mail->SMTPAuth = true;                               // Enable SMTP authentication
-            $mail->Username = $settings['username'];                 // SMTP username
-            $mail->Password = $settings['password'];                           // SMTP password
-            $mail->SMTPSecure = $settings['encryption'];                            // Enable TLS encryption, `ssl` also accepted
-            $mail->Port = $settings['port'];
-            $mail->addAddress($to);
-            $mail->MsgHTML($message);
-            $mail->setFrom($settings['username'], 'Mailer');
-
-            $mail->send();
-
-        } catch (Exception $e) {
-
-        }
-    }
 
     private function sendMail2(string $to, string $message){
         //Import PHPMailer classes into the global namespace

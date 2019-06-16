@@ -31,6 +31,21 @@ class UploadProductViewController
      */
     public function __invoke(Request $request, Response $response)
     {
-        return $this->container->get('view')->render($response, 'uploadProduct.html.twig');
+        session_start();
+
+        $protocol = $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
+            || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
+        $url = $protocol . $_SERVER['SERVER_NAME'];
+
+        if (empty($_SESSION['user_id'])){
+
+            $url = $url . '/login';
+            return $this->container->get('view')->render($response->withHeader('Location', $url), 'login.html.twig');
+
+        }else{
+
+            return $this->container->get('view')->render($response, 'uploadProduct.html.twig');
+
+        }
     }
 }

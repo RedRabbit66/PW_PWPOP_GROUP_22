@@ -68,7 +68,6 @@ class DoctrineUserRepository implements UserRepository
 
     public function searchUser(){
 
-        session_start();
         $hash_id = $_SESSION['user_id'];
 
         if($hash_id != -1){
@@ -161,7 +160,8 @@ var_dump($imageProfile);
 
             //Ponemos a 0 el is_active de los products del usuario
             //DELETE FROM products WHERE id LIKE :id
-            $sql = 'DELETE FROM products WHERE user_id LIKE :user_id';
+            //UPDATE products SET is_active = 0 WHERE user_id LIKE :user_id
+            $sql = 'UPDATE products SET is_active = 0 WHERE user_id LIKE :user_id';
             $stmt = $this->database->prepare($sql);
             $stmt->bindValue('user_id', $hash_id, 'string');
             $stmt->execute();
