@@ -24,8 +24,12 @@ class LogoutController
     public function __invoke(Request $request, Response $response) {
         session_start();
 
+        $id = $_SESSION['user_id'];
+
         if (session_status() == PHP_SESSION_ACTIVE) {
             session_destroy();
+            $cookie = $id;
+            setcookie("Sessio", $cookie, time()-7200);
         }
 
         $protocol = $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
