@@ -26,8 +26,7 @@
     <h1 class="text-center alert alert-primary">My Products</h1>
 
     <div class="row m-4 text-center">
-
-        <form id="form_login" class="col" action="/upgradeProduct" enctype="multipart/form-data" method="POST">
+        <form id="form_login" class="col" action="/updateProduct/{{ product[0]['id'] }}" enctype="multipart/form-data" method="POST">
             <h2 class="mb-4">Upgrade your product: {{ product[0]['title'] }}</h2>
             <div class="form-group"><input id="uploadProduct_Name" type="text" name="uploadProduct_Name" class="form-control-sm" style="width: 400px; font-size: 20px" onkeyup="comprovaUpload_Name()" value={{ product[0]['title'] }}></div>
             <div class="form-group"><span id="errorUpload_Name" style="color: red"></span></div>
@@ -49,7 +48,9 @@
             <div class="form-group"><input id="uploadProduct_Price" type="text" name="uploadProduct_Price" class="form-control-sm" style= "width: 75px" onkeyup="comprovaUpload_Price()" value={{ product[0]['price'] }}> €</div>
             <div class="form-group"><span id="errorUpload_Price" style="color: red"></span></div>
 
-            <div><button type="submit" name="button" class="btn-dark">Upgrade Product</button></div>
+            <input type="file" name="files[]" ><br><br>
+
+            <div><button type="submit" name="button" class="btn-dark">Update Product</button></div>
 
 
         </form>

@@ -27,6 +27,6 @@ class GetImageProfileUseCase
 
     public function __invoke(){
 
-        $this->repo->getImageProfileUser();
+        return $this->repo->getImageProfileUser();
     }
 }

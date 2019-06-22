@@ -72,8 +72,6 @@ class RegisterController
 
             }
         }
-
-
     }
 
     public function validateUser(){

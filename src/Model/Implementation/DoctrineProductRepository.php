@@ -141,15 +141,11 @@ class DoctrineProductRepository implements ProductRepository
     public function uploadProduct(Product $product)
     {
         $product->generateHashId();
-        //falta gestion image
+
+        $extension = '.' . explode(".", $_FILES['files']['name'][0])[1];
+        $imageProfileName =  'ImageProduct_' . $product->getHashId() . $extension;
         session_start();
         $user_id = $_SESSION['user_id'];
-        /*
-        $user_id = $this->getUserIdByHashId($user_hash_id);
-        */
-        //echo($user_id);
-
-        //$user_id = $_SESSION['user_id'];
 
         $sql = 'INSERT INTO products(hash_id, user_id, description, price, category, title, product_image) 
                 VALUES(:hash_id, :user_id, :description, :price, :category, :title, :product_image)';
@@ -161,7 +157,7 @@ class DoctrineProductRepository implements ProductRepository
         $stmt->bindValue('price', $product->getPrice(), 'string');
         $stmt->bindValue('category', $product->getCategory(), 'string');
         $stmt->bindValue('title', $product->getTitle(), 'string');
-        $stmt->bindValue('product_image', 'photo', 'string');
+        $stmt->bindValue('product_image', $imageProfileName , 'string');
 
         $stmt->execute();
     }
@@ -189,7 +185,7 @@ class DoctrineProductRepository implements ProductRepository
         return $result;
     }
 
-    public function upgradeProduct($productId, $title, $description, $price, $category){
+    public function updateProduct($productId, $title, $description, $price, $category){
 
             $sql = 'UPDATE products SET title = :title, price = :price, description = :description, category =:category WHERE id LIKE :id';
             $stmt = $this->database->prepare($sql);
@@ -199,7 +195,6 @@ class DoctrineProductRepository implements ProductRepository
             $stmt->bindValue('category', $category, 'string');
             $stmt->bindValue('id', $productId, 'string');
             $stmt->execute();
-
     }
 
     public function getMyProducts(){

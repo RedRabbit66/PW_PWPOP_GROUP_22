@@ -30,6 +30,37 @@ class LoginViewController
      */
     public function __invoke(Request $request, Response $response)
     {
+        if (isset($_COOKIE['Sessio'])) {
+            var_dump($_COOKIE['Sessio']);
+            $value = $_COOKIE['Sessio'];
+            $_SESSION['user_id'] = $value;
+            session_start();
+            $_SESSION['user_id'] = $value;
+            $found = 1;
+            $imageProfile = -1;
+
+            $protocol = $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
+                || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
+            $url = $protocol . $_SERVER['SERVER_NAME'];
+
+            if ($value == -1) {
+                $status = 302;
+                $url = $url . '/login' . '?action=login_user&status=error';
+
+            } else {
+                $_SESSION['user_id'] = $value;
+                $url = $url . '/'; //. '?action=login_user&status=success';
+                $status = 200;
+            }
+
+            $response = $response
+                ->withStatus($status)
+                ->withHeader('Location', $url);
+
+            return $response;
+
+        }
+
         $params = $request->getQueryParams();
         if (sizeof($params)!=0){
             $action = $params['action'];

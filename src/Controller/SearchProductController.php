@@ -24,7 +24,18 @@ class SearchProductController
     public function __invoke(Request $request, Response $response)
     {
         session_start();
-        $userId = $_SESSION['user_id'];
+
+        if (session_status() == PHP_SESSION_ACTIVE) {
+            if (isset($_SESSION['user_id'])){
+                $userId = $_SESSION['user_id'];
+                $service = $this->container->get('get_image_profile_repository');
+                $imageProfile = '/assets/images/' . $service();
+
+            }else{
+                $userId = -1;
+                $imageProfile = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSODALYDYo2dqN0DG_kPNi2X7EAy1K8SpRRZQWkNv9alC62IHggOw';
+            }
+         }
 
         try {
             $inputSearch = $_SERVER['REQUEST_URI'];
@@ -32,6 +43,8 @@ class SearchProductController
 
             $service = $this->container->get('search_product_repository');
             $result = $service($inputSearch);
+
+
 
         } catch (\Exception $e) {
             $result = -1;
@@ -43,6 +56,6 @@ class SearchProductController
             $found = 1;
         }
 
-        return $this->container->get('view')->render($response, 'home.html.twig', ['user_id' => $userId, 'products' => $result, 'found' => $found]);
+        return $this->container->get('view')->render($response, 'home.html.twig', ['user_id' => $userId, 'products' => $result, 'found' => $found, 'image_profile' => $imageProfile]);
     }
 }

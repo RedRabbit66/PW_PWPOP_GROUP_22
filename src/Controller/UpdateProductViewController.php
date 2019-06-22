@@ -12,7 +12,7 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
-class UpgradeProductViewController
+class UpdateProductViewController
 {
     protected $container;
 
@@ -36,31 +36,30 @@ class UpgradeProductViewController
             || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
         $url = $protocol . $_SERVER['SERVER_NAME'];
 
-        if (empty($_SESSION['user_id'])){
+        if (!isset($_SESSION['user_id'])){
+
             $url = $url . '/login';
             return $this->container->get('view')->render($response->withHeader('Location', $url), 'login.html.twig');
 
         }else {
 
             $product = NULL;
+
             if (isset($args['productid'])) {
 
                 $service = $this->container->get('get_product_repository');
                 $product = $service($args['productid']);
-                if($product[0]['id_user'] == $_SESSION['user_id']){
+                //var_dump($product[0]['user_id']);
 
-                return $this->container->get('view')->render($response, 'upgradeProduct.html.twig', ['product' => $product]);
+                if($product[0]['user_id'] == $_SESSION['user_id']){
+                    return $this->container->get('view')->render($response, 'updateProduct.html.twig', ['product' => $product]);
 
                 }else{
-
-                    $url = $url . '/login';
-                    return $this->container->get('view')->render($response->withHeader('Location', $url), 'login.html.twig');
-
+                    echo "Pagina no accesible!";
                 }
 
             } else {
-
-                return $this->container->get('view')->render($response, 'home.html.twig');
+                echo "Pagina no accesible!";
 
             }
 

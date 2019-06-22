@@ -59,6 +59,7 @@ class ProductController
                     if (empty($_SESSION['user_id'])){
 
                         $url = $url . '/';
+                        //cambiar por /login
                         return $this->container->get('view')->render($response->withHeader('Location', $url), 'home.html.twig');
 
                     }else{
@@ -96,9 +97,6 @@ class ProductController
 
 
         }
-
-
-
     }
 
 

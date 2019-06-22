@@ -11,11 +11,22 @@ namespace SallePW\pwpop\Controller;
 use \Psr\Container\ContainerInterface;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use \Psr\Http\Message\UploadedFileInterface;
 
 
 class UpdateUserController
 {
     protected $container;
+
+    //ZONA CONSTANTES IMAGEN
+    private const UPLOADS_DIR = __DIR__ . '/../../public/assets/images';
+
+    private const UNEXPECTED_ERROR = "An unexpected error occurred uploading the file '%s'...";
+
+    private const INVALID_EXTENSION_ERROR = "The received file extension '%s' is not valid";
+
+    // We use this const to define the extensions that we are going to allow
+    private const ALLOWED_EXTENSIONS = ['jpg', 'png'];
 
     public function __construct(ContainerInterface $container) {
         $this->container = $container;
@@ -28,10 +39,11 @@ class UpdateUserController
 
         if (0 != 0) {
             $status = 302;
-            echo "<script>alert('This is an alert');</script>";
             $statusMessage = "error";
         } else {
             try {
+                $this -> uploadAction($request, $response);
+
                 $data = $request->getParsedBody();
                 $service = $this->container->get('update_user_repository');
                 $service($data);
@@ -118,6 +130,46 @@ class UpdateUserController
             return $errors;
         }
         return -1;
+    }
+
+
+    public function uploadAction(Request $request, Response $response){
+        $uploadedFiles = $request->getUploadedFiles();
+
+        $errors = [];
+
+        //var_dump($_FILES['files']['name'][0]);
+        /** @var UploadedFileInterface $uploadedFile */
+        foreach ($uploadedFiles['files'] as $uploadedFile) {
+            if ($uploadedFile->getError() !== UPLOAD_ERR_OK) {
+                $errors[] = sprintf(self::UNEXPECTED_ERROR, $uploadedFile->getClientFilename());
+                continue;
+            }
+
+            $name = $uploadedFile->getClientFilename();
+
+            $fileInfo = pathinfo($name);
+            echo (self::UPLOADS_DIR . DIRECTORY_SEPARATOR . $name);
+
+            $format = $fileInfo['extension'];
+
+            if (!$this->isValidFormat($format)) {
+                $errors[] = sprintf(self::INVALID_EXTENSION_ERROR, $format);
+                continue;
+            }
+
+            $extension = '.' . explode(".", $_FILES['files']['name'][0])[1];
+
+            // We generate a custom name here instead of using the one coming form the form
+            $uploadedFile->moveTo(self::UPLOADS_DIR . DIRECTORY_SEPARATOR . 'ImageProfile_' . $_POST['username']. $extension);
+        }
+
+        return $this->container->get('view')->render($response, 'home.html.twig');
+    }
+
+    private function isValidFormat(string $extension): bool
+    {
+        return in_array($extension, self::ALLOWED_EXTENSIONS, true);
     }
 
     private function isValidDate(string $date){

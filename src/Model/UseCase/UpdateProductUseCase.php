@@ -10,14 +10,14 @@ namespace SallePW\pwpop\Model\UseCase;
 
 use SallePW\pwpop\Model\ProductRepository;
 
-class UpgradeProductUseCase
+class UpdateProductUseCase
 {
-    /** @var UserRepository */
+    /** @var ProductRepository */
     private $repo;
 
     /**
      * PostUserUseCase constructor.
-     * @param UserRepository $repo
+     * @param ProductRepository $repo
      */
     public function __construct(ProductRepository $repo)
     {
@@ -26,6 +26,6 @@ class UpgradeProductUseCase
 
     public function __invoke(string $productId, string $title, string $description, string $price, string $category){
 
-        $this->repo->upgradeProduct($productId, $title, $description, $price, $category);
+        $this->repo->updateProduct($productId, $title, $description, $price, $category);
     }
 }

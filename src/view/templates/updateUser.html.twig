@@ -4,7 +4,7 @@
     <div class="text-center m-4">
         <div id="div_update">
             <form id="form_updateUser" class="col" action="/updateuser" enctype="multipart/form-data" method="POST">
-                <img src="https://www.1plusx.com/app/mu-plugins/all-in-one-seo-pack-pro/images/default-user-image.png" border="1" alt="img user" width="128" height="128">
+                <img src= "../assets/images/{{ image_profile }}" border="1" alt="img user" width="128" height="128">
                 <h2 class="mb-4">Update User</h2>
                 <div class="form-group"><input id="name" type="text" name="name" class="form-control-sm" onkeyup="comprovaInput('notLogin')" value={{ name }} ></div>
                 <div class="form-group"><span id="error0" style="color: red"></span></div>
@@ -21,8 +21,8 @@
                 <div class="form-group"><span id="error4" style="color: red"></span></div>
                 <div class="form-group"><input id="confirmPassword" type="password" name="confirmPassword" class="form-control-sm" placeholder="Confirm New Password" onkeyup="comprovaInput('notLogin')"></div>
                 <div class="form-group"><span id="error5" style="color: red"></span></div>
+                <input type="file" name="files[]" ><br><br>
                 <div><button type="submit" name="button" class="btn-dark" onclick="sendForm(this)">Update Account</button></div><br>
-                <input type="file" name="files[]" >
                 {% if errors is defined %}
                     <ol>
                         {% for error in errors %}

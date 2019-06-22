@@ -7,14 +7,16 @@
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 
     {%  if user_id == -1 %}
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSODALYDYo2dqN0DG_kPNi2X7EAy1K8SpRRZQWkNv9alC62IHggOw" border="1" alt="img user" width="32" height="32">
         <a href="{{ url }}/myproducts">My Products</a><br>
 
 
     {%  else %}
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSODALYDYo2dqN0DG_kPNi2X7EAy1K8SpRRZQWkNv9alC62IHggOw" border="1" alt="img user" width="32" height="32">
         <a href="{{ url }}/profile">User Profile</a><br>
-        <a href="{{ url }}/logout">Log Out</a>
+        <a href="{{ url }}/uploadproduct">Add item</a>
+        <br>
+        <a href="{{ url }}/myproducts">My Products</a>
+        <br>
+        <a href="{{ url }}/logout">Log Out</a><br>
 
 
     {%  endif %}

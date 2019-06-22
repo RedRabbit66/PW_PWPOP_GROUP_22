@@ -35,10 +35,14 @@ class UpdateUserViewController
                 $action = $request->getQueryParam('action');
                 $statusMessage = $request->getQueryParam('status');
 
+                $service = $this->container->get('get_image_profile_repository');
+                $imageProfile = $service();
+                var_dump($imageProfile);
+
                 return $this->container->get('view')->render($response, 'updateUser.html.twig',
                     ['name' => $user['name'], 'username' => $user['username'],  'email' => $user['email'],
                         'birthday' => $user['birthday'], 'phone_number' => $user['phone_number'], 'url' => $url,
-                        'action' => $action, 'statusMessage' => $statusMessage]);
+                        'action' => $action, 'statusMessage' => $statusMessage, 'image_profile' => $imageProfile]);
             }else{
                 $response = $response
                     ->withStatus(403)

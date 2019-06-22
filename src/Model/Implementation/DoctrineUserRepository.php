@@ -96,28 +96,50 @@ class DoctrineUserRepository implements UserRepository
         $id = $_SESSION['user_id'];
 
         if($id != -1){
-            $name = $_POST['name'];
-            $email = $_POST['email'];
-            $birthday = $_POST['birthday'];
-            $phone_number = $_POST['phone_number'];
-            $password = md5($_POST['password']);
+            if(empty($password)){
+                $name = $_POST['name'];
+                $email = $_POST['email'];
+                $birthday = $_POST['birthday'];
+                $phone_number = $_POST['phone_number'];
 
-            $sql = 'UPDATE users SET name = :name, email = :email, birth_date = :birth_date, phone_number =:phone_number, password = :password WHERE hash_id LIKE :hash_id';
-            $stmt = $this->database->prepare($sql);
-            $stmt->bindValue('name', $name, 'string');
-            $stmt->bindValue('email', $email, 'string');
-            $stmt->bindValue('birth_date', $birthday, 'string');
-            $stmt->bindValue('phone_number', $phone_number, 'string');
-            $stmt->bindValue('password', $password, 'string');
-            $stmt->bindValue('hash_id', $id, 'string');
-            $stmt->execute();
+                $sql = 'UPDATE users SET name = :name, email = :email, birth_date = :birth_date, phone_number =:phone_number WHERE hash_id LIKE :hash_id';
+                $stmt = $this->database->prepare($sql);
+                $stmt->bindValue('name', $name, 'string');
+                $stmt->bindValue('email', $email, 'string');
+                $stmt->bindValue('birth_date', $birthday, 'string');
+                $stmt->bindValue('phone_number', $phone_number, 'string');
+                $stmt->bindValue('hash_id', $id, 'string');
+                $stmt->execute();
+
+            }else {
+                $name = $_POST['name'];
+                $email = $_POST['email'];
+                $birthday = $_POST['birthday'];
+                $phone_number = $_POST['phone_number'];
+                $password = md5($_POST['password']);
+
+                $sql = 'UPDATE users SET name = :name, email = :email, birth_date = :birth_date, phone_number =:phone_number, password = :password WHERE hash_id LIKE :hash_id';
+                $stmt = $this->database->prepare($sql);
+                $stmt->bindValue('name', $name, 'string');
+                $stmt->bindValue('email', $email, 'string');
+                $stmt->bindValue('birth_date', $birthday, 'string');
+                $stmt->bindValue('phone_number', $phone_number, 'string');
+                $stmt->bindValue('password', $password, 'string');
+                $stmt->bindValue('hash_id', $id, 'string');
+                $stmt->execute();
+            }
         }
     }
 
     public function getImageProfileUser(){
         //session_start();
-        $hash_id = $_SESSION['user_id'];
 
+        if (isset($_SESSION['user_id'])) {
+
+            $hash_id = $_SESSION['user_id'];
+        }else{
+            return -1;
+        }
         if($hash_id != -1) {
             $sql = 'SELECT profile_image FROM users WHERE hash_id LIKE :hash_id';
             $stmt = $this->database->prepare($sql);
@@ -125,11 +147,10 @@ class DoctrineUserRepository implements UserRepository
             $stmt->execute();
             $result = $stmt->fetchAll();
             $imageProfile = $result[0]['profile_image'];
-var_dump($imageProfile);
-            //            return $result[0]['profile_image'];
-        }
-        return 1;
 
+            return $imageProfile;
+        }
+        return -1;
     }
 
 

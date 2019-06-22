@@ -16,7 +16,9 @@
 </head>
 <body>
 <header>
-    {% block header %}{% endblock %}
+    {% block header %}
+        <a href="{{ url }}/">Home</a><br>
+    {% endblock %}
 </header>
 <div id="content" class="container-fluid">{% block content %}{% endblock %} </div>
 <footer>

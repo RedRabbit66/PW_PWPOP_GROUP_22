@@ -30,64 +30,42 @@ class HomeController
      */
     public function __invoke(Request $request, Response $response)
     {
-       /* if(session_status() == "PHP_SESSION_ACTIVE "){
-            session_start();
-        }*/
         session_start();
         $found = 1;
         $imageProfile = -1;
+        $user_id = -1;
 
-        if (empty($_SESSION['user_id'])) {
-            $user_id = -1;
-
-
-        } else{
-
+        if (isset($_SESSION['user_id'])) {
             $user_id = $_SESSION['user_id'];
-
-            try {
-                $service = $this->container->get('get_image_profile_repository');
-                $imageProfile = $service();
-                var_dump($imageProfile);
-
-            }catch (\Exception $e) {
-
-            }
-
+            $service = $this->container->get('get_image_profile_repository');
+            $imageProfile = $service();
         }
 
-        if($user_id != -1){
-
-        $service = $this->container->get('get_products2_repository');
+        $service = $this->container->get('get_products_repository');
         $products = $service();
 
 
         if($imageProfile != -1){
-            $imageProfile = '/../../public/assets/images/'. $imageProfile;
+            $imageProfile = '/assets/images/'. $imageProfile;
         }else{
             $imageProfile = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSODALYDYo2dqN0DG_kPNi2X7EAy1K8SpRRZQWkNv9alC62IHggOw';
         }
 
         $params = $request->getQueryParams();
+
+        $action = null;
+        $status = null;
         if (sizeof($params)!=0){
-            $action = $params['action'];
-            $status = $params['status'];
+            if(isset( $params['action'])) {
+                $action = $params['action'];
+            }
+            if(isset( $params['status'])){
+                $status = $params['status'];
+            }
+
             return $this->container->get('view')->render($response, 'login.html.twig', ['action' => $action, 'statusValue' => $status, 'image_profile' => $imageProfile]);
         }
 
-        return $this->container->get('view')->render($response, 'home.html.twig', ['user_id' => $user_id, 'products' => $products, 'productsSize' => sizeof($products), 'found' => $found, 'image_profile' => $imageProfile]);
-
-        }
-
-        if ($user_id == -1){
-
-            $service = $this->container->get('get_products_repository');
-            $products = $service();
-
-            return $this->container->get('view')->render($response, 'home.html.twig', ['user_id' => $user_id, 'products' => $products, 'found' => $found, 'image_profile' => $imageProfile]);
-
-
-        }
-
+        return $this->container->get('view')->render($response, 'home.html.twig', ['user_id' => $user_id, 'products' => $products, 'found' => $found, 'image_profile' => $imageProfile]);
     }
 }

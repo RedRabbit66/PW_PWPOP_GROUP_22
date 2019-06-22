@@ -44,8 +44,13 @@ class LoginController
 
                 if($data['user_id'] != '-1'){
 
-                $id = $data['user_id'];
-                session_start();
+                    $id = $data['user_id'];
+                    session_start();
+
+                    if(sizeof($_POST) > 2){
+                        $cookie = $id;
+                        setcookie("Sessio", $cookie, time()+7200);
+                    }
 
                 }else{
                     $loginFail = '1';

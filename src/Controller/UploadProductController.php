@@ -13,6 +13,7 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use \Psr\Http\Message\UploadedFileInterface;
+use \Hashids\Hashids;
 
 
 class UploadProductController
@@ -50,7 +51,7 @@ class UploadProductController
             }
         }
 
-        session_start();
+        //session_start();
         $found = 1;
         $imageProfile = -1;
 
@@ -145,11 +146,16 @@ class UploadProductController
                 continue;
             }
 
+            $extension = '.' . explode(".", $_FILES['files']['name'][0])[1];
+
+            $productHashId = new Hashids($_POST['uploadProduct_Name'] . $_POST['uploadProduct_Description']);
+            $productHashId = $productHashId->encode(1, 2, 3);
+
             // We generate a custom name here instead of using the one coming form the form
-            $uploadedFile->moveTo(self::UPLOADS_DIR . DIRECTORY_SEPARATOR . 'ImageProduct_' .$_POST['uploadProduct_Name']. '_' . $name);
+            $uploadedFile->moveTo(self::UPLOADS_DIR . DIRECTORY_SEPARATOR . 'ImageProduct_' . $productHashId . $extension);
         }
 
-       // return $this->container->get('view')->render($response, 'home.html.twig');
+        return $this->container->get('view')->render($response, 'home.html.twig');
     }
 
     private function isValidFormat(string $extension): bool

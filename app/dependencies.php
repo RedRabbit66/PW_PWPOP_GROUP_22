@@ -222,8 +222,8 @@ $container['search_product_repository'] = function ($container){
     return $service;
 };
 
-$container['upgrade_product_repository'] = function ($container){
-    $service = new SallePW\pwpop\Model\UseCase\UpgradeProductUseCase(
+$container['update_product_repository'] = function ($container){
+    $service = new SallePW\pwpop\Model\UseCase\UpdateProductUseCase(
         $container->get('product_repository')
     );
     return $service;
