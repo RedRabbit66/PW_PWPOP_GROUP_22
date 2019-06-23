@@ -37,7 +37,7 @@ class UpdateUserViewController
 
                 $service = $this->container->get('get_image_profile_repository');
                 $imageProfile = $service();
-                var_dump($imageProfile);
+                //var_dump($imageProfile);
 
                 return $this->container->get('view')->render($response, 'updateUser.html.twig',
                     ['name' => $user['name'], 'username' => $user['username'],  'email' => $user['email'],
@@ -47,14 +47,14 @@ class UpdateUserViewController
                 $response = $response
                     ->withStatus(403)
                     ->withHeader('403 Forbidden', '/');
-                echo "403 Error - You are forbidden!";
+                echo "403 Error - Access forbidden!";
                 //return $response;
             }
         }else{
             $response = $response
                 ->withStatus(403)
                 ->withHeader('403 Forbidden', '/');
-            echo "403 Error - You are forbidden!";
+            echo "403 Error - Access forbidden!";
             //return $response;
 
         }

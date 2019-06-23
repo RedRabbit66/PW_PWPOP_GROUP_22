@@ -30,6 +30,12 @@ class RegisterViewController
      */
     public function __invoke(Request $request, Response $response)
     {
-        return $this->container->get('view')->render($response, 'register.html.twig');
+        $values = [];
+
+        $params = $request->getQueryParams();
+        if (isset($params['action'])) {$values['action'] = $params['action'];}
+        if (isset($params['validation'])) {$values['validation'] = $params['validation'];}
+
+        return $this->container->get('view')->render($response, 'register.html.twig', $values);
     }
 }

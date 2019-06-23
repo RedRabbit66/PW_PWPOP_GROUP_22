@@ -51,11 +51,10 @@ class HomeController
             $imageProfile = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSODALYDYo2dqN0DG_kPNi2X7EAy1K8SpRRZQWkNv9alC62IHggOw';
         }
 
-        $params = $request->getQueryParams();
+        /*$params = $request->getQueryParams();
 
         $action = null;
         $status = null;
-        if (sizeof($params)!=0){
             if(isset( $params['action'])) {
                 $action = $params['action'];
             }
@@ -63,8 +62,7 @@ class HomeController
                 $status = $params['status'];
             }
 
-            return $this->container->get('view')->render($response, 'login.html.twig', ['action' => $action, 'statusValue' => $status, 'image_profile' => $imageProfile]);
-        }
+            return $this->container->get('view')->render($response, 'login.html.twig', ['action' => $action, 'validation' => $status, 'image_profile' => $imageProfile]);*/
 
         return $this->container->get('view')->render($response, 'home.html.twig', ['user_id' => $user_id, 'products' => $products, 'found' => $found, 'image_profile' => $imageProfile]);
     }

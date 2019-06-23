@@ -35,9 +35,9 @@ class UpdateUserController
     public function __invoke(Request $request, Response $response)
     {
         $errors = $this->validateUser();
-        $statusMessage = "";
+        $statusMessage = "success";
 
-        if (0 != 0) {
+        if (sizeof($errors) != 0) {
             $status = 302;
             $statusMessage = "error";
         } else {
@@ -183,16 +183,19 @@ class UpdateUserController
         $dateSplitted = explode("/", $date);
 
         $day = intval($dateSplitted[0]);
+
         $month = intval($dateSplitted[1]);
+
         $year = intval($dateSplitted[2]);
 
-        if ($year < 1900 || $year > 2020 || $month == 0 || $month > 12) {
+
+        if ($year < 1900 || $year > 2019 || $month == 0 || $month > 12) {
             return false;
         }elseif ($month < 0 || $month > 12){
             return false;
         }elseif ($year % 400 == 0 || ($year % 100 != 0 && $year % 4 == 0)){
             $monthLength[1] = 29;
-        }elseif (($day > 0) && ($day <= $monthLength[$month - 1])){
+        }elseif (($day < 0) || ($day > $monthLength[$month - 1])){
             return false;
         }
         return true;

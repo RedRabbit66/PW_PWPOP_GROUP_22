@@ -1,6 +1,15 @@
 {% extends "base.html.twig" %}
 {% block title %}Update User{% endblock %}
 {% block content %}
+
+    {%  if action == "update_user" and statusMessage == "success" %}
+        <div class="alert alert-success" role="alert">All changes have been successfully saved
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">close &times;</span>
+            </button>
+        </div>
+    {% endif %}
+
     <div class="text-center m-4">
         <div id="div_update">
             <form id="form_updateUser" class="col" action="/updateuser" enctype="multipart/form-data" method="POST">
@@ -13,7 +22,7 @@
                 <div class="form-group"><span id="error1_1" style="color: red"></span></div>
                 <div class="form-group"><input id="email" type="email" name="email" class="form-control-sm" onkeyup="comprovaInput('notLogin')" value={{ email }}></div>
                 <div class="form-group"><span id="error2" style="color: red"></span></div>
-                <div class="form-group"><input id="birthday" type="date" name="birthday" class="form-control-sm" value={{ birthday }} ></div>
+                <div class="form-group"><input id="birthday" type="text" name="birthday" class="form-control-sm" onkeyup="comprovaInput('notLogin')" value={{ birthday }}></div>
                 <div class="form-group"><span id="error3" style="color: red"></span></div>
                 <div class="form-group"><input id="phoneNumber" type="text" name="phone_number" class="form-control-sm" value={{ phone_number }} ></div>
                 <div class="form-group"><span id="error6" style="color: red"></span></div>
@@ -39,4 +48,16 @@
         </div>
     </div>
     <input type="button" value="Go back" class="btn-dark" onclick="history.back()">
+
+    {% if action == "update_user" and statusMessage == "error" %}
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">close &times;</span>
+            </button>
+            <h4 class="alert-heading" style="color: red">CANNOT LOGIN</h4>
+            <hr>
+            <h5 class="alert-heading" style="color: red">Please make sure you fulfill all requirements</h5>
+        </div>
+    {% endif %}
+
 {% endblock %}

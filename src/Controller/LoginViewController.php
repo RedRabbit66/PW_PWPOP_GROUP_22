@@ -61,13 +61,11 @@ class LoginViewController
 
         }
 
+        $values = [];
         $params = $request->getQueryParams();
-        if (sizeof($params)!=0){
-            $action = $params['action'];
-            $status = $params['status'];
-            return $this->container->get('view')->render($response, 'login.html.twig', ['action' => $action, 'statusValue' => $status, 'LoginFail' => '0']);
-        }
+        if (isset($params['action'])) {$values['action'] = $params['action'];}
+        if (isset($params['validation'])) {$values['validation'] = $params['validation'];}
+        return $this->container->get('view')->render($response, 'login.html.twig', $values);
 
-        return $this->container->get('view')->render($response, 'login.html.twig');
     }
 }

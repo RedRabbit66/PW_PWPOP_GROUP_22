@@ -34,16 +34,22 @@ class RegisterController
     }
 
     public function __invoke(Request $request, Response $response) {
-       // $error[] = $this->validateUser();
+        $error[] = $this->validateUser();
 
         session_start();
+
+        $status = 0;
 
         if (!empty($_SESSION['user_id'])) {
             return $response->withHeader('Location', '/');
         }
 
-        if (0 != 0) {
+        if (sizeof($error) == 0) {
             $status = 302;
+            $response = $response
+                ->withStatus($status)
+                ->withHeader('Location', '/register?action=register&validation=error');
+            return $response;
         } else {
 
             try {
@@ -57,7 +63,7 @@ class RegisterController
 
                 $response = $response
                     ->withStatus($status)
-                    ->withHeader('Location', '/login');
+                    ->withHeader('Location', '/login?action=registerOK');
 
                 return $response;
 
@@ -214,13 +220,13 @@ class RegisterController
         $month = intval($dateSplitted[1]);
         $year = intval($dateSplitted[2]);
 
-        if ($year < 1900 || $year > 2020 || $month == 0 || $month > 12) {
+        if ($year < 1900 || $year > 2019 || $month == 0 || $month > 12) {
             return false;
         }elseif ($month < 0 || $month > 12){
             return false;
         }elseif ($year % 400 == 0 || ($year % 100 != 0 && $year % 4 == 0)){
             $monthLength[1] = 29;
-        }elseif (($day > 0) && ($day <= $monthLength[$month - 1])){
+        }elseif (($day < 0) && ($day > $monthLength[$month - 1])){
             return false;
         }
         return true;

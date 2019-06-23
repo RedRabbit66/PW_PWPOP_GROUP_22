@@ -30,11 +30,8 @@ class LoginController
         $errors = $this->validateUser();
         $id = '0';
 
-       /*if(sizeof($errors) != 0){
-            $id = -1;
-        */
-       if(0!=0){
-
+       if(sizeof($errors) != 0){
+           $id = '-1';
        } else {
             try {
                 $loginFail = '0';
@@ -70,11 +67,11 @@ class LoginController
 
         if ($id == -1) {
             $status = 302;
-            $url = $url . '/login' . '?action=login_user&status=error';
+            $url = $url . '/login' . '?action=login&validation=error';
 
         } else {
             $_SESSION['user_id'] = $id;
-            $url = $url . '/'; //. '?action=login_user&status=success';
+            $url = $url . '/';
             $status = 200;
         }
 

@@ -295,7 +295,7 @@ function isValidDate(birthdate) {
     var month = parseInt(parts[1], 10);
     var year = parseInt(parts[2], 10);
 
-    if (year < 1900 || year > 2020 || month == 0 || month > 12) {
+    if (year < 1900 || year > 2019 || month == 0 || month > 12) {
         return false;
     }
     if (month < 0 || month > 12){
