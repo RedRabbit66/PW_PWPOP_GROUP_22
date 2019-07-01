@@ -170,6 +170,7 @@ class RegisterController
     public function uploadAction(Request $request, Response $response){
         $uploadedFiles = $request->getUploadedFiles();
 
+        var_dump($_FILES);
         $errors = [];
 
         //var_dump($_FILES['files']['name'][0]);

@@ -20,17 +20,6 @@ class UpdateProductController
 {
     private $container;
 
-    //ZONA CONSTANTES IMAGEN
-    private const UPLOADS_DIR = __DIR__ . '/../../public/assets/images';
-
-    private const UNEXPECTED_ERROR = "An unexpected error occurred uploading the file '%s'...";
-
-    private const INVALID_EXTENSION_ERROR = "The received file extension '%s' is not valid";
-
-    // We use this const to define the extensions that we are going to allow
-    private const ALLOWED_EXTENSIONS = ['jpg', 'png'];
-
-
     public function __construct(ContainerInterface $container) {
         $this->container = $container;
     }
@@ -40,7 +29,6 @@ class UpdateProductController
     {
 
         if (isset($args['productid'])) {
-            $this -> uploadAction($request, $response, $args);
 
             $data = $request->getParsedBody();
             $service = $this->container->get('update_product_repository');
@@ -54,45 +42,33 @@ class UpdateProductController
     }
 
 
-    public function uploadAction(Request $request, Response $response, array $args){
-        $uploadedFiles = $request->getUploadedFiles();
-
+    public function validateProductUpload(){
         $errors = [];
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            foreach ($_POST as $data => $val) {
 
-        //var_dump($_FILES['files']['name'][0]);
-        /** @var UploadedFileInterface $uploadedFile */
-        foreach ($uploadedFiles['files'] as $uploadedFile) {
-            if ($uploadedFile->getError() !== UPLOAD_ERR_OK) {
-                $errors[] = sprintf(self::UNEXPECTED_ERROR, $uploadedFile->getClientFilename());
-                continue;
+                if ($data == 'uploadProduct_Name') {
+                    if (strlen($val) == 0) {
+                        $errors['uploadProduct_Name'] = "Title field is required";
+                    }
+                } elseif ($data == 'uploadProduct_Description') {
+                    if (strlen($val) == 0) {
+                        $errors['uploadProduct_Description'] = "Product description field is required";
+                    } elseif (strlen($val) < 20) {
+                        $errors['uploadProduct_Description'] = "Product description field must be at least 20 characters long";
+                    }
+                } elseif ($data == 'uploadProduct_Category') {
+                    if (strcmp($val, "empty") == 0) {
+                        $errors['uploadProduct_Category'] = "You must choose a product category";
+                    }
+                } elseif ($data == 'uploadProduct_Price') {
+                    if (($val < 0) || !preg_match("/^[0-9]+$/", $val)) {
+                        $errors['uploadProduct_Price'] = "Price must be a valid integer positive value";
+                    }
+                }
             }
-
-            $name = $uploadedFile->getClientFilename();
-
-            $fileInfo = pathinfo($name);
-            echo (self::UPLOADS_DIR . DIRECTORY_SEPARATOR . $name);
-
-            $format = $fileInfo['extension'];
-
-            if (!$this->isValidFormat($format)) {
-                $errors[] = sprintf(self::INVALID_EXTENSION_ERROR, $format);
-                continue;
-            }
-
-            $extension = '.' . explode(".", $_FILES['files']['name'][0])[1];
-
-            $service = $this->container->get('get_product_repository');
-            $product = $service($args['productid']);
-            // We generate a custom name here instead of using the one coming form the form
-            $uploadedFile->moveTo(self::UPLOADS_DIR . DIRECTORY_SEPARATOR . $product[0]['product_image']);
         }
-
-
-        return $this->container->get('view')->render($response, 'home.html.twig');
+        return $errors;
     }
 
-    private function isValidFormat(string $extension): bool
-    {
-        return in_array($extension, self::ALLOWED_EXTENSIONS, true);
-    }
 }

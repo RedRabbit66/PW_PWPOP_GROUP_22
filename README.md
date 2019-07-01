@@ -1,23 +1,3 @@
-DROP DATABASE IF EXISTS pwpopdb; 
-
-CREATE DATABASE pwpopdb;
-
-USE pwpopdb;
-
-DROP TABLE IF EXISTS users; 
-CREATE TABLE users (
-	 id INT(20) UNSIGNED NOT NULL AUTO_INCREMENT, 
-	 hash_id VARCHAR(100) NOT NULL UNIQUE, 
-	 name VARCHAR(100) NOT NULL DEFAULT '', 
-	 username VARCHAR(100) NOT NULL UNIQUE, 
-	 email VARCHAR(100) NOT NULL UNIQUE, 
-	 birth_date VARCHAR(100) NOT NULL DEFAULT '', 
-	 phone_number VARCHAR(100) NOT NULL DEFAULT '', 
-	 password VARCHAR(150) NOT NULL DEFAULT '', 
-	 profile_image VARCHAR(150) NOT NULL DEFAULT '',
-	 is_active BOOLEAN DEFAULT TRUE,
-PRIMARY KEY(id)
-) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 
 -- Table which'll store the information of the products 
@@ -41,16 +21,16 @@ CREATE TABLE products (
 -- INSERT INTO users(hash_id, name, username, email, birth_date, phone_number, password, profile_image) VALUES('fdsf', 'sergio', 'sergio', 'aa@a.com', '16/6/8755', '666 666 666', 'fxgbgfhnfdgnd', 'aa'); 
 
 
-  INSERT INTO products(hash_id, user_id, description, dateUpload, price, category, title, product_image) VALUES('aaa', '2', "llure3 desc", NOW(), 200, 2, 'ddddd','llure.jpg');
-  INSERT INTO products(hash_id, user_id, description, dateUpload, price, category, title, product_image) VALUES('haffsh4', '1', "llure4 desc", NOW(), 200, 1, 'llorenc4','llure2.jpg');
-  INSERT INTO products(hash_id, user_id, description, dateUpload, price, category, title, product_image) VALUES('hafsh5', '1', "llure5 desc", NOW(), 200, 1, 'llorenc5','llure2.jpg');
-  INSERT INTO products(hash_id, user_id, description, dateUpload, price, category, title, product_image) VALUES('hasffh6', '1', "llure6 desc", NOW(), 200, 1, 'llorenc6','llure2.jpg');
+   INSERT INTO products(hash_id, user_id, description, dateUpload, price, category, title, product_image) VALUES('aaa', '2', "llure3 desc", NOW(), 200, 2, 'ddddd','llure.jpg');
+    INSERT INTO products(hash_id, user_id, description, dateUpload, price, category, title, product_image) VALUES('haffsh4', '1', "llure4 desc", NOW(), 200, 1, 'llorenc4','llure2.jpg');
+   INSERT INTO products(hash_id, user_id, description, dateUpload, price, category, title, product_image) VALUES('hafsh5', '1', "llure5 desc", NOW(), 200, 1, 'llorenc5','llure2.jpg');
+   INSERT INTO products(hash_id, user_id, description, dateUpload, price, category, title, product_image) VALUES('hasffh6', '1', "llure6 desc", NOW(), 200, 1, 'llorenc6','llure2.jpg');
 
--- INSERT INTO products(hash_id, user_id, description, dateUpload, price, category, title, product_image) VALUES('hash6', 'QpcvSL', "llure6 desc", NOW(), 200, 1, 'llorenc6','llure2.jpg');
+ INSERT INTO products(hash_id, user_id, description, dateUpload, price, category, title, product_image) VALUES('hash6', 'QpcvSL', "llure6 desc", NOW(), 200, 1, 'llorenc6','llure2.jpg');
 
 -- UPDATE products SET sold_out = '0' WHERE id LIKE 1;
 
 SELECT * FROM users; 
 SELECT * FROM products;
 
-INSERT INTO products(hash_id, user_id, description, price, category, title, product_image) VALUES('jgvhgv', 1, 'jgvjghv', 12, 'hgvhgv', 'jhvhgdvhdg', 'jsvhgv')
+-- INSERT INTO products(hash_id, user_id, description, price, category, title, product_image) VALUES('jgvhgv', 1, 'jgvjghv', 12, 'hgvhgv', 'jhvhgdvhdg', 'jsvhgv')
