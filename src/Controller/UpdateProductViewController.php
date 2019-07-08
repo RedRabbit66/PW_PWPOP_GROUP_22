@@ -51,8 +51,14 @@ class UpdateProductViewController
                 $product = $service($args['productid']);
                 //var_dump($product[0]['user_id']);
 
+                $action = "none";
+                $validation = "none";
+                $params = $request->getQueryParams();
+                if (isset($params['action'])) {$action = $params['action'];}
+                if (isset($params['validation'])) {$validation = $params['validation'];}
+
                 if($product[0]['user_id'] == $_SESSION['user_id']){
-                    return $this->container->get('view')->render($response, 'updateProduct.html.twig', ['product' => $product]);
+                    return $this->container->get('view')->render($response, 'updateProduct.html.twig', ['product' => $product, 'action' => $action, 'validation' => $validation]);
 
                 }else{
                     echo "Pagina no accesible!";

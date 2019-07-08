@@ -34,12 +34,22 @@ class UploadProductController
         $this->container = $container;
     }
 
-    public function __invoke(Request $request, Response $response){
-        if (0!=0){
+    public function __invoke(Request $request, Response $response)
+    {
+
+        $errors = $this->validateProductUpload();
+        var_dump($errors);
+        $status = 200;
+
+        if (sizeof($errors) != 0) {
             $status = 302;
-        }else{
+            $response = $response
+                ->withStatus($status)
+                ->withHeader('Location', '/uploadproduct?action=upload&validation=error');
+                return $response;
+        } else {
             try {
-                $this -> uploadAction($request, $response);
+                $this->uploadAction($request, $response);
                 //Upload del producto
                 $data = $request->getParsedBody();
                 $service = $this->container->get('post_product_repository');
@@ -59,7 +69,7 @@ class UploadProductController
             $user_id = -1;
 
 
-        } else{
+        } else {
 
             $user_id = $_SESSION['user_id'];
             try {
@@ -70,7 +80,7 @@ class UploadProductController
             }catch (\Exception $e) {
 
             }
-            }
+        }
 
 
             $service = $this->container->get('get_products_repository');
@@ -87,8 +97,10 @@ class UploadProductController
             ->withHeader('Location', '/');
 
 
+            return $this->container->get('view')->render($response, 'home.html.twig',
+                ['user_id' => $user_id, 'products' => $products, 'found' => $found, 'image_profile' => $imageProfile]);
 
-        return $this->container->get('view')->render($response, 'home.html.twig', ['user_id' => $user_id, 'products' => $products, 'found' => $found, 'image_profile' => $imageProfile]);
+        }
     }
 
     public function validateProductUpload(){

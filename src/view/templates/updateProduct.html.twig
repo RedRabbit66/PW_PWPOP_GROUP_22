@@ -56,6 +56,18 @@
     </div>
     <input type="button" value="Go back" class="btn-dark" onclick="history.back()">
 
+        {% if action == "update" and validation == "error" %}
+            <div class="alert alert-danger" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">close &times;</span>
+                </button>
+                <h4 class="alert-heading" style="color: red">CANNOT UPDATE THIS PRODUCT</h4>
+                <hr>
+                <h5 class="alert-heading" style="color: red">Please make sure you fulfill all requirements</h5>
+                <hr>
+            </div>
+        {% endif %}
+
     {%  endif %}
 
 {% endblock %}

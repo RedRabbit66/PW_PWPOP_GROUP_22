@@ -28,6 +28,17 @@ class UpdateProductController
     public function __invoke(Request $request, Response $response, array $args)
     {
 
+        $errors = $this->validateProductUpload();
+        var_dump($errors);
+
+        if(sizeof($errors)!=0){
+
+            $response = $response
+                ->withStatus($status)
+                ->withHeader('Location', '/updateProduct/'. $args['productid'] .'?action=update&validation=error');
+            return $response;
+        }
+
         if (isset($args['productid'])) {
 
             $data = $request->getParsedBody();

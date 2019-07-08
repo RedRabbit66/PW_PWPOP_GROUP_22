@@ -20,8 +20,10 @@ function comprovaUpload_Description(){
     var product_description = document.getElementById('uploadProduct_Description').value;
     //Description min length = 20
     if (product_description.length == 0) {
+        textError = document.createTextNode("*This field is required.");
         document.getElementById('errorUpload_Description').textContent = '';
-        document.getElementById('uploadProduct_Description').style.borderColor = "white";
+        document.getElementById('errorUpload_Description').appendChild(textError);
+        document.getElementById('uploadProduct_Description').style.borderColor = "red";
     } else if (product_description.length < 20) {
         textError = document.createTextNode("*This field must be at least 20 characters long.");
         document.getElementById('errorUpload_Description').textContent = '';
