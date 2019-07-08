@@ -97,7 +97,7 @@ class LoginController
                             if (!preg_match("/^[A-Za-z]+$/i", $val)){
                                 $errors['usernameLogin_1']="Username must only contain alphanumeric characters";
                             }
-                            if (strlen($val)>10){
+                            if (strlen($val)>20){
                                 $errors['UsernameLogin_1_1']="Username must contain a maximum of 10 characters";
                             }
                         }elseif (!preg_match("/^\S+@\S+\.\S+$/", $val)){

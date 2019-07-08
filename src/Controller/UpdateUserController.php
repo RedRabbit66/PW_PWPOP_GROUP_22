@@ -39,7 +39,10 @@ class UpdateUserController
 
         if (sizeof($errors) != 0) {
             $status = 302;
-            $statusMessage = "error";
+            $response = $response
+                ->withStatus($status)
+                ->withHeader('Location', '/profile?action=update&validation=error');
+            return $response;
         } else {
             try {
                 $this -> uploadAction($request, $response);
@@ -60,7 +63,7 @@ class UpdateUserController
         $response = $response
             ->withStatus($status)
             ->withHeader('Location',
-                $protocol . $_SERVER['SERVER_NAME'] . '/profile?action=update_user&status=' . $statusMessage);
+                $protocol . $_SERVER['SERVER_NAME'] . '/profile?action=update&validation=' . $statusMessage);
 
         return $response;
     }
@@ -70,7 +73,6 @@ class UpdateUserController
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $password = '';
-
 
             foreach ($_POST as $data => $val) {
                 if ($data == 'name') {
@@ -114,22 +116,33 @@ class UpdateUserController
                     $password = $val;
                     if(strlen($val)==0){
                         $errors['password']="Password field is required";
-                    }elseif (strlen($val) < 6 || strlen($val)>12) {
-                        $errors['password'] = "Password must be 6 to 12 characters long";
+                    }elseif (strlen($val) < 6) {
+                        $errors['password'] = "Password must be at least 6 characters long";
                     }elseif(!preg_match("/^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})\S+$/", $val)){
                         $errors['password']="Password must at least contain one number and a capital letter.";
                     }
                 } elseif ($data == 'confirmPassword') {
-                    if (strlen($val) == 0) {
-                        $errors['confirmPassword'] = "Confirm password field is required";
-                    } elseif ($val != $password) {
+                    if(strlen($val)==0){
+                        $errors['confirmPassword']="Confirm password field is required";
+                    }elseif ($val != $password) {
                         $errors['confirmPassword'] = "Password mismatch";
+                    }
+
+                    //https://phppot.com/php/php-image-upload-with-size-type-dimension-validation/
+                } elseif ($data == 'image') {
+                    $ext = pathinfo($val, PATHINFO_EXTENSION);
+                    if ($ext !== 'png' || $ext !== 'jpg') {
+                        $errors['image'] = "Bad extension";
+                    }
+                } elseif ($data == 'image') {
+                    $ext = pathinfo($val, PATHINFO_EXTENSION);
+                    if ($ext !== 'png' || $ext !== 'jpg') {
+                        $errors['image'] = "Bad size";
                     }
                 }
             }
-            return $errors;
         }
-        return -1;
+        return $errors;
     }
 
 
