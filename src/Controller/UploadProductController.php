@@ -99,8 +99,6 @@ class UploadProductController
 
             return $this->container->get('view')->render($response, 'home.html.twig',
                 ['user_id' => $user_id, 'products' => $products, 'found' => $found, 'image_profile' => $imageProfile]);
-
-        }
     }
 
     public function validateProductUpload(){
