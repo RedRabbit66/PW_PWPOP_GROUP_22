@@ -34,8 +34,7 @@ class RegisterController
     }
 
     public function __invoke(Request $request, Response $response) {
-        $error[] = $this->validateUser();
-
+        $error = $this->validateUser();
         session_start();
 
         $status = 0;
@@ -44,7 +43,7 @@ class RegisterController
             return $response->withHeader('Location', '/');
         }
 
-        if (sizeof($error) == 0) {
+        if (sizeof($error) != 0) {
             $status = 302;
             $response = $response
                 ->withStatus($status)
@@ -65,6 +64,7 @@ class RegisterController
                     ->withStatus($status)
                     ->withHeader('Location', '/login?action=registerOK');
 
+
                 return $response;
 
             } catch (\Exception $e) {
@@ -74,7 +74,7 @@ class RegisterController
                     ->withStatus($status)
                     ->withHeader('Location', '/register');
 
-                return $response;
+                //return $response;
 
             }
         }
@@ -93,7 +93,6 @@ class RegisterController
             $confirmPassword = $data['confirmPassword'];*/
 
             foreach ($_POST as $data => $val) {
-                var_dump($_POST);
                 if ($data == 'name') {
                     if (strlen($val)==0){
                         $errors['name'] = "The name field is required";
@@ -135,8 +134,8 @@ class RegisterController
                     $password = $val;
                     if(strlen($val)==0){
                         $errors['password']="Password field is required";
-                    }elseif (strlen($val) < 6 || strlen($val)>12) {
-                        $errors['password'] = "Password must be 6 to 12 characters long";
+                    }elseif (strlen($val) < 6) {
+                        $errors['password'] = "Password must be at least 6 characters long";
                     }elseif(!preg_match("/^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})\S+$/", $val)){
                         $errors['password']="Password must at least contain one number and a capital letter.";
                     }

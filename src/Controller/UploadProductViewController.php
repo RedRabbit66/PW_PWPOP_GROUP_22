@@ -44,7 +44,13 @@ class UploadProductViewController
 
         }else{
 
-            return $this->container->get('view')->render($response, 'uploadProduct.html.twig');
+            $values = [];
+
+            $params = $request->getQueryParams();
+            if (isset($params['action'])) {$values['action'] = $params['action'];}
+            if (isset($params['validation'])) {$values['validation'] = $params['validation'];}
+
+            return $this->container->get('view')->render($response, 'uploadProduct.html.twig', $values);
 
         }
     }

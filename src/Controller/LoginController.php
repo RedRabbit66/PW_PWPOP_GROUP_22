@@ -108,7 +108,7 @@ class LoginController
                     if (strlen($val)==0){
                         $errors['password']="Password field is required";
                     }else{
-                        if (strlen($val) < 6 || strlen($val) > 12) {
+                        if (strlen($val) < 6  || !preg_match("/^(?=(?:.*\d){1})(?=(?:.*[A-Z]){1})\S+$/", $val)) {
                             $errors['password'] = "Password must be 6 to 12 characters long";
                         }
                     }

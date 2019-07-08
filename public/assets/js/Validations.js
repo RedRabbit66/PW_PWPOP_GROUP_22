@@ -81,8 +81,11 @@ function comprovaInput(update) {
         var usernameLogin = document.getElementById('usernameLogin').value;
 
         if (usernameLogin.length == 0) {
+            textError = document.createTextNode("*This field is required");
             document.getElementById('error1').textContent = '';
-            document.getElementById('usernameLogin').style.borderColor = "white";
+            document.getElementById('error1_1').textContent = '';
+            document.getElementById('error1').appendChild(textError);
+            document.getElementById('usernameLogin').style.borderColor = "red";
         } else {
             if (!usernameLogin.includes('@')) {
                 if (usernameRegex.test(usernameLogin)) {
@@ -132,8 +135,10 @@ function comprovaInput(update) {
 
         //COMPROBACION NAME
         if (name.length == 0) {
+            textError = document.createTextNode("*This field is required");
             document.getElementById('error0').textContent = '';
-            document.getElementById('name').style.borderColor = "white";
+            document.getElementById('error0').appendChild(textError);
+            document.getElementById('name').style.borderColor = "red";
         }else if (!usernameRegex.test(name)) {
             textError = document.createTextNode("*Only alphanumeric characters");
             document.getElementById('error0').textContent = '';
@@ -146,9 +151,11 @@ function comprovaInput(update) {
 
         //COMPROBACION USERNAME
         if (username.length == 0) {
+            textError = document.createTextNode("*This field is required");
             document.getElementById('error1').textContent = '';
             document.getElementById('error1_1').textContent = '';
-            document.getElementById('username').style.borderColor = "white";
+            document.getElementById('error1').appendChild(textError);
+            document.getElementById('username').style.borderColor = "red";
         } else {
             if (usernameRegex.test(username)) {
                 document.getElementById('error1').textContent = '';
@@ -172,8 +179,10 @@ function comprovaInput(update) {
 
         //COMPROBACION MAIL
         if (email.length == 0) {
+            textError = document.createTextNode("*This field is required");
             document.getElementById('error2').textContent = '';
-            document.getElementById('email').style.borderColor = "white";
+            document.getElementById('error2').appendChild(textError);
+            document.getElementById('email').style.borderColor = "red";
         } else {
             if (emailRegex.test(email)) {
                 document.getElementById('error2').textContent = '';
@@ -207,21 +216,17 @@ function comprovaInput(update) {
         //COMPROBACIÓN PHONE NUMBER
         console.log(phoneNumber.length);
         console.log(phoneNumber.value);
-        if (phoneNumber.length < 9) {
+        if (phoneNumber.length == 0) {
+            textError = document.createTextNode("*This field is required");
             document.getElementById('error6').textContent = '';
-            document.getElementById('phoneNumber').style.borderColor = "white";
-            if (!telephoneRegex.test(phoneNumber) && phoneNumber.length >= 1){
-                textError = document.createTextNode("*Phone number should only contain digits");
-                document.getElementById('error6').textContent = '';
-                document.getElementById('error6').appendChild(textError);
-                document.getElementById('phoneNumber').style.borderColor = "red";
-            }
+            document.getElementById('error6').appendChild(textError);
+            document.getElementById('phoneNumber').style.borderColor = "red";
         }else if (!telephoneRegex.test(phoneNumber)) {
             textError = document.createTextNode("*Phone number should only contain digits");
             document.getElementById('error6').textContent = '';
             document.getElementById('error6').appendChild(textError);
             document.getElementById('phoneNumber').style.borderColor = "red";
-        } else if(phoneNumber.length>9) {
+        } else if(phoneNumber.length!=9) {
             textError = document.createTextNode("*Field must follow XXXXXXXXX format");
             document.getElementById('error6').textContent = '';
             document.getElementById('error6').appendChild(textError);
@@ -236,11 +241,13 @@ function comprovaInput(update) {
     var password = document.getElementById('password').value;
 
     if (password.length == 0) {
+        textError = document.createTextNode("*This field is required");
         document.getElementById('error4').textContent = '';
-        document.getElementById('password').style.borderColor = "white";
+        document.getElementById('error4').appendChild(textError);
+        document.getElementById('password').style.borderColor = "red";
     } else {
-        if (password.length < 6 || password.length > 12) {
-            textError = document.createTextNode("*Password must be 6 to 12 characters long");
+        if (password.length < 6) {
+            textError = document.createTextNode("*Password must be at least 6 characters long");
             document.getElementById('error4').textContent = '';
             document.getElementById('error4').appendChild(textError);
         } else if (!passwordRegex.test(password)) {
@@ -256,27 +263,23 @@ function comprovaInput(update) {
 
     if (update != 'login'){
         //COMPROBACIÓN CONFIRMPASS
-        if (password.length == 0) {
+        if (confirmPassword.length == 0){
+            textError = document.createTextNode("*This field is required");
             document.getElementById('error5').textContent = '';
-            document.getElementById('confirmPassword').style.borderColor = "white";
+            document.getElementById('error5').appendChild(textError);
+            document.getElementById('confirmPassword').style.borderColor = "red";
         }else{
-            if (confirmPassword.length == 0){
+            if (confirmPassword != password) {
+                textError = document.createTextNode("*Password mismatch");
                 document.getElementById('error5').textContent = '';
-                document.getElementById('confirmPassword').style.borderColor = "white";
-            }else{
-                if (confirmPassword != password) {
-                    textError = document.createTextNode("*Password mismatch");
-                    document.getElementById('error5').textContent = '';
-                    document.getElementById('error5').appendChild(textError);
-                    document.getElementById('password').style.borderColor = "red";
-                    document.getElementById('confirmPassword').style.borderColor = "red";
-                } else{
-                    document.getElementById('confirmPassword').style.borderColor = "green";
-                    document.getElementById('password').style.borderColor = "green";
-                    document.getElementById('error5').textContent = '';
-                }
+                document.getElementById('error5').appendChild(textError);
+                document.getElementById('password').style.borderColor = "red";
+                document.getElementById('confirmPassword').style.borderColor = "red";
+            } else{
+                document.getElementById('confirmPassword').style.borderColor = "green";
+                document.getElementById('password').style.borderColor = "green";
+                document.getElementById('error5').textContent = '';
             }
-
         }
     }
 }
@@ -303,7 +306,7 @@ function isValidDate(birthdate) {
     }
     var monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-    if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)){
+    if (((year % 400) == 0) || ((year % 100) != 0) && ((year % 4) == 0)){
         monthLength[1] = 29;
     }
     return ((day > 0) && (day <= monthLength[month - 1]));
