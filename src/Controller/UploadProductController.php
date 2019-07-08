@@ -77,7 +77,7 @@ class UploadProductController
                 $imageProfile = $service();
                 var_dump($imageProfile);
 
-            }catch (\Exception $e) {
+            } catch (\Exception $e) {
 
             }
         }
