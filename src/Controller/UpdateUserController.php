@@ -45,7 +45,28 @@ class UpdateUserController
             return $response;
         } else {
             try {
-                $this -> uploadAction($request, $response);
+                if(strlen($_FILES['files']['name'][0]) > 1){
+                    var_dump($_FILES);
+                    if((strpos($_FILES['files']['name'][0], '.jpg') !== false) || (strpos($_FILES['files']['name'][0], '.png') !== false)) {
+                        if($_FILES['files']['size'][0] < 500001){
+                            $this->uploadAction($request, $response);
+                            //var_dump($_FILES['files']['size'][0]);
+
+                        }else{
+                            $status = 302;
+                            $response = $response
+                                ->withStatus($status)
+                                ->withHeader('Location', '/profile?action=update&validation=error');
+                            return $response;
+                        }
+                    }else {
+                        $status = 302;
+                        $response = $response
+                            ->withStatus($status)
+                            ->withHeader('Location', '/profile?action=update&validation=error');
+                        return $response;
+                    }
+                }
 
                 $data = $request->getParsedBody();
                 $service = $this->container->get('update_user_repository');

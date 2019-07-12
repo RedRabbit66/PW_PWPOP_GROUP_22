@@ -52,7 +52,35 @@ class RegisterController
         } else {
 
             try {
-                $this -> uploadAction($request, $response);
+                if(isset($_FILES['files'])){
+                    if((strpos($_FILES['files']['name'][0], '.jpg') !== false) || (strpos($_FILES['files']['name'][0], '.png') !== false)) {
+                        if($_FILES['files']['size'][0] < 500001){
+                            $this->uploadAction($request, $response);
+                            //var_dump($_FILES['files']['size'][0]);
+
+                        }else{
+                            $status = 302;
+                            $response = $response
+                                ->withStatus($status)
+                                ->withHeader('Location', '/register?action=register&validation=error');
+                            return $response;
+                        }
+                    }else {
+                        $status = 302;
+                        $response = $response
+                            ->withStatus($status)
+                            ->withHeader('Location', '/register?action=register&validation=error');
+                        return $response;
+                    }
+                }else {
+                $status = 302;
+                $response = $response
+                    ->withStatus($status)
+                    ->withHeader('Location', '/register?action=register&validation=error');
+                return $response;
+                }
+
+
                 //Registramos al usuario
                 $data = $request->getParsedBody();
                 $service = $this->container->get('post_user_repository');
@@ -72,10 +100,8 @@ class RegisterController
 
                 $response = $response
                     ->withStatus($status)
-                    ->withHeader('Location', '/register');
-
-                //return $response;
-
+                    ->withHeader('Location', '/register?action=register&validation=error');
+                return $response;
             }
         }
     }

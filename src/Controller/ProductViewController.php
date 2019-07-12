@@ -28,7 +28,6 @@ class ProductViewController
      */
     public function __invoke(Request $request, Response $response, array $args)
     {
-
         session_start();
 
         if (empty($_SESSION['user_id'])) {
@@ -52,16 +51,18 @@ class ProductViewController
             $service = $this->container->get('get_product_repository');
             $product = $service($args['productid']);
 
+            if(isset($product[0])){
+                if (!$product[0]['is_active']) {
+                    echo("Product not avaliable");
 
-            if (!$product[0]['is_active']) {
-                echo("Product not avaliable");
-
-            } elseif ($product[0]['sold_out']){
-                echo("ERROR 404 - Product sold out");
-            }else{
-                //echo($product[0]['title']);
-                return $this->container->get('view')->render($response, 'product.html.twig', ['user_id' => $user_id, 'product' => $product]);
+                } elseif ($product[0]['sold_out']){
+                    echo("ERROR 404 - Product sold out");
+                }else{
+                    //echo($product[0]['title']);
+                    return $this->container->get('view')->render($response, 'product.html.twig', ['user_id' => $user_id, 'product' => $product]);
+                }
             }
+
         } else {
             echo "Error 404 - Page not found";
             //Error

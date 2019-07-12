@@ -34,7 +34,7 @@ class UpdateProductController
         if(sizeof($errors)!=0){
 
             $response = $response
-                ->withStatus($status)
+
                 ->withHeader('Location', '/updateProduct/'. $args['productid'] .'?action=update&validation=error');
             return $response;
         }
@@ -78,8 +78,10 @@ class UpdateProductController
                     }
                 }
             }
+            if(empty($_POST['uploadProduct_Category'])){
+                $errors['uploadProduct_Category'] = "You must choose a product category";
+            }
         }
         return $errors;
     }
-
 }

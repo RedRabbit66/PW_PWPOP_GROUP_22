@@ -96,7 +96,7 @@ class DoctrineUserRepository implements UserRepository
         $id = $_SESSION['user_id'];
 
         if($id != -1){
-            if(empty($password)){
+            /*if(empty($password)){
                 $name = $_POST['name'];
                 $email = $_POST['email'];
                 $birthday = $_POST['birthday'];
@@ -111,7 +111,7 @@ class DoctrineUserRepository implements UserRepository
                 $stmt->bindValue('hash_id', $id, 'string');
                 $stmt->execute();
 
-            }else {
+            }else {*/
                 $name = $_POST['name'];
                 $email = $_POST['email'];
                 $birthday = $_POST['birthday'];
@@ -127,7 +127,8 @@ class DoctrineUserRepository implements UserRepository
                 $stmt->bindValue('password', $password, 'string');
                 $stmt->bindValue('hash_id', $id, 'string');
                 $stmt->execute();
-            }
+            //echo($_POST['password']);
+
         }
     }
 

@@ -29,7 +29,6 @@ class UpdateProductViewController
      */
     public function __invoke(Request $request, Response $response, array $args)
     {
-
         session_start();
 
         $protocol = $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')
@@ -42,7 +41,6 @@ class UpdateProductViewController
             return $this->container->get('view')->render($response->withHeader('Location', $url), 'login.html.twig');
 
         }else {
-
             $product = NULL;
 
             if (isset($args['productid'])) {
@@ -57,18 +55,17 @@ class UpdateProductViewController
                 if (isset($params['action'])) {$action = $params['action'];}
                 if (isset($params['validation'])) {$validation = $params['validation'];}
 
-                if($product[0]['user_id'] == $_SESSION['user_id']){
-                    return $this->container->get('view')->render($response, 'updateProduct.html.twig', ['product' => $product, 'action' => $action, 'validation' => $validation]);
+                if(isset($product[0]['user_id'])){
+                    if($product[0]['user_id'] == $_SESSION['user_id']){
+                        return $this->container->get('view')->render($response, 'updateProduct.html.twig', ['product' => $product, 'action' => $action, 'validation' => $validation]);
 
-                }else{
-                    echo "Pagina no accesible!";
+                    }else{
+                        echo "Pagina no accesible!";
+                    }
                 }
-
             } else {
                 echo "Pagina no accesible!";
-
             }
-
         }
     }
 }

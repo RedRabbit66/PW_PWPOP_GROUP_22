@@ -38,7 +38,6 @@ class UploadProductController
     {
 
         $errors = $this->validateProductUpload();
-        var_dump($errors);
         $status = 200;
 
         if (sizeof($errors) != 0) {
@@ -49,7 +48,34 @@ class UploadProductController
                 return $response;
         } else {
             try {
-                $this->uploadAction($request, $response);
+                if(isset($_FILES['files'])){
+                    if((strpos($_FILES['files']['name'][0], '.jpg') !== false) || (strpos($_FILES['files']['name'][0], '.png') !== false)) {
+                        if($_FILES['files']['size'][0] < 500001){
+                            $this->uploadAction($request, $response);
+                            //var_dump($_FILES['files']['size'][0]);
+
+                        }else{
+                            $status = 302;
+                            $response = $response
+                                ->withStatus($status)
+                                ->withHeader('Location', '/uploadproduct?action=upload&validation=error');
+                            return $response;
+                        }
+                    }else {
+                        $status = 302;
+                        $response = $response
+                            ->withStatus($status)
+                            ->withHeader('Location', '/uploadproduct?action=upload&validation=error');
+                        return $response;
+                    }
+                }else {
+                    $status = 302;
+                    $response = $response
+                        ->withStatus($status)
+                        ->withHeader('Location', '/uploadproduct?action=upload&validation=error');
+                    return $response;
+                }
+
                 //Upload del producto
                 $data = $request->getParsedBody();
                 $service = $this->container->get('post_product_repository');
@@ -68,20 +94,16 @@ class UploadProductController
         if (empty($_SESSION['user_id'])) {
             $user_id = -1;
 
-
         } else {
-
             $user_id = $_SESSION['user_id'];
             try {
                 $service = $this->container->get('get_image_profile_repository');
                 $imageProfile = $service();
-                var_dump($imageProfile);
 
             } catch (\Exception $e) {
 
             }
         }
-
 
             $service = $this->container->get('get_products_repository');
             $products = $service();
@@ -125,6 +147,13 @@ class UploadProductController
                         $errors['uploadProduct_Price'] = "Price must be a valid integer positive value";
                     }
                 }
+            }
+            if(empty($_POST['uploadProduct_Category'])){
+                $errors['uploadProduct_Category'] = "You must choose a product category";
+            }
+
+            if(empty($_FILES['files'])){
+                $errors['file'] = "You must choose an image";
             }
         }
         return $errors;
