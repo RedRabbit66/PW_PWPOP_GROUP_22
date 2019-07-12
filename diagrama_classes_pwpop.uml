@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>PHP</ID>
+  <OriginalElement>C:/Users/Sergio/Documents/Uni/Cuarto curso/Web2/pwpop</OriginalElement>
+  <nodes>
+    <node x="607.0" y="1429.0">\SallePW\pwpop\Model\UseCase\PostProductUseCase</node>
+    <node x="794.0" y="1145.0">\SallePW\pwpop\Controller\SearchProductController</node>
+    <node x="0.0" y="0.0">\SallePW\pwpop\Model\ProductRepository</node>
+    <node x="1592.0" y="1429.0">\SallePW\pwpop\Model\UseCase\SearchUserUseCase</node>
+    <node x="584.0" y="1003.0">\SallePW\pwpop\Controller\ProductViewController</node>
+    <node x="1420.0" y="684.0">\SallePW\pwpop\Model\UseCase\UpdateProductUseCase</node>
+    <node x="0.0" y="1571.0">\SallePW\pwpop\Model\UseCase\GetProducts2UseCase</node>
+    <node x="1454.0" y="1003.0">\SallePW\pwpop\Model\UseCase\SendMailUseCase</node>
+    <node x="1663.0" y="1287.0">\SallePW\pwpop\Model\UseCase\GetImageProfileUseCase</node>
+    <node x="417.5" y="0.0">\SallePW\pwpop\Model\UserRepository</node>
+    <node x="0.0" y="1003.0">\SallePW\pwpop\Controller\PHPMailer</node>
+    <node x="1517.0" y="0.0">\SallePW\pwpop\Controller\RegisterController</node>
+    <node x="1056.0" y="1145.0">\SallePW\pwpop\Controller\UploadProductViewController</node>
+    <node x="804.0" y="1429.0">\SallePW\pwpop\Model\UseCase\CheckUserUseCase</node>
+    <node x="1001.0" y="1429.0">\SallePW\pwpop\Model\UseCase\UpdateUserUseCase</node>
+    <node x="1158.0" y="684.0">\SallePW\pwpop\Controller\LoginController</node>
+    <node x="193.0" y="1571.0">\SallePW\pwpop\Model\UseCase\GetUserUseCase</node>
+    <node x="1318.0" y="1145.0">\SallePW\pwpop\Controller\UpdateUserViewController</node>
+    <node x="1580.0" y="1145.0">\SallePW\pwpop\Controller\RegisterViewController</node>
+    <node x="0.0" y="1429.0">\SallePW\pwpop\Model\UseCase\GetProductUseCase</node>
+    <node x="0.0" y="1145.0">\SallePW\pwpop\Model\Services\PostVerificationKeyService</node>
+    <node x="386.0" y="1571.0">\SallePW\pwpop\Model\UseCase\GetProductsUseCase</node>
+    <node x="262.0" y="1287.0">\SallePW\pwpop\Controller\MyProductsViewController</node>
+    <node x="524.0" y="1287.0">\SallePW\pwpop\Controller\HomeController</node>
+    <node x="578.0" y="684.0">\SallePW\pwpop\Controller\UpdateProductController</node>
+    <node x="579.0" y="1571.0">\SallePW\pwpop\Model\MailerRepository</node>
+    <node x="270.0" y="1145.0">\SallePW\pwpop\Controller\LoginViewController</node>
+    <node x="532.0" y="1145.0">\SallePW\pwpop\Controller\DeleteUserController</node>
+    <node x="1013.0" y="1287.0">\SallePW\pwpop\Model\Services\UpdateVerifiedService</node>
+    <node x="294.0" y="1003.0">\SallePW\pwpop\Controller\UpdateProductViewController</node>
+    <node x="1457.0" y="1287.0">\SallePW\pwpop\Model\UseCase\DeleteProductUseCase</node>
+    <node x="206.0" y="1429.0">\SallePW\pwpop\Model\UseCase\GetMyProductsUseCase</node>
+    <node x="415.0" y="299.0">\SallePW\pwpop\Model\Implementation\DoctrineUserRepository</node>
+    <node x="1198.0" y="1429.0">\SallePW\pwpop\Model\UseCase\PostUserUseCase</node>
+    <node x="868.0" y="684.0">\SallePW\pwpop\Controller\ProductController</node>
+    <node x="1235.0" y="1287.0">\SallePW\pwpop\Model\Services\CheckVerificationService</node>
+    <node x="874.0" y="1003.0">\SallePW\pwpop\Controller\ActivationMailController</node>
+    <node x="1179.0" y="0.0">\SallePW\pwpop\Model\Product</node>
+    <node x="409.0" y="1429.0">\SallePW\pwpop\Model\UseCase\SearchProductUseCase</node>
+    <node x="289.0" y="684.0">\SallePW\pwpop\Controller\UploadProductController</node>
+    <node x="0.0" y="1287.0">\SallePW\pwpop\Controller\LogoutController</node>
+    <node x="0.0" y="277.0">\SallePW\pwpop\Model\Implementation\DoctrineProductRepository</node>
+    <node x="0.0" y="684.0">\SallePW\pwpop\Controller\UpdateUserController</node>
+    <node x="1164.0" y="1003.0">\SallePW\pwpop\Controller\DeleteProductController</node>
+    <node x="1395.0" y="1429.0">\SallePW\pwpop\Model\UseCase\DeleteUserUseCase</node>
+    <node x="786.0" y="1287.0">\SallePW\pwpop\Model\UseCase\SetProductSoldOutsUseCase</node>
+    <node x="693.0" y="0.0">\SallePW\pwpop\Model\User</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="\SallePW\pwpop\Model\Implementation\DoctrineProductRepository" target="\SallePW\pwpop\Model\ProductRepository">
+      <point x="0.0" y="-181.0" />
+      <point x="0.0" y="113.5" />
+    </edge>
+    <edge source="\SallePW\pwpop\Model\Implementation\DoctrineUserRepository" target="\SallePW\pwpop\Model\UserRepository">
+      <point x="0.0" y="-158.5" />
+      <point x="0.0" y="124.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.4" x="1412.75" y="982.9166666666667" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constants</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
