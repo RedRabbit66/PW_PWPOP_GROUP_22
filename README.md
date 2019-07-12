@@ -1,1 +1,40 @@
 
+DROP DATABASE IF EXISTS pwpopdb; 
+
+CREATE DATABASE pwpopdb;
+
+USE pwpopdb;
+
+-- Table which'll store the information of the users 
+DROP TABLE IF EXISTS users; 
+CREATE TABLE users (
+	 id INT(20) UNSIGNED NOT NULL AUTO_INCREMENT, 
+	 hash_id VARCHAR(100) NOT NULL UNIQUE, 
+	 name VARCHAR(100) NOT NULL DEFAULT '', 
+	 username VARCHAR(100) NOT NULL UNIQUE, 
+	 email VARCHAR(100) NOT NULL UNIQUE, 
+	 birth_date VARCHAR(100) NOT NULL DEFAULT '', 
+	 phone_number VARCHAR(100) NOT NULL DEFAULT '', 
+	 password VARCHAR(150) NOT NULL DEFAULT '', 
+	 profile_image VARCHAR(150) NOT NULL DEFAULT '',
+	 is_active BOOLEAN DEFAULT TRUE,
+PRIMARY KEY(id)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+
+-- Table which'll store the information of the products 
+DROP TABLE IF EXISTS products; 
+CREATE TABLE products ( 
+	id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT, 
+	hash_id VARCHAR(40) NOT NULL UNIQUE, 
+	user_id VARCHAR(100) NOT NULL, 
+    description VARCHAR(255) NOT NULL DEFAULT '', 
+	dateUpload DATETIME DEFAULT CURRENT_TIMESTAMP , 
+	price INT(10) NOT NULL DEFAULT 0,
+	category VARCHAR(50) NOT NULL DEFAULT '', 
+	title VARCHAR(255) NOT NULL DEFAULT '', 
+	product_image VARCHAR(255) NOT NULL DEFAULT '', 
+	sold_out BOOLEAN DEFAULT FALSE,
+	is_active BOOLEAN DEFAULT TRUE,
+	PRIMARY KEY(id) 
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
