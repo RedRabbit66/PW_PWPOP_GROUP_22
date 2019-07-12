@@ -21,7 +21,6 @@ class ActivationMailController
 
     public function __invoke(Request $request, Response $response, array $args)
     {
-
         $checkVerificationService = $this->container->get('check_verification_service');
         $userId = $checkVerificationService($args['key']);
 
